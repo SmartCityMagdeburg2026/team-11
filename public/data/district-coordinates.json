@@ -1,0 +1,1345 @@
+{
+  "generatedAt": "2026-06-05T22:27:04.445Z",
+  "provider": "Nominatim/OpenStreetMap",
+  "boundaryOsmRelation": 62481,
+  "coordinates": [
+    {
+      "name": "Adelheidring",
+      "lat": 52.128028,
+      "lon": 11.618616,
+      "displayName": "Adelheidring, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, 39108, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Agrarstraße",
+      "lat": 52.1585465,
+      "lon": 11.5726938,
+      "displayName": "Agrarstraße, Alt Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Albert-Vater-Straße",
+      "lat": 52.1403532,
+      "lon": 11.6287731,
+      "displayName": "Albert-Vater-Straße, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, 39108, Deutschland",
+      "type": "primary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Alt Cracau",
+      "lat": 52.1156876,
+      "lon": 11.6639711,
+      "displayName": "Alt Cracau, Cracau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Alt Diesdorf",
+      "lat": 52.1309381,
+      "lon": 11.5687168,
+      "displayName": "Alt Diesdorf, Diesdorf, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Alt Fermersleben",
+      "lat": 52.0900546,
+      "lon": 11.6577494,
+      "displayName": "Alt Fermersleben, Fermersleben, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Alt Lemsdorf",
+      "lat": 52.0982427,
+      "lon": 11.5974961,
+      "displayName": "Inferred from Lemsdorf administrative area",
+      "matchedVariant": "inferred: Lemsdorf",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Alt Olvenstedt Dorf",
+      "lat": 52.1576278,
+      "lon": 11.5702321,
+      "displayName": "Alt Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "administrative",
+      "importance": 0.319279276758968,
+      "matchedVariant": "Alt Olvenstedt"
+    },
+    {
+      "name": "Alt Ottersleben",
+      "lat": 52.0885959,
+      "lon": 11.5710507,
+      "displayName": "Alt Ottersleben, Klein Ottersleben, Ottersleben, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Alt Reform",
+      "lat": 52.0935277,
+      "lon": 11.6113063,
+      "displayName": "Reform, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.3140788844789178,
+      "matchedVariant": "Reform"
+    },
+    {
+      "name": "Alt Rothensee",
+      "lat": 52.1833033,
+      "lon": 11.6659085,
+      "displayName": "Alt Rothensee, Rothensee, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "neighbourhood",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Alt Salbke",
+      "lat": 52.0771168,
+      "lon": 11.6686661,
+      "displayName": "Alt Salbke, Salbke, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Alt Westerhüsen",
+      "lat": 52.0672385,
+      "lon": 11.6750765,
+      "displayName": "Alt Westerhüsen, Fahlberg List, Westerhüsen, Magdeburg, Sachsen-Anhalt, 39122, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Am Glacis",
+      "lat": 52.1302387,
+      "lon": 11.6168188,
+      "displayName": "Adler-Apotheke Am Glacis, 244, Große Diesdorfer Straße, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, 39108, Deutschland",
+      "type": "pharmacy",
+      "importance": 0.00007251926451509908
+    },
+    {
+      "name": "Am Spionskopf",
+      "lat": 52.070746,
+      "lon": 11.6629677,
+      "displayName": "Am Spionskopf, Salbke, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "August-Bebel-Damm",
+      "lat": 52.1959262,
+      "lon": 11.6784338,
+      "displayName": "August-Bebel-Damm, Gewerbegebiet Nord, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Bahnhof Rothensee",
+      "lat": 52.1814,
+      "lon": 11.6626,
+      "displayName": "Inferred from Rothensee rail station area",
+      "matchedVariant": "inferred: Rothensee station",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Bahnhofsviertel",
+      "lat": 52.1274582,
+      "lon": 11.6245999,
+      "displayName": "Bahnhofsviertel, Altstadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Ballenstedter Straße",
+      "lat": 52.0941541,
+      "lon": 11.5905022,
+      "displayName": "Ballenstedter Straße, Lemsdorf, Magdeburg, Sachsen-Anhalt, 39118, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Barleber See I",
+      "lat": 52.2211157,
+      "lon": 11.6494868,
+      "displayName": "Barleber See I, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "water",
+      "importance": 0.19283288150311992
+    },
+    {
+      "name": "Barleber Straße/Lumumbastraße",
+      "lat": 52.1755219,
+      "lon": 11.6353229,
+      "displayName": "Barleber Straße, Neustädter See, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Barleber Straße"
+    },
+    {
+      "name": "Barro-See",
+      "lat": 52.1909394,
+      "lon": 11.639477,
+      "displayName": "Großer Barrosee, Neustädter See, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "water",
+      "importance": 0.10673918593118178,
+      "matchedVariant": "Barrosee"
+    },
+    {
+      "name": "Beimssiedlung",
+      "lat": 52.1248094,
+      "lon": 11.5898569,
+      "displayName": "Hermann-Beims-Siedlung, Stadtfeld West, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "residential",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Benneckenbeck",
+      "lat": 52.0844994,
+      "lon": 11.5859644,
+      "displayName": "Wohnturm Benneckenbeck, Am Alten Turm, Ottersleben, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "tower",
+      "importance": 0.10540294855860563
+    },
+    {
+      "name": "Berliner Chaussee",
+      "lat": 52.1276752,
+      "lon": 11.70063,
+      "displayName": "Berliner Chaussee, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.30093685344584264
+    },
+    {
+      "name": "Beyendorf",
+      "lat": 52.0460789,
+      "lon": 11.6365911,
+      "displayName": "Beyendorf-Sohlen, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.3212490653681812
+    },
+    {
+      "name": "Birkenweiler",
+      "lat": 52.1603539,
+      "lon": 11.6144549,
+      "displayName": "Gartensparte Birkenweiler, Neustädter Feld, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "allotments",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Bleckenburgstraße/Jahnring",
+      "lat": 52.1108871,
+      "lon": 11.6337134,
+      "displayName": "Bleckenburgstraße/Jahnring, Buckau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Bördecenter",
+      "lat": 52.0840925,
+      "lon": 11.599451,
+      "displayName": "Bördepark, 67-71, Salbker Chaussee, Reform, Magdeburg, Sachsen-Anhalt, 39118, Deutschland",
+      "type": "mall",
+      "importance": 0.12743869505990896,
+      "matchedVariant": "Bördepark"
+    },
+    {
+      "name": "Bördegarten",
+      "lat": 52.153019,
+      "lon": 11.6049904,
+      "displayName": "Am Bördegarten, Nordwest, Magdeburg, Sachsen-Anhalt, 39128, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Calenberge",
+      "lat": 52.0597332,
+      "lon": 11.716781,
+      "displayName": "Randau-Calenberge, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.32316133360556143
+    },
+    {
+      "name": "Cracauer Anger",
+      "lat": 52.135781,
+      "lon": 11.6724559,
+      "displayName": "Cracauer Anger, Herrenkrug, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Curiesiedlung",
+      "lat": 52.1634492,
+      "lon": 11.6557386,
+      "displayName": "Offener Treff Curiesiedlung „Jung & Alt“, 2, Am Vorhorn, Neue Neustadt, Magdeburg, Sachsen-Anhalt, 39124, Deutschland",
+      "type": "yes",
+      "importance": 0.00007251926451509908
+    },
+    {
+      "name": "Damaschkeplatz",
+      "lat": 52.1323185,
+      "lon": 11.623896,
+      "displayName": "Damaschkeplatz, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "square",
+      "importance": 0.0667391859311818
+    },
+    {
+      "name": "Danziger Dorf",
+      "lat": 52.1662496,
+      "lon": 11.6193091,
+      "displayName": "Danziger Dorf, Kannenstieg, Magdeburg, Sachsen-Anhalt, 39128, Deutschland",
+      "type": "footway",
+      "importance": 0.04007251926451513
+    },
+    {
+      "name": "Dessauer Straße",
+      "lat": 52.1306575,
+      "lon": 11.6693706,
+      "displayName": "Dessauer Straße, Brückfeld, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Düppler Mühle",
+      "lat": 52.1474174,
+      "lon": 11.5878391,
+      "displayName": "Düppler Mühle, 1, Düppler Mühlenplatz, Neu Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "yes",
+      "importance": 0.12743869505990896
+    },
+    {
+      "name": "Eichenweiler",
+      "lat": 52.1695564,
+      "lon": 11.6504975,
+      "displayName": "Eichenweiler, Neustädter See, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "locality",
+      "importance": 0.0667391859311818
+    },
+    {
+      "name": "Engpaß",
+      "lat": 52.1084529,
+      "lon": 11.6395263,
+      "displayName": "Engpaß, Buckau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Fabriciusstraße",
+      "lat": 52.1015354,
+      "lon": 11.5896118,
+      "displayName": "Fabriciusstraße, Sudenburg, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Fauler Grund",
+      "lat": 52.0819331,
+      "lon": 11.6379413,
+      "displayName": "Fauler Grund, Hopfengarten, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Fermersleber Weg",
+      "lat": 52.1075125,
+      "lon": 11.6111724,
+      "displayName": "Fermersleber Weg, Leipziger Straße, Magdeburg, Sachsen-Anhalt, 39112, Deutschland",
+      "type": "tertiary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Fichtestraße/Ambrosiusplatz",
+      "lat": 52.1145876,
+      "lon": 11.5954386,
+      "displayName": "Fichtestraße, Sudenburg, Magdeburg, Sachsen-Anhalt, 39112, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Fichtestraße"
+    },
+    {
+      "name": "Fliedergrund",
+      "lat": 52.1450162,
+      "lon": 11.5837114,
+      "displayName": "Fliedergrund, Neu Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Flugplatz",
+      "lat": 52.0776482,
+      "lon": 11.6276198,
+      "displayName": "Flugplatz, Beyendorfer Grund, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Fort V",
+      "lat": 52.1408051,
+      "lon": 11.6081905,
+      "displayName": "ehem. Fort V, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "recreation_ground",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Frankefelde",
+      "lat": 52.0936006,
+      "lon": 11.5826544,
+      "displayName": "Frankefelde Ost, Ottersleben, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "residential",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Friedenshöhe",
+      "lat": 52.1058657,
+      "lon": 11.5865735,
+      "displayName": "Friedenshöhe, Sudenburg, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "residential",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Friedensweiler",
+      "lat": 52.136496,
+      "lon": 11.7107886,
+      "displayName": "Friedensweiler, Berliner Chaussee, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.1570394422394589
+    },
+    {
+      "name": "Friedrich-List-Straße",
+      "lat": 52.0891324,
+      "lon": 11.645764,
+      "displayName": "Friedrich-List-Straße, Salbke, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Gewerbegebiet Buckau",
+      "lat": 52.1018127,
+      "lon": 11.6449883,
+      "displayName": "Gewerbegebiet Buckau, Buckau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Gewerbegebiet Salbke",
+      "lat": 52.087687,
+      "lon": 11.6566853,
+      "displayName": "Gewerbegebiet Salbke, Salbke, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Gewerbegebiet Welsleber Straße",
+      "lat": 52.066054,
+      "lon": 11.6623863,
+      "displayName": "Welsleber Straße, Westerhüsen, Beyendorf-Sohlen, Magdeburg, Sachsen-Anhalt, 39122, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Welsleber Straße"
+    },
+    {
+      "name": "Gewerbegebiet Windmühlenstraße",
+      "lat": 52.1728086,
+      "lon": 11.6601927,
+      "displayName": "Windmühlenstraße, Siedlung Rothensee, Rothensee, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Windmühlenstraße"
+    },
+    {
+      "name": "Gneisenauring",
+      "lat": 52.1482067,
+      "lon": 11.5895096,
+      "displayName": "Gneisenauring, Neu Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Goslarer Straße",
+      "lat": 52.1015224,
+      "lon": 11.6049383,
+      "displayName": "Goslarer Straße, Lemsdorf, Magdeburg, Sachsen-Anhalt, 39118, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Gröperstraße/Nachtweide",
+      "lat": 52.1509271,
+      "lon": 11.6429328,
+      "displayName": "Gröperstraße, Neustädter Bahnhof, Neue Neustadt, Magdeburg, Sachsen-Anhalt, 39124, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Gröperstraße"
+    },
+    {
+      "name": "Großer Werder",
+      "lat": 52.1410944,
+      "lon": 11.6617409,
+      "displayName": "Großer Werder, Werder, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Gübser Weg",
+      "lat": 52.1273578,
+      "lon": 11.6729876,
+      "displayName": "Gübser Weg, Brückfeld, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Halberstädter Chaussee",
+      "lat": 52.094312,
+      "lon": 11.5721559,
+      "displayName": "Halberstädter Chaussee, Klein Ottersleben, Ottersleben, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "tertiary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Hanns-Eisler-Platz/Kannenstieg",
+      "lat": 52.1690154,
+      "lon": 11.6253129,
+      "displayName": "Hanns-Eisler-Platz, Kannenstieg, Magdeburg, Sachsen-Anhalt, 39128, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Harsdorfer Berg",
+      "lat": 52.134108,
+      "lon": 11.5742447,
+      "displayName": "Harsdorfer Berg, Stadtfeld West, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Hasselbachplatzviertel",
+      "lat": 52.1216679,
+      "lon": 11.6315765,
+      "displayName": "Hasselbachplatzviertel, Altstadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Helmholtzstraße",
+      "lat": 52.1114478,
+      "lon": 11.6242407,
+      "displayName": "Helmholtzstraße, Leipziger Straße, Magdeburg, Sachsen-Anhalt, 39112, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Herrenkrug/Biederitzer Busch",
+      "lat": 52.1495556,
+      "lon": 11.6954123,
+      "displayName": "Herrenkrug/Biederitzer Busch, Herrenkrug, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Heumarkt",
+      "lat": 52.1275538,
+      "lon": 11.6553817,
+      "displayName": "Heumarkt, Brückfeld, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Hillersleber Straße",
+      "lat": 52.179913,
+      "lon": 11.6602298,
+      "displayName": "Hillersleber Straße, Rothensee, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "neighbourhood",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Hohendodeleber Weg",
+      "lat": 52.1135468,
+      "lon": 11.5569305,
+      "displayName": "Hohendodeleber Weg, Diesdorf, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Hohepfortestraße",
+      "lat": 52.1472155,
+      "lon": 11.6506003,
+      "displayName": "Hohepfortestraße, Alte Neustadt, Magdeburg, Sachsen-Anhalt, 39106, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Hopfengarten",
+      "lat": 52.0880993,
+      "lon": 11.6320269,
+      "displayName": "Hopfengarten, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.3047903492217065
+    },
+    {
+      "name": "Industriehafen",
+      "lat": 52.174619,
+      "lon": 11.6735668,
+      "displayName": "Industriehafen, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.31074813956852465
+    },
+    {
+      "name": "Insel",
+      "lat": 52.1065641,
+      "lon": 11.6291692,
+      "displayName": "Buckauer Insel, Leipziger Straße, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "neighbourhood",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Insleber Straße/Münchenhofstraße",
+      "lat": 52.1487811,
+      "lon": 11.6343073,
+      "displayName": "Insleber Straße, Neue Neustadt, Magdeburg, Sachsen-Anhalt, 39124, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Insleber Straße"
+    },
+    {
+      "name": "Jakobstraße",
+      "lat": 52.1337236,
+      "lon": 11.6465443,
+      "displayName": "Jakobstraße, Altstadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Jordanstraße",
+      "lat": 52.1169629,
+      "lon": 11.6106224,
+      "displayName": "Jordanstraße, Sudenburg, Magdeburg, Sachsen-Anhalt, 39112, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Junkerssiedlung",
+      "lat": 52.1477962,
+      "lon": 11.6037815,
+      "displayName": "Inferred from nearby Juliusstraße, Nordwest",
+      "matchedVariant": "inferred: Juliusstraße",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Klein Ottersleben",
+      "lat": 52.0973082,
+      "lon": 11.5672252,
+      "displayName": "Klein Ottersleben, Ottersleben, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "hamlet",
+      "importance": 0.13340585259784846
+    },
+    {
+      "name": "Kleiner Harz",
+      "lat": 52.1017908,
+      "lon": 11.5931033,
+      "displayName": "KGV 'Kleiner Harz', Lemsdorf, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "allotments",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Kleiner Silberberg",
+      "lat": 52.15852,
+      "lon": 11.6028229,
+      "displayName": "Großsteingrab Kleiner Silberberg, Ede-und-Unku-Weg, Großer Silberberg, Magdeburg, Sachsen-Anhalt, 39128, Deutschland",
+      "type": "archaeological_site",
+      "importance": 0.13618373728802152
+    },
+    {
+      "name": "Klosterwuhne",
+      "lat": 52.1639659,
+      "lon": 11.6387063,
+      "displayName": "Klosterwuhne, Neue Neustadt, Magdeburg, Sachsen-Anhalt, 39124, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Kristallpalast",
+      "lat": 52.1127153,
+      "lon": 11.6157327,
+      "displayName": "Inferred from Am Fuchsberg, Leipziger Straße",
+      "matchedVariant": "inferred: Am Fuchsberg",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Kroatenhügel",
+      "lat": 52.1091794,
+      "lon": 11.5862552,
+      "displayName": "Großsteingrab Kroatenhügel, Bundschuhstraße, Friedenshöhe, Sudenburg, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "archaeological_site",
+      "importance": 0.00007251926451509908
+    },
+    {
+      "name": "Krökentorviertel/Breiter Weg NA",
+      "lat": 52.1359342,
+      "lon": 11.6396756,
+      "displayName": "Krökentorviertel/Breiter Weg NA, Altstadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Kümmelsberg",
+      "lat": 52.1344849,
+      "lon": 11.5728932,
+      "displayName": "Kümmelsberg, Stadtfeld West, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Liebknechtstraße",
+      "lat": 52.1228686,
+      "lon": 11.600947,
+      "displayName": "Liebknechtstraße, Stadtfeld West, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "tertiary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Lindenhof",
+      "lat": 52.0853645,
+      "lon": 11.6283368,
+      "displayName": "Lindenhof, Hopfengarten, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Lindenweiler",
+      "lat": 52.133986,
+      "lon": 11.5803599,
+      "displayName": "Zum Lindenweiler, Stadtfeld West, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Lüttgen-Salbke",
+      "lat": 52.0782333,
+      "lon": 11.6549587,
+      "displayName": "Lüttgen-Salbke, Salbke, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.13618373728802152
+    },
+    {
+      "name": "Marienstift",
+      "lat": 52.1371517,
+      "lon": 11.6005955,
+      "displayName": "Sankt-Marienstift-Kapelle, 30, Harsdorfer Straße, Stadtfeld West, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "place_of_worship",
+      "importance": 0.28187552194901133
+    },
+    {
+      "name": "Marktbreite",
+      "lat": 52.1498487,
+      "lon": 11.5818552,
+      "displayName": "Marktbreite, Neu Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "footway",
+      "importance": 0.04007251926451513
+    },
+    {
+      "name": "Meseberger Weg/Milchweg",
+      "lat": 52.1644133,
+      "lon": 11.616554,
+      "displayName": "Meseberger Weg, Neustädter Feld, Magdeburg, Sachsen-Anhalt, 39128, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Meseberger Weg"
+    },
+    {
+      "name": "Moritzplatz",
+      "lat": 52.1553718,
+      "lon": 11.6325998,
+      "displayName": "Moritzplatz, Neue Neustadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "park",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Neu Reform",
+      "lat": 52.0935277,
+      "lon": 11.6113063,
+      "displayName": "Reform, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.3140788844789178,
+      "matchedVariant": "Reform"
+    },
+    {
+      "name": "Neue Siedlung",
+      "lat": 52.0547249,
+      "lon": 11.6801367,
+      "displayName": "Neue Siedlung, Westerhüsen, Magdeburg, Sachsen-Anhalt, 39122, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Neugrüneberg",
+      "lat": 52.1232233,
+      "lon": 11.6840302,
+      "displayName": "Neugrüneberg, Berliner Chaussee, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.07194870560319186
+    },
+    {
+      "name": "Neustädter Bahnhof",
+      "lat": 52.1490924,
+      "lon": 11.6465621,
+      "displayName": "Neustädter Bahnhof, Alte Neustadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Neustädter Feld Ost",
+      "lat": 52.1644,
+      "lon": 11.6233,
+      "displayName": "Inferred from Neustädter Feld east of Meseberger Weg",
+      "matchedVariant": "inferred: Neustädter Feld Ost",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Neustädter Feld West",
+      "lat": 52.1642,
+      "lon": 11.6086,
+      "displayName": "Inferred from Neustädter Feld west of Meseberger Weg",
+      "matchedVariant": "inferred: Neustädter Feld West",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Neustädter Platz",
+      "lat": 52.1699176,
+      "lon": 11.632177,
+      "displayName": "Neustädter Platz, Neustädter See, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "square",
+      "importance": 0.0667391859311818
+    },
+    {
+      "name": "Neustädter See",
+      "lat": 52.1708248,
+      "lon": 11.63362,
+      "displayName": "Neustädter See, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.2647815871063118
+    },
+    {
+      "name": "Nicolaiplatz",
+      "lat": 52.1558198,
+      "lon": 11.6372645,
+      "displayName": "Nicolaiplatz, Neue Neustadt, Magdeburg, Sachsen-Anhalt, 39124, Deutschland",
+      "type": "pedestrian",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Niederndodeleber Straße",
+      "lat": 52.1324841,
+      "lon": 11.54491,
+      "displayName": "Niederndodeleber Straße, Diesdorf, Niederndodeleben, Magdeburg, Hohe Börde, Börde, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Nordfront",
+      "lat": 52.1425409,
+      "lon": 11.6369425,
+      "displayName": "Nordfront, Alte Neustadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Nordpark",
+      "lat": 52.1426715,
+      "lon": 11.6450947,
+      "displayName": "Nordpark, Alte Neustadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "park",
+      "importance": 0.19283288150311992
+    },
+    {
+      "name": "Ohrestraße",
+      "lat": 52.1562842,
+      "lon": 11.6573916,
+      "displayName": "Ohrestraße, Neue Neustadt, Magdeburg, Sachsen-Anhalt, 39124, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Olvenstedter Platz",
+      "lat": 52.136194,
+      "lon": 11.6071519,
+      "displayName": "Olvenstedter Platz, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "square",
+      "importance": 0.0667391859311818
+    },
+    {
+      "name": "Olvenstedter Röthe",
+      "lat": 52.1531,
+      "lon": 11.5744,
+      "displayName": "Inferred from western Alt Olvenstedt / Weizengrund area",
+      "matchedVariant": "inferred: Olvenstedt west",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Osterweddinger Siedlung",
+      "lat": 52.0806591,
+      "lon": 11.572058,
+      "displayName": "Inferred from Osterweddinger Straße, Ottersleben",
+      "matchedVariant": "inferred: Osterweddinger Straße",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Otto-Richter-Straße",
+      "lat": 52.1159596,
+      "lon": 11.5859408,
+      "displayName": "Otto-Richter-Straße, Sudenburg, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Pechau",
+      "lat": 52.0842573,
+      "lon": 11.7244761,
+      "displayName": "Pechau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.3212490653681812
+    },
+    {
+      "name": "Pestalozzistraße",
+      "lat": 52.1301471,
+      "lon": 11.6011027,
+      "displayName": "Pestalozzistraße, Stadtfeld West, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Planeten- und SKL-Siedlung",
+      "lat": 52.0846069,
+      "lon": 11.6200014,
+      "displayName": "Inferred from Planetenweg, Reform",
+      "matchedVariant": "inferred: Planetenweg",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Prester",
+      "lat": 52.104183,
+      "lon": 11.6790034,
+      "displayName": "Prester, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.31776205367205024
+    },
+    {
+      "name": "Prestersee",
+      "lat": 52.0993207,
+      "lon": 11.6857907,
+      "displayName": "Prestersee, Prester, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Puppendorf",
+      "lat": 52.127779,
+      "lon": 11.6899697,
+      "displayName": "Puppendorf, Berliner Chaussee, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.11734328469919902
+    },
+    {
+      "name": "Quittenweg",
+      "lat": 52.0928199,
+      "lon": 11.6129832,
+      "displayName": "Quittenweg, Reform, Magdeburg, Sachsen-Anhalt, 39118, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Randau",
+      "lat": 52.0597332,
+      "lon": 11.716781,
+      "displayName": "Randau-Calenberge, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.32316133360556143
+    },
+    {
+      "name": "Rathausviertel",
+      "lat": 52.1286899,
+      "lon": 11.6351312,
+      "displayName": "Rathausviertel, Altstadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Rotehorn",
+      "lat": 52.1177573,
+      "lon": 11.644788,
+      "displayName": "Rotehorn, Werder, Magdeburg, Sachsen-Anhalt, 39104, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Salbker Seen",
+      "lat": 52.0949265,
+      "lon": 11.6661213,
+      "displayName": "Salbker Seen, Fermersleben, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Salzmannstraße",
+      "lat": 52.1083068,
+      "lon": 11.6040428,
+      "displayName": "Salzmannstraße, Sudenburg, Magdeburg, Sachsen-Anhalt, 39112, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Schäferbrunnen",
+      "lat": 52.152066,
+      "lon": 11.6083958,
+      "displayName": "Am Schäferbrunnen, Nordwest, Magdeburg, Sachsen-Anhalt, 39128, Deutschland",
+      "type": "living_street",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Schellheimerplatz",
+      "lat": 52.1267516,
+      "lon": 11.6087691,
+      "displayName": "Schellheimerplatz, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "park",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Schiffshebewerk",
+      "lat": 52.2242595,
+      "lon": 11.6722331,
+      "displayName": "Schiffshebewerk Rothensee, Siedlung Schiffshebewerk, Barleber See, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "boat_lift",
+      "importance": 0.13338771725032422
+    },
+    {
+      "name": "Schilfbreite",
+      "lat": 52.0948511,
+      "lon": 11.6281269,
+      "displayName": "Schilfbreite, Hopfengarten, Leipziger Straße, Magdeburg, Sachsen-Anhalt, 39120, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Schlachthof",
+      "lat": 52.1206954,
+      "lon": 11.6183513,
+      "displayName": "Schlachthofweg, Bahnhofsviertel, Altstadt, Magdeburg, Sachsen-Anhalt, 39104, Deutschland",
+      "type": "unclassified",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Schroteanger",
+      "lat": 52.1331443,
+      "lon": 11.5902463,
+      "displayName": "Eichelschanze / Schroteanger/Heimstätten, Stadtfeld West, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "allotments",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Semmelweisstraße",
+      "lat": 52.108174,
+      "lon": 11.6175268,
+      "displayName": "Semmelweisstraße, Leipziger Straße, Magdeburg, Sachsen-Anhalt, 39112, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Siedlung Birkenallee",
+      "lat": 52.1557761,
+      "lon": 11.5761944,
+      "displayName": "Birkenallee, Alt Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Birkenallee"
+    },
+    {
+      "name": "Siedlung Cracau",
+      "lat": 52.1220419,
+      "lon": 11.6582518,
+      "displayName": "Siedlung Cracau, Cracau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Siedlung Fermersleben",
+      "lat": 52.0945715,
+      "lon": 11.6495674,
+      "displayName": "Siedlung Fermersleben, Fermersleben, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Siedlung Rothensee",
+      "lat": 52.1700082,
+      "lon": 11.6601741,
+      "displayName": "Siedlung Rothensee, Rothensee, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "neighbourhood",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Sohlen",
+      "lat": 52.0460789,
+      "lon": 11.6365911,
+      "displayName": "Beyendorf-Sohlen, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.3212490653681812
+    },
+    {
+      "name": "Spielhagensiedlung",
+      "lat": 52.1277143,
+      "lon": 11.5991346,
+      "displayName": "Inferred from Spielhagenstraße, Stadtfeld West",
+      "matchedVariant": "inferred: Spielhagenstraße",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "St.Pauli/Alexander-Puschkin-Straße",
+      "lat": 52.1321804,
+      "lon": 11.6159335,
+      "displayName": "Alexander-Puschkin-Straße, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, 39108, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Alexander-Puschkin-Straße"
+    },
+    {
+      "name": "Stadion",
+      "lat": 52.1245335,
+      "lon": 11.6695005,
+      "displayName": "Stadion, Cracau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Stadion Neue Welt",
+      "lat": 52.1367239,
+      "lon": 11.7014757,
+      "displayName": "Stadion Neue Welt, Berliner Chaussee, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Steinkuhle",
+      "lat": 52.1422311,
+      "lon": 11.6253693,
+      "displayName": "An der Steinkuhle, Nordwest, Magdeburg, Sachsen-Anhalt, 39128, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Steinwiese",
+      "lat": 52.1325098,
+      "lon": 11.6915388,
+      "displayName": "Steinwiese, Berliner Chaussee, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Sternbogen",
+      "lat": 52.144777,
+      "lon": 11.5774844,
+      "displayName": "Sternbogen, Neu Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "path",
+      "importance": 0.04007251926451513
+    },
+    {
+      "name": "Sternviertel",
+      "lat": 52.1172733,
+      "lon": 11.626987,
+      "displayName": "Sternviertel, Altstadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Sudenburger Bahnhof",
+      "lat": 52.1206971,
+      "lon": 11.5968649,
+      "displayName": "Am Sudenburger Bahnhof, MAW zuvor Polte Armaturenwerke, Stadtfeld West, Magdeburg, Sachsen-Anhalt, 39110, Deutschland",
+      "type": "service",
+      "importance": 0.04007251926451513
+    },
+    {
+      "name": "Sülzeanger",
+      "lat": 52.1770662,
+      "lon": 11.6211872,
+      "displayName": "Kleingartenverein 'Sülzeanger', Kannenstieg, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "allotments",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Sülzegrund Nord",
+      "lat": 52.1771207,
+      "lon": 11.6066353,
+      "displayName": "Sülzegrund Nord, Sülzegrund, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Thauberg",
+      "lat": 52.0959102,
+      "lon": 11.545975,
+      "displayName": "Thauberg, Ottersleben, Magdeburg, Sachsen-Anhalt, 39116, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Umspannwerk",
+      "lat": 52.0699691,
+      "lon": 11.547279,
+      "displayName": "Umspannwerk Eulenberg, Ottersleben, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "construction",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Universitätsklinikum",
+      "lat": 52.1027384,
+      "lon": 11.6154432,
+      "displayName": "Universitätsklinikum Magdeburg, 44, Leipziger Straße, Magdeburg, Sachsen-Anhalt, 39120, Deutschland",
+      "type": "hospital",
+      "importance": 0.29960026554141705
+    },
+    {
+      "name": "Universitätsviertel",
+      "lat": 52.1394272,
+      "lon": 11.6468291,
+      "displayName": "Universitätsviertel, Alte Neustadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Unterhorstweg",
+      "lat": 52.0837314,
+      "lon": 11.6699877,
+      "displayName": "Unterhorstweg, Salbke, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Vogelgesang",
+      "lat": 52.1643704,
+      "lon": 11.6458968,
+      "displayName": "Park Vogelgesang, Neue Neustadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "park",
+      "importance": 0.16273786379520622
+    },
+    {
+      "name": "Weizengrund",
+      "lat": 52.1555047,
+      "lon": 11.5717395,
+      "displayName": "Weizengrund, Alt Olvenstedt, Magdeburg, Sachsen-Anhalt, 39130, Deutschland",
+      "type": "secondary",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Werder",
+      "lat": 52.128999,
+      "lon": 11.6512866,
+      "displayName": "Werder, Magdeburg, Sachsen-Anhalt, 39104, Deutschland",
+      "type": "administrative",
+      "importance": 0.32076214465567665
+    },
+    {
+      "name": "Werner-von-Siemens-Ring",
+      "lat": 52.0794224,
+      "lon": 11.5791514,
+      "displayName": "Werner-von-Siemens-Ring, Ottersleben, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "commercial",
+      "importance": 0.08007251926451511
+    },
+    {
+      "name": "Westerhüsener Park",
+      "lat": 52.0636,
+      "lon": 11.674,
+      "displayName": "Inferred from Alt Westerhüsen park-side area",
+      "matchedVariant": "inferred: Alt Westerhüsen",
+      "class": "inferred",
+      "type": "statistical-district-anchor",
+      "importance": 0,
+      "inferred": true
+    },
+    {
+      "name": "Westernplan",
+      "lat": 52.1386762,
+      "lon": 11.6159942,
+      "displayName": "Westernplan, Stadtfeld Ost, Magdeburg, Sachsen-Anhalt, 39108, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Wiesengrund/Zur Pappel",
+      "lat": 52.1175804,
+      "lon": 11.6754322,
+      "displayName": "Wiesengrund/Zur Pappel, Cracau, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "administrative",
+      "importance": 0.10673918593118178
+    },
+    {
+      "name": "Wissenschaftshafen",
+      "lat": 52.1463387,
+      "lon": 11.6595178,
+      "displayName": "Wissenschaftshafen (Handelshafen), Alte Neustadt, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "harbour",
+      "importance": 0.19938740066310082
+    },
+    {
+      "name": "Wohngebiet Welsleber Straße",
+      "lat": 52.066054,
+      "lon": 11.6623863,
+      "displayName": "Welsleber Straße, Westerhüsen, Beyendorf-Sohlen, Magdeburg, Sachsen-Anhalt, 39122, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844,
+      "matchedVariant": "Welsleber Straße"
+    },
+    {
+      "name": "Wormser Platz",
+      "lat": 52.1166931,
+      "lon": 11.6001191,
+      "displayName": "Wormser Platz, Sudenburg, Magdeburg, Sachsen-Anhalt, Deutschland",
+      "type": "square",
+      "importance": 0.0667391859311818
+    },
+    {
+      "name": "Ziolkowskistraße",
+      "lat": 52.1719299,
+      "lon": 11.6303434,
+      "displayName": "Ziolkowskistraße, Neustädter See, Magdeburg, Sachsen-Anhalt, 39126, Deutschland",
+      "type": "residential",
+      "importance": 0.05340585259784844
+    },
+    {
+      "name": "Zipkeleben",
+      "lat": 52.1029036,
+      "lon": 11.708718,
+      "displayName": "Zipkeleben, Magdeburg, Sachsen-Anhalt, 39114, Deutschland",
+      "type": "administrative",
+      "importance": 0.2961343492019334
+    }
+  ],
+  "missing": [],
+  "updatedAt": "2026-06-05T22:32:02.938Z"
+}
