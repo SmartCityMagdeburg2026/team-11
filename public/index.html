@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SmartCity Operations Dashboard</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">SmartCity Magdeburg</p>
+        <h1>Operations Dashboard</h1>
+      </div>
+      <div class="status-strip" aria-label="Dashboard status">
+        <span id="city-name">Magdeburg</span>
+        <span id="last-updated">Loading</span>
+      </div>
+    </header>
+
+    <main class="dashboard-shell">
+      <section class="metric-grid" id="metric-grid" aria-label="City metrics"></section>
+
+      <section class="layout-grid">
+        <section class="panel panel-large" aria-labelledby="district-heading">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Districts</p>
+              <h2 id="district-heading">Live Readiness</h2>
+            </div>
+            <span class="panel-chip">4 zones</span>
+          </div>
+          <div class="district-list" id="district-list"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="alerts-heading">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Signals</p>
+              <h2 id="alerts-heading">Alerts</h2>
+            </div>
+          </div>
+          <ul class="alert-list" id="alert-list"></ul>
+        </section>
+
+        <section class="panel" aria-labelledby="mobility-heading">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Mobility</p>
+              <h2 id="mobility-heading">Network Flow</h2>
+            </div>
+          </div>
+          <div class="bar-list" id="mobility-bars"></div>
+        </section>
+
+        <section class="panel" aria-labelledby="energy-heading">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Energy</p>
+              <h2 id="energy-heading">Resource Mix</h2>
+            </div>
+          </div>
+          <div class="bar-list" id="energy-bars"></div>
+        </section>
+
+        <section class="panel panel-large" aria-labelledby="activity-heading">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Operations</p>
+              <h2 id="activity-heading">Recent Activity</h2>
+            </div>
+          </div>
+          <ul class="activity-list" id="activity-list"></ul>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
