@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { getPopulationDashboardData } from "./data/population.js";
 import { getHealthDashboardData } from "./data/health.js";
 import { getEducationDashboardData } from "./data/education.js";
+import { getInfrastructureDashboardData } from "./data/infrastructure.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -52,6 +53,7 @@ app.get("/api/dashboard", async (_request, response, next) => {
         categories: ["Population", "Education", "Infrastructure", "Health and Social Services"]
       },
       population: await getPopulationDashboardData(),
+      infrastructure: await getInfrastructureDashboardData(),
       health: await getHealthDashboardData(),
       education: await getEducationDashboardData(),
       alerts: [
@@ -83,8 +85,8 @@ app.get("/api/dashboard", async (_request, response, next) => {
           level: { en: "Note", de: "Notiz" },
           title: { en: "More sections coming", de: "Weitere Bereiche folgen" },
           detail: {
-            en: "Infrastructure, health and social services are prepared as placeholders.",
-            de: "Infrastruktur sowie Gesundheit und Soziales sind als Platzhalter vorbereitet."
+            en: "Population, education, infrastructure, and health indicators are available; additional infrastructure detail can be added as datasets mature.",
+            de: "BevÃ¶lkerung, Bildung, Infrastruktur und Gesundheit sind verfÃ¼gbar; weitere Infrastrukturdetails kÃ¶nnen mit validierten DatensÃ¤tzen ergÃ¤nzt werden."
           }
         }
       ]

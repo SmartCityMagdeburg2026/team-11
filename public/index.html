@@ -164,6 +164,54 @@
       </section>
 
       <!-- ================================================================
+           INFRASTRUCTURE VIEW
+      ================================================================= -->
+      <section id="infrastructure-view" hidden>
+        <section class="kpi-grid" id="infra-kpi-grid" aria-label="Infrastructure summary"></section>
+
+        <section class="visual-grid">
+          <article class="chart-card chart-card-wide">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="infra-stock-kicker">Housing stock</p>
+                <h2 id="infra-stock-title">Housing stock and residential buildings over time</h2>
+              </div>
+            </div>
+            <div class="chart-frame chart-frame-wide">
+              <canvas id="infra-stock-chart"></canvas>
+            </div>
+            <p class="source-note" id="infra-stock-source"></p>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="infra-completions-kicker">New completions</p>
+                <h2 id="infra-completions-title">Completed apartments in new buildings by year</h2>
+              </div>
+            </div>
+            <div class="chart-frame chart-frame-compact">
+              <canvas id="infra-completions-chart"></canvas>
+            </div>
+            <p class="source-note" id="infra-completions-source"></p>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="infra-vacancy-kicker">Vacancy rate</p>
+                <h2 id="infra-vacancy-title">Citywide vacancy rate over time</h2>
+              </div>
+            </div>
+            <div class="chart-frame chart-frame-compact">
+              <canvas id="infra-vacancy-chart"></canvas>
+            </div>
+            <p class="source-note" id="infra-vacancy-source"></p>
+          </article>
+        </section>
+      </section>
+
+      <!-- ================================================================
            HEALTH VIEW
       ================================================================= -->
       <section id="health-view" hidden>
