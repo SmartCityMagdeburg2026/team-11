@@ -1408,22 +1408,19 @@ function renderCapacityChart(schoolDetails, lang) {
     return (val - min) / (max - min || 1) > 0.55 ? "#ffffff" : "#712B13";
   }
 
-  // Replace canvas with a styled table
-  const canvas = document.getElementById("school-capacity-chart");
-  if (!canvas) return;
+  const root = document.getElementById("school-capacity-chart");
+  if (!root) return;
 
-  // Remove old chart instance if any
   destroyChart("school-capacity-chart");
-
-  // Replace canvas with a div for the table
-  const wrapper = document.createElement("div");
-  wrapper.id = "school-capacity-heatmap";
-  wrapper.style.cssText = "overflow-x:auto; margin-top:0.5rem;";
-  canvas.replaceWith(wrapper);
+  root.classList.add("education-heatmap");
+  const previousLegend = root.nextElementSibling;
+  if (previousLegend?.classList.contains("education-heatmap-legend")) previousLegend.remove();
+  const wrapper = root;
 
   // Build table HTML
-  let html = `
-    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+  const html = `
+    <div style="overflow-x:auto; margin-top:0.5rem;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
       <thead>
         <tr>
           <th style="text-align:left;padding:8px 10px;color:#888;font-weight:500;
@@ -1463,12 +1460,14 @@ function renderCapacityChart(schoolDetails, lang) {
             }).join("")}
           </tr>`).join("")}
       </tbody>
-    </table>`;
+      </table>
+    </div>`;
 
   wrapper.innerHTML = html;
 
   // Add colour scale legend
   const legend = document.createElement("div");
+  legend.className = "education-heatmap-legend";
   legend.style.cssText = "display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;color:#888;";
   legend.innerHTML = `
     <span>${lang === "de" ? "Niedrig" : "Low"}</span>

@@ -73,7 +73,7 @@
 
         <section class="visual-grid">
 
-          <!-- 1. Polar area: students by school type -->
+          <!-- 1. Lollipop chart: students by school type -->
           <article class="chart-card">
             <div class="card-heading">
               <div>
@@ -97,7 +97,7 @@
             <p class="source-note" id="edu-trend-source"></p>
           </article>
 
-          <!-- 2. Bubble/scatter: classrooms vs students per school -->
+          <!-- 2. Heatmap: schools, classes and students by school type -->
           <article class="chart-card chart-card-wide">
             <div class="card-heading">
               <div>
@@ -105,7 +105,7 @@
                 <h2 id="edu-capacity-title">Classrooms vs. student population</h2>
               </div>
             </div>
-            <canvas id="school-capacity-chart" height="600"></canvas>
+            <div id="school-capacity-chart" class="education-heatmap" role="img" aria-label="School capacity heatmap"></div>
             <p class="source-note" id="edu-capacity-source"></p>
           </article>
 
@@ -139,7 +139,7 @@
           </article>
 
           <!-- 6. Stacked bar: freshmen by institution + gender (latest year) -->
-          <article class="chart-card"
+          <article class="chart-card">
             <div class="card-heading">
               <div>
                 <p class="eyebrow" id="edu-uni-institution-kicker">Institutions</p>
