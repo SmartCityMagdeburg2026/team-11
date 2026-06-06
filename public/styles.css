@@ -507,6 +507,12 @@ button {
   height: 100% !important;
 }
 
+.education-heatmap {
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
 .source-note {
   margin: 0.95rem 0 0;
   padding-top: 0.85rem;

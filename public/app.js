@@ -35,6 +35,7 @@ const translations = {
     infrastructureKicker: "Infrastructure indicators",
     infrastructureIntro:
       "Review housing stock, residential buildings, completions, and vacancy indicators for Magdeburg's built environment.",
+    healthKicker: "Health and social services indicators",
     healthIntro: "Explore district-level medical service availability for doctors, dentists and pharmacies.",
     placeholders: {
       infrastructure: "Infrastructure indicators will appear when validated datasets are added.",
@@ -62,7 +63,15 @@ const translations = {
       infrastructureFloorArea: "Residential floor area",
       infrastructureFloorAreaHint: "Latest recorded floor area",
       infrastructureVacancy: "Vacancy rate",
-      infrastructureVacancyHint: "Latest annual citywide vacancy share"
+      infrastructureVacancyHint: "Latest annual citywide vacancy share",
+      healthServices: "Health service points",
+      healthServicesHint: "Doctors, dentists and pharmacies",
+      healthDoctors: "Doctors",
+      healthDoctorsHint: "Citywide count in the selected year",
+      healthDentists: "Dentists",
+      healthDentistsHint: "Citywide count in the selected year",
+      healthPharmacies: "Pharmacies",
+      healthPharmaciesHint: "Citywide count in the selected year"
     },
     charts: {
       statusKicker: "Population status",
@@ -85,6 +94,12 @@ const translations = {
       infrastructureVacancyTitle: "Citywide vacancy rate over time",
       healthKicker: "Health services",
       healthTitle: "Doctors, dentists and pharmacies by district",
+      healthTrendKicker: "Service trend",
+      healthTrendTitle: "Citywide health service availability over time",
+      healthMixKicker: "Service mix",
+      healthMixTitle: "Doctors, dentists and pharmacies in the selected year",
+      healthRankKicker: "District ranking",
+      healthRankTitle: "Top districts by total service points",
       eduTypeKicker: "Educational landscape",
       eduTypeTitle: "Students by school type",
       eduCapacityKicker: "School capacity",
@@ -118,7 +133,8 @@ const translations = {
       housingStock: "Housing stock",
       residentialBuildings: "Residential buildings",
       completions: "Completed apartments",
-      vacancyRate: "Vacancy rate"
+      vacancyRate: "Vacancy rate",
+      healthTotal: "Total service points"
     },
     map: {
       residents: "Resident population",
@@ -164,6 +180,7 @@ const translations = {
     infrastructureKicker: "Infrastrukturindikatoren",
     infrastructureIntro:
       "Analyse von Wohnungsbestand, Wohngebäuden, Fertigstellungen und Leerstand in Magdeburg.",
+    healthKicker: "Gesundheits- und Sozialindikatoren",
     healthIntro: "Zeige die Verteilung von Ärzten, Zahnärzten und Apotheken nach Stadtteil.",
     placeholders: {
       infrastructure: "Infrastrukturindikatoren erscheinen, sobald geprüfte Datensätze ergänzt wurden.",
@@ -191,7 +208,15 @@ const translations = {
       infrastructureFloorArea: "Wohnfläche",
       infrastructureFloorAreaHint: "Neueste erfasste Wohnfläche",
       infrastructureVacancy: "Leerstandsquote",
-      infrastructureVacancyHint: "Neuester stadtweiter jährlicher Anteil"
+      infrastructureVacancyHint: "Neuester stadtweiter jährlicher Anteil",
+      healthServices: "Gesundheitsangebote",
+      healthServicesHint: "Ärzte, Zahnärzte und Apotheken",
+      healthDoctors: "Ärzte",
+      healthDoctorsHint: "Stadtweiter Wert im ausgewählten Jahr",
+      healthDentists: "Zahnärzte",
+      healthDentistsHint: "Stadtweiter Wert im ausgewählten Jahr",
+      healthPharmacies: "Apotheken",
+      healthPharmaciesHint: "Stadtweiter Wert im ausgewählten Jahr"
     },
     charts: {
       statusKicker: "Bevölkerungsstand",
@@ -214,6 +239,12 @@ const translations = {
       infrastructureVacancyTitle: "Stadtweite Leerstandsquote im Zeitverlauf",
       healthKicker: "Gesundheitsdienste",
       healthTitle: "Ärzte, Zahnärzte und Apotheken nach Bezirk",
+      healthTrendKicker: "Entwicklung",
+      healthTrendTitle: "Stadtweite Gesundheitsangebote im Zeitverlauf",
+      healthMixKicker: "Angebotsmix",
+      healthMixTitle: "Ärzte, Zahnärzte und Apotheken im ausgewählten Jahr",
+      healthRankKicker: "Bezirksrangfolge",
+      healthRankTitle: "Bezirke mit den meisten Gesundheitsangeboten",
       eduTypeKicker: "Bildungslandschaft",
       eduTypeTitle: "Schüler nach Schulart",
       eduCapacityKicker: "Schulkapazität",
@@ -247,7 +278,8 @@ const translations = {
       housingStock: "Wohnungsbestand",
       residentialBuildings: "Wohngebäude",
       completions: "Fertiggestellte Wohnungen",
-      vacancyRate: "Leerstandsquote"
+      vacancyRate: "Leerstandsquote",
+      healthTotal: "Gesundheitsangebote gesamt"
     },
     map: {
       residents: "Bevölkerung mit Hauptwohnsitz",
@@ -494,6 +526,21 @@ function renderHealthYearSlider(health) {
 function healthDistrictSnapshot(health, year) {
   const districts = health.districtsByYear?.[String(year)] ?? [];
   return districts.map((d) => ({ ...d, year, total: d.total }));
+}
+
+function healthTotalsForYear(health, year) {
+  return healthDistrictSnapshot(health, year).reduce((totals, district) => {
+    totals.doctors += Number(district.doctors) || 0;
+    totals.dentists += Number(district.dentists) || 0;
+    totals.pharmacies += Number(district.pharmacies) || 0;
+    totals.total += Number(district.total) || 0;
+    totals.districts += 1;
+    return totals;
+  }, { year: Number(year), doctors: 0, dentists: 0, pharmacies: 0, total: 0, districts: 0 });
+}
+
+function healthTrendRows(health) {
+  return healthYears(health).map((year) => healthTotalsForYear(health, year));
 }
 
 function updateHealthInspector(inspector, district, rank) {
@@ -1290,7 +1337,7 @@ function renderSchoolTypeChart(schoolDetails, lang) {
     options: {
       indexAxis: "y",
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       animation: { duration: 900, easing: "easeOutQuart" },
       plugins: {
         legend: { display: false },
@@ -1478,7 +1525,7 @@ function renderCapacityChart(schoolDetails, lang) {
         ? "· Farbe zeigt relativen Wert je Spalte" 
         : "· Colour shows relative value within each column"}
     </span>`;
-  wrapper.after(legend);
+  wrapper.append(legend);
 }
 
 function renderSchoolTrendChart(schoolDetails) {
@@ -1490,7 +1537,7 @@ function renderSchoolTrendChart(schoolDetails) {
       datasets: [{ label: state.language === "de" ? "Schüler gesamt" : "Total students", data: cityTrend.map((r) => r.students), backgroundColor: "rgba(196,77,54,0.30)", borderColor: css("--brand-orange"), borderWidth: 2, borderRadius: 3 }]
     },
     options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
+      responsive: true, maintainAspectRatio: false, animation: { duration: 900 },
       plugins: { legend: { display: false }, tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => ` ${formatNumber(ctx.parsed.y)} students` } } },
       scales: {
         x: { grid: { display: false }, ticks: { color: css("--muted"), maxRotation: 0, autoSkip: true, maxTicksLimit: 12 } },
@@ -1554,7 +1601,7 @@ function renderUniversityTrendChart(universities) {
       ]
     },
     options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900, easing: "easeOutQuart" },
+      responsive: true, maintainAspectRatio: false, animation: { duration: 900, easing: "easeOutQuart" },
       interaction: { mode: "index", intersect: false },
       plugins: {
         legend: { labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700 } } },
@@ -1584,7 +1631,7 @@ function renderInstitutionChart(universities) {
       ]
     },
     options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
+      responsive: true, maintainAspectRatio: false, animation: { duration: 900 },
       plugins: {
         legend: { labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700 } } },
         tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => ` ${ctx.dataset.label}: ${formatNumber(ctx.parsed.y)}` } }
@@ -1648,7 +1695,7 @@ function renderStudyProgramChart(studyPrograms, lang) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       animation: { duration: 900 },
       plugins: {
         legend: {
@@ -1706,6 +1753,174 @@ function renderEducationView() {
 // Health view
 // ---------------------------------------------------------------------------
 
+function renderHealthKpis(health, selectedYear) {
+  const labels = t().kpis;
+  const totals = healthTotalsForYear(health, selectedYear);
+  const grid = document.getElementById("health-kpi-grid");
+  if (!grid) return;
+
+  const items = [
+    { label: labels.healthServices, value: formatNumber(totals.total), hint: `${labels.healthServicesHint} (${selectedYear})` },
+    { label: labels.healthDoctors, value: formatNumber(totals.doctors), hint: `${labels.healthDoctorsHint} (${selectedYear})` },
+    { label: labels.healthDentists, value: formatNumber(totals.dentists), hint: `${labels.healthDentistsHint} (${selectedYear})` },
+    { label: labels.healthPharmacies, value: formatNumber(totals.pharmacies), hint: `${labels.healthPharmaciesHint} (${selectedYear})` }
+  ];
+
+  grid.innerHTML = items.map((item) => `
+    <article class="kpi-card">
+      <span>${item.label}</span>
+      <strong>${item.value}</strong>
+      <p>${item.hint}</p>
+    </article>
+  `).join("");
+}
+
+function renderHealthTrendChart(health) {
+  const rows = healthTrendRows(health);
+  const services = t().health.services;
+
+  createChart("health-trend-chart", {
+    type: "line",
+    data: {
+      labels: rows.map((row) => String(row.year)),
+      datasets: [
+        {
+          label: t().series.healthTotal,
+          data: rows.map((row) => row.total),
+          borderColor: css("--brand-orange"),
+          backgroundColor: "rgba(196,77,54,0.11)",
+          borderWidth: 3,
+          tension: 0.32,
+          fill: true
+        },
+        {
+          label: services.doctors,
+          data: rows.map((row) => row.doctors),
+          borderColor: css("--brand-brown"),
+          backgroundColor: "transparent",
+          borderWidth: 2,
+          tension: 0.32
+        },
+        {
+          label: services.dentists,
+          data: rows.map((row) => row.dentists),
+          borderColor: css("--signal-green"),
+          backgroundColor: "transparent",
+          borderWidth: 2,
+          tension: 0.32
+        },
+        {
+          label: services.pharmacies,
+          data: rows.map((row) => row.pharmacies),
+          borderColor: css("--signal-blue"),
+          backgroundColor: "transparent",
+          borderWidth: 2,
+          tension: 0.32
+        }
+      ]
+    },
+    options: chartOptions()
+  });
+}
+
+function renderHealthMixChart(health, selectedYear) {
+  const totals = healthTotalsForYear(health, selectedYear);
+  const services = t().health.services;
+
+  createChart("health-mix-chart", {
+    type: "doughnut",
+    data: {
+      labels: [services.doctors, services.dentists, services.pharmacies],
+      datasets: [
+        {
+          data: [totals.doctors, totals.dentists, totals.pharmacies],
+          backgroundColor: [css("--brand-brown"), css("--signal-green"), css("--brand-orange")],
+          borderWidth: 0,
+          hoverOffset: 10
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: "62%",
+      animation: { duration: 900, easing: "easeOutQuart" },
+      plugins: {
+        legend: {
+          position: "top",
+          labels: {
+            boxWidth: 12,
+            boxHeight: 12,
+            padding: 18,
+            usePointStyle: true,
+            color: css("--ink"),
+            font: { size: 13, weight: 750 }
+          }
+        },
+        tooltip: {
+          backgroundColor: "rgba(84,45,36,0.94)",
+          padding: 12,
+          callbacks: {
+            label: (ctx) => `${ctx.label}: ${formatNumber(ctx.parsed)}`
+          }
+        }
+      }
+    }
+  });
+}
+
+function renderHealthRankChart(rankedDistricts) {
+  const top = rankedDistricts.slice(0, 8).reverse();
+  const shortName = (name) => name.length > 24 ? `${name.slice(0, 22)}...` : name;
+
+  createChart("health-rank-chart", {
+    type: "bar",
+    data: {
+      labels: top.map((district) => shortName(district.name)),
+      datasets: [
+        {
+          label: t().series.healthTotal,
+          data: top.map((district) => district.total),
+          backgroundColor: "rgba(196,77,54,0.30)",
+          borderColor: css("--brand-orange"),
+          borderWidth: 2,
+          borderRadius: 8
+        }
+      ]
+    },
+    options: {
+      ...chartOptions(),
+      indexAxis: "y",
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "rgba(84,45,36,0.94)",
+          padding: 12,
+          callbacks: {
+            label: (ctx) => `${top[ctx.dataIndex]?.name ?? ctx.label}: ${formatNumber(ctx.parsed.x)}`
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: "#eeeeee" },
+          ticks: { color: css("--muted"), callback: (value) => formatNumber(value) }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: css("--ink"), font: { size: 12, weight: 700 } }
+        }
+      }
+    }
+  });
+}
+
+function renderHealthSources() {
+  ["health-source", "health-trend-source", "health-mix-source", "health-rank-source"].forEach((id) => {
+    setSource(id, ["Gesundheit und Soziales"]);
+  });
+}
+
 function renderHealthView() {
   const health = state.data.health;
   const selectedYear = state.selectedHealthYear ?? health.latestYear;
@@ -1713,11 +1928,15 @@ function renderHealthView() {
   const rankedDistricts = [...districts].sort((a, b) => b.total - a.total);
   state.healthRankedDistricts = rankedDistricts;
   if (state.selectedHealthRank >= rankedDistricts.length) state.selectedHealthRank = 0;
+  renderHealthKpis(health, selectedYear);
   renderHealthYearSlider(health);
   renderMap("health-map", "health-inspector", districts, { ranked: true, onInspect: updateHealthInspector, initialIndex: state.selectedHealthRank });
   syncHealthRankControls(state.selectedHealthRank + 1);
   document.getElementById("health-year-output").textContent = selectedYear;
-  setSource("health-source", ["Gesundheit und Soziales"]);
+  renderHealthTrendChart(health);
+  renderHealthMixChart(health, selectedYear);
+  renderHealthRankChart(rankedDistricts);
+  renderHealthSources();
 }
 
 // ---------------------------------------------------------------------------
@@ -1806,6 +2025,9 @@ function updateStaticText() {
     ["migration-chart", "migrationKicker", "migrationTitle"],
     ["population-map", "populationKicker", "populationTitle"],
     ["health-map", "healthKicker", "healthTitle"],
+    ["health-trend-chart", "healthTrendKicker", "healthTrendTitle"],
+    ["health-mix-chart", "healthMixKicker", "healthMixTitle"],
+    ["health-rank-chart", "healthRankKicker", "healthRankTitle"],
     ["infra-stock-chart", "infrastructureStockKicker", "infrastructureStockTitle"],
     ["infra-completions-chart", "infrastructureCompletionsKicker", "infrastructureCompletionsTitle"],
     ["infra-vacancy-chart", "infrastructureVacancyKicker", "infrastructureVacancyTitle"],
@@ -1817,7 +2039,8 @@ function updateStaticText() {
     ["education-map", "eduMapKicker", "eduMapTitle"],
     ["school-trend-chart", "eduTrendKicker", "eduTrendTitle"],
     ["university-trend-chart", "eduUniTrendKicker", "eduUniTrendTitle"],
-    ["institution-breakdown-chart", "eduUniInstitutionKicker", "eduUniInstitutionTitle"]
+    ["institution-breakdown-chart", "eduUniInstitutionKicker", "eduUniInstitutionTitle"],
+    ["study-program-chart", "eduProgramKicker", "eduProgramTitle"]
   ];
 
   for (const [id, kicker, title] of sectionCopy) {
