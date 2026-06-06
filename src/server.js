@@ -3,6 +3,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { getPopulationDashboardData } from "./data/population.js";
+import { getHealthDashboardData } from "./data/health.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -50,6 +51,7 @@ app.get("/api/dashboard", async (_request, response, next) => {
         categories: ["Population", "Education", "Infrastructure", "Health and Social Services"]
       },
       population: await getPopulationDashboardData(),
+      health: await getHealthDashboardData(),
       alerts: [
         {
           level: { en: "Data", de: "Daten" },

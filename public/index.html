@@ -63,6 +63,32 @@
         </div>
       </section>
 
+      <section id="health-view" hidden>
+        <article class="chart-card chart-card-wide map-card">
+          <div class="card-heading">
+            <div>
+              <p class="eyebrow" id="health-map-kicker">Health services</p>
+              <h2 id="health-map-title">Doctors, dentists and pharmacies by district</h2>
+            </div>
+            <output id="health-year-output"></output>
+          </div>
+          <label class="year-slider map-year-slider">
+            <span id="health-slider-label">Year</span>
+            <input id="health-year-slider" type="range" min="0" max="0" step="1" value="0">
+          </label>
+          <div class="rank-actions" id="health-rank-actions">
+            <button id="health-rank-prev" type="button">← Previous</button>
+            <span id="health-rank-position">Rank 1 / 0</span>
+            <button id="health-rank-next" type="button">Next →</button>
+          </div>
+          <div class="map-layout">
+            <div class="city-map" id="health-map" aria-label="Magdeburg health district map"></div>
+            <aside class="map-inspector" id="health-inspector"></aside>
+          </div>
+          <p class="source-note" id="health-source"></p>
+        </article>
+      </section>
+
       <section class="placeholder-view" id="placeholder-view" hidden>
         <p class="eyebrow" id="placeholder-kicker">Coming soon</p>
         <h2 id="placeholder-title">This topic is ready for future data.</h2>

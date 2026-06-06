@@ -5,6 +5,9 @@ const state = {
   selectedPopulationYear: null,
   selectedAgeQuoteIndex: 0,
   selectedAgeIndex: 0,
+  selectedHealthYear: null,
+  selectedHealthRank: 0,
+  healthRankedDistricts: [],
   charts: {},
   maps: {},
   boundary: null,
@@ -24,10 +27,19 @@ const translations = {
     introTitle: "MagdePulse",
     introCopy:
       "Explore Magdeburg's population rhythm through resident movement, district patterns, life events, and age structure.",
+    healthIntro: "Explore district-level medical service availability for doctors, dentists and pharmacies.",
     placeholders: {
       education: "Education visualizations are ready for future datasets.",
       infrastructure: "Infrastructure visualizations are ready for future datasets.",
       health: "Health and social services visualizations are ready for future datasets."
+    },
+    health: {
+      service: "Service",
+      services: {
+        doctors: "Doctors",
+        dentists: "Dentists",
+        pharmacies: "Pharmacies"
+      }
     },
     comingSoon: "Coming soon",
     readyCopy: "The dashboard framework is prepared. Add datasets to activate this section.",
@@ -51,7 +63,9 @@ const translations = {
       ageKicker: "Age structure",
       ageTitle: "Youth and elderly quotas",
       ageMigrationKicker: "Age-group migration",
-      ageMigrationTitle: "Moving into and out of Magdeburg by age"
+      ageMigrationTitle: "Moving into and out of Magdeburg by age",
+      healthKicker: "Health services",
+      healthTitle: "Doctors, dentists and pharmacies by district"
     },
     series: {
       arrivals: "Arrivals",
@@ -99,10 +113,19 @@ const translations = {
     introTitle: "MagdePulse",
     introCopy:
       "Entdecke Magdeburgs Bevölkerungsrhythmus anhand von Wanderung, Bezirksmustern, Lebensereignissen und Altersstruktur.",
+    healthIntro: "Zeige die Verteilung von Ärzten, Zahnärzten und Apotheken nach Stadtteil.",
     placeholders: {
       education: "Visualisierungen zur Bildung sind für zukünftige Datensätze vorbereitet.",
       infrastructure: "Visualisierungen zur Infrastruktur sind für zukünftige Datensätze vorbereitet.",
       health: "Visualisierungen zu Gesundheit und Sozialem sind für zukünftige Datensätze vorbereitet."
+    },
+    health: {
+      service: "Dienstleistung",
+      services: {
+        doctors: "Ärzte",
+        dentists: "Zahnärzte",
+        pharmacies: "Apotheken"
+      }
     },
     comingSoon: "Demnächst",
     readyCopy: "Das Dashboard-Framework ist vorbereitet. Neue Datensätze aktivieren diesen Bereich.",
@@ -126,7 +149,9 @@ const translations = {
       ageKicker: "Altersstruktur",
       ageTitle: "Jugend- und Altenquote",
       ageMigrationKicker: "Altersgruppen-Migration",
-      ageMigrationTitle: "Zuzug und Wegzug nach Alter"
+      ageMigrationTitle: "Zuzug und Wegzug nach Alter",
+      healthKicker: "Gesundheitsdienste",
+      healthTitle: "Ärzte, Zahnärzte und Apotheken nach Bezirk"
     },
     series: {
       arrivals: "Zuzüge",
@@ -294,6 +319,74 @@ async function loadDistrictCoordinates() {
   return new Map(cache.coordinates.map((item) => [item.name, item]));
 }
 
+function normalizeLabel(value) {
+  return String(value || "").toLowerCase().trim().replace(/\s+/g, " ");
+}
+
+function findDistrictCoordinate(name) {
+  if (!name) {
+    return null;
+  }
+
+  const exact = state.districtCoordinates.get(name);
+  if (exact) {
+    return exact;
+  }
+
+  const normalizedName = normalizeLabel(name);
+  const candidates = [...state.districtCoordinates.values()]
+    .map((item) => {
+      const nameValue = normalizeLabel(item.name);
+      const displayValue = normalizeLabel(item.displayName);
+      const variantValue = normalizeLabel(item.matchedVariant || "");
+      let score = 0;
+
+      if (nameValue === normalizedName) score += 200;
+      if (displayValue === normalizedName) score += 150;
+      if (variantValue === normalizedName) score += 120;
+      if (displayValue.includes(normalizedName)) score += 60;
+      if (variantValue.includes(normalizedName)) score += 40;
+      if (nameValue.includes(normalizedName)) score += 30;
+      if (item.type === "administrative") score += 15;
+      if (item.importance) score += Math.round(item.importance * 20);
+
+      return { item, score };
+    })
+    .filter((candidate) => candidate.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  return candidates[0]?.item ?? null;
+}
+
+function syncHealthRankControls(rank) {
+  const position = document.getElementById("health-rank-position");
+  const previous = document.getElementById("health-rank-prev");
+  const next = document.getElementById("health-rank-next");
+  const total = state.healthRankedDistricts.length;
+
+  if (!position || !previous || !next) {
+    return;
+  }
+
+  position.textContent = total ? `${t().map.rank} ${rank} / ${total}` : "";
+  previous.disabled = rank <= 1;
+  next.disabled = rank >= total;
+}
+
+function selectHealthRank(districts, rankIndex) {
+  const index = Math.max(0, Math.min(rankIndex, districts.length - 1));
+  const district = districts[index];
+
+  if (!district) {
+    return;
+  }
+
+  state.selectedHealthRank = index;
+  const inspector = document.getElementById("health-inspector");
+  updateHealthInspector(inspector, district, index + 1);
+  syncHealthRankControls(index + 1);
+}
+
 function populationYears(population) {
   return population.population.cityPopulation.map((row) => row.year);
 }
@@ -316,6 +409,54 @@ function districtSnapshot(population, year) {
       };
     })
     .filter(Boolean);
+}
+
+function healthYears(health) {
+  return health.years;
+}
+
+function renderHealthYearSlider(health) {
+  const years = healthYears(health);
+  const slider = document.getElementById("health-year-slider");
+
+  if (!state.selectedHealthYear || !years.includes(Number(state.selectedHealthYear))) {
+    state.selectedHealthYear = years.at(-1);
+  }
+
+  slider.min = "0";
+  slider.max = String(years.length - 1);
+  slider.value = String(years.indexOf(Number(state.selectedHealthYear)));
+  setText("#health-slider-label", t().age.year);
+}
+
+function healthDistrictSnapshot(health, year) {
+  const yearKey = String(year);
+  const districts = health.districtsByYear?.[yearKey] ?? [];
+
+  return districts.map((district) => ({
+    ...district,
+    year,
+    total: district.total
+  }));
+}
+
+function updateHealthInspector(inspector, district, rank) {
+  inspector.innerHTML = `
+    <p class="eyebrow">${rank ? `${t().map.rank} ${rank}` : t().map.hover}</p>
+    <h3>${district.name}</h3>
+    <strong>${formatNumber(district.total)}</strong>
+    <span>${t().age.year}: ${district.year}</span>
+    <div class="health-counts">
+      <span>${t().health.services.doctors}: ${formatNumber(district.doctors)}</span>
+      <span>${t().health.services.dentists}: ${formatNumber(district.dentists)}</span>
+      <span>${t().health.services.pharmacies}: ${formatNumber(district.pharmacies)}</span>
+    </div>
+  `;
+
+  if (rank) {
+    syncHealthRankControls(rank);
+    state.selectedHealthRank = rank - 1;
+  }
 }
 
 function renderKpis(summary) {
@@ -578,9 +719,9 @@ function addBoundaryMask(map, feature) {
   return boundaryLayer;
 }
 
-function renderMap(containerId, inspectorId, districts, { ranked = false } = {}) {
+function renderMap(containerId, inspectorId, districts, { ranked = false, onInspect: onInspectCallback = null, initialIndex = 0 } = {}) {
   const inspector = document.getElementById(inspectorId);
-  const max = Math.max(...districts.map((district) => district.total));
+  const max = Math.max(1, ...districts.map((district) => district.total));
   const rankedDistricts = [...districts].sort((a, b) => b.total - a.total);
   const rankByName = new Map(rankedDistricts.map((district, index) => [district.name, index + 1]));
   const topNames = new Set(rankedDistricts.slice(0, 12).map((district) => district.name));
@@ -595,7 +736,7 @@ function renderMap(containerId, inspectorId, districts, { ranked = false } = {})
   `;
 
   districts.forEach((district, index) => {
-    const coordinate = state.districtCoordinates.get(district.name);
+    const coordinate = findDistrictCoordinate(district.name);
 
     if (!coordinate) {
       return;
@@ -613,7 +754,13 @@ function renderMap(containerId, inspectorId, districts, { ranked = false } = {})
       dashArray: coordinate.inferred ? "4 3" : null
     }).addTo(map);
     const rank = rankByName.get(district.name);
-    const onInspect = () => updateInspector(inspector, district, ranked ? rank : null);
+    const onInspect = () => {
+      if (typeof onInspectCallback === "function") {
+        onInspectCallback(inspector, district, ranked ? rank : null);
+      } else {
+        updateInspector(inspector, district, ranked ? rank : null);
+      }
+    };
     marker.bindTooltip(
       `${district.name}: ${formatNumber(district.total)}${coordinate.inferred ? " · inferred anchor" : ""}`,
       {
@@ -628,7 +775,18 @@ function renderMap(containerId, inspectorId, districts, { ranked = false } = {})
   map.fitBounds(bounds, { padding: [16, 16] });
   map.setMaxBounds(bounds.pad(0.08));
   setTimeout(() => map.invalidateSize(), 0);
-  updateInspector(inspector, rankedDistricts[0], ranked ? 1 : null);
+
+  const safeIndex = Math.max(0, Math.min(initialIndex, rankedDistricts.length - 1));
+  const initialDistrict = rankedDistricts[safeIndex];
+  const initialRank = ranked ? safeIndex + 1 : null;
+
+  if (initialDistrict) {
+    if (typeof onInspectCallback === "function") {
+      onInspectCallback(inspector, initialDistrict, initialRank);
+    } else {
+      updateInspector(inspector, initialDistrict, initialRank);
+    }
+  }
 }
 
 function renderAgeStructure(population) {
@@ -746,6 +904,7 @@ function renderSources() {
   setSource("vital-source", ["Geburten"]);
   setSource("age-source", ["Jugend- und Altenquote"]);
   setSource("age-migration-source", ["Zuzüge nach", "Wegzüge aus"]);
+  setSource("health-source", ["Gesundheit und Soziales"]);
 }
 
 function renderPopulationView() {
@@ -762,6 +921,29 @@ function renderPopulationView() {
   renderAgeSlider(population);
   renderAgeFlow(population);
   renderSources();
+}
+
+function renderHealthView() {
+  const health = state.data.health;
+  const selectedYear = state.selectedHealthYear ?? health.latestYear;
+  const districts = healthDistrictSnapshot(health, selectedYear);
+  const rankedDistricts = [...districts].sort((a, b) => b.total - a.total);
+
+  state.healthRankedDistricts = rankedDistricts;
+  if (state.selectedHealthRank >= rankedDistricts.length) {
+    state.selectedHealthRank = 0;
+  }
+
+  renderHealthYearSlider(health);
+  renderMap("health-map", "health-inspector", districts, {
+    ranked: true,
+    onInspect: updateHealthInspector,
+    initialIndex: state.selectedHealthRank
+  });
+
+  syncHealthRankControls(state.selectedHealthRank + 1);
+  document.getElementById("health-year-output").textContent = selectedYear;
+  setSource("health-source", ["Gesundheit und Soziales"]);
 }
 
 function renderAlerts(alerts) {
@@ -785,9 +967,9 @@ function updateStaticText() {
   document.title = "MagdePulse";
   document.querySelector(".brand strong").textContent = "MagdePulse";
   document.querySelector(".brand em").textContent = copy.tagline;
-  setText("#topic-kicker", state.topic === "population" ? copy.introKicker : copy.comingSoon);
+  setText("#topic-kicker", state.topic === "population" ? copy.introKicker : state.topic === "health" ? copy.healthKicker : copy.comingSoon);
   setText("#page-title", copy.introTitle);
-  setText("#page-copy", state.topic === "population" ? copy.introCopy : copy.placeholders[state.topic]);
+  setText("#page-copy", state.topic === "population" ? copy.introCopy : state.topic === "health" ? copy.healthIntro : copy.placeholders[state.topic]);
   setText("#placeholder-kicker", copy.comingSoon);
   setText("#placeholder-title", copy.placeholders[state.topic] ?? copy.placeholders.education);
   setText("#placeholder-copy", copy.readyCopy);
@@ -802,6 +984,7 @@ function updateStaticText() {
   const sectionCopy = [
     ["migration-chart", "migrationKicker", "migrationTitle"],
     ["population-map", "populationKicker", "populationTitle"],
+    ["health-map", "healthKicker", "healthTitle"],
     ["vital-chart", "vitalKicker", "vitalTitle"],
     ["age-orbits", "ageKicker", "ageTitle"],
     ["age-flow-grid", "ageMigrationKicker", "ageMigrationTitle"]
@@ -813,16 +996,27 @@ function updateStaticText() {
     card.querySelector(".eyebrow").textContent = copy.charts[kicker];
     card.querySelector("h2").textContent = copy.charts[title];
   }
+
 }
 
 function renderTopic() {
   const isPopulation = state.topic === "population";
+  const isHealth = state.topic === "health";
   document.getElementById("population-view").hidden = !isPopulation;
-  document.getElementById("placeholder-view").hidden = isPopulation;
+  document.getElementById("health-view").hidden = !isHealth;
+  document.getElementById("placeholder-view").hidden = isPopulation || isHealth;
   updateStaticText();
 
-  if (isPopulation && state.data) {
+  if (!state.data) {
+    return;
+  }
+
+  if (isPopulation) {
     renderPopulationView();
+  }
+
+  if (isHealth) {
+    renderHealthView();
   }
 }
 
@@ -864,6 +1058,22 @@ function bindEvents() {
     renderAgeFlow(state.data.population);
   });
 
+  document.getElementById("health-year-slider").addEventListener("input", (event) => {
+    const health = state.data.health;
+    const years = health.years;
+    state.selectedHealthYear = years[Number(event.target.value)];
+    state.selectedHealthRank = 0;
+    renderHealthView();
+  });
+
+  document.getElementById("health-rank-prev").addEventListener("click", () => {
+    selectHealthRank(state.healthRankedDistricts, state.selectedHealthRank - 1);
+  });
+
+  document.getElementById("health-rank-next").addEventListener("click", () => {
+    selectHealthRank(state.healthRankedDistricts, state.selectedHealthRank + 1);
+  });
+
   const alertsPanel = document.getElementById("alerts-panel");
   const alertsButton = document.getElementById("alerts-button");
   alertsButton.addEventListener("click", () => {
@@ -889,6 +1099,7 @@ async function loadDashboard() {
   state.selectedPopulationYear = populationYears(state.data.population).at(-1);
   state.selectedAgeQuoteIndex = state.data.population.ageQuote.length - 1;
   state.selectedAgeIndex = state.data.population.ageMigration.length - 1;
+  state.selectedHealthYear = state.data.health.latestYear;
   renderAlerts(state.data.alerts);
   renderTopic();
 }

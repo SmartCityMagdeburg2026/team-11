@@ -33,5 +33,10 @@ export const dataSources = [
     dataset: "Zuzüge nach Magdeburg nach Altersgruppen",
     source: "Statistisches Landesamt Sachsen-Anhalt",
     url: "https://statistik.magdeburg.de/KISS-MD/"
+  },
+  {
+    dataset: "Daten_Gesundheit und Soziales",
+    source: "Einwohnermelderegister",
+    url: "https://statistik.magdeburg.de/KISS-MD/"
   }
 ];
