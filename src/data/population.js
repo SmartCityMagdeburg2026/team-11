@@ -25,6 +25,33 @@ const monthOrder = new Map([
 
 const ageLabels = ["Under 18", "18-25", "25-30", "30-50", "50-65", "65+"];
 
+const officialPopulationStatusRows = [
+  { year: 2001, totalPopulation: 229714, internationalPopulation: 6668 },
+  { year: 2002, totalPopulation: 227990, internationalPopulation: 7249 },
+  { year: 2003, totalPopulation: 227129, internationalPopulation: 7967 },
+  { year: 2004, totalPopulation: 226610, internationalPopulation: 8103 },
+  { year: 2005, totalPopulation: 228775, internationalPopulation: 7887 },
+  { year: 2006, totalPopulation: 229691, internationalPopulation: 7985 },
+  { year: 2007, totalPopulation: 229631, internationalPopulation: 8004 },
+  { year: 2008, totalPopulation: 229233, internationalPopulation: 7708 },
+  { year: 2009, totalPopulation: 229794, internationalPopulation: 7923 },
+  { year: 2010, totalPopulation: 230979, internationalPopulation: 8162 },
+  { year: 2011, totalPopulation: 231620, internationalPopulation: 8426 },
+  { year: 2012, totalPopulation: 232660, internationalPopulation: 9279 },
+  { year: 2013, totalPopulation: 233669, internationalPopulation: 10199 },
+  { year: 2014, totalPopulation: 234858, internationalPopulation: 11449 },
+  { year: 2015, totalPopulation: 238212, internationalPopulation: 14808 },
+  { year: 2016, totalPopulation: 241134, internationalPopulation: 18735 },
+  { year: 2017, totalPopulation: 241769, internationalPopulation: 20740 },
+  { year: 2018, totalPopulation: 242170, internationalPopulation: 22386 },
+  { year: 2019, totalPopulation: 240947, internationalPopulation: 23338 },
+  { year: 2020, totalPopulation: 239408, internationalPopulation: 23794 },
+  { year: 2021, totalPopulation: 239970, internationalPopulation: 26290 },
+  { year: 2022, totalPopulation: 242753, internationalPopulation: 31779 },
+  { year: 2023, totalPopulation: 243419, internationalPopulation: 34303 },
+  { year: 2024, totalPopulation: 245521, internationalPopulation: 37454 }
+];
+
 let cachedPopulationData;
 
 function asNumber(value) {
@@ -92,7 +119,6 @@ async function getPopulationFiles() {
   return {
     districtGender: pick((name) => name.startsWith("Haupt")),
     vitalEvents: pick((name) => name.startsWith("Geburten")),
-    migration: pick((name) => name.startsWith("Zuz") && name.includes(",")),
     ageQuote: pick((name) => name.startsWith("Jugend")),
     ageIncoming: pick((name) => name.startsWith("Zuz") && !name.includes(",")),
     ageOutgoing: pick((name) => name.startsWith("Weg"))
@@ -168,22 +194,6 @@ function parsePopulationRows(rows) {
   return { cityPopulation, districtPopulation, topDistricts };
 }
 
-function parseMigrationRows(rows) {
-  const annual = groupByYear(
-    rows,
-    (year) => ({ year, arrivals: 0, departures: 0, net: 0, internalMoves: 0, months: 0 }),
-    (item, row) => {
-      item.arrivals += asNumber(row[4]);
-      item.departures += asNumber(row[8]);
-      item.net += asNumber(row[12]);
-      item.internalMoves += asNumber(row[13]);
-      item.months += 1;
-    }
-  );
-
-  return { annual };
-}
-
 function parseVitalRows(rows) {
   const annual = groupByYear(
     rows,
@@ -202,6 +212,21 @@ function parseVitalRows(rows) {
   return { annual };
 }
 
+function parsePopulationStatusRows() {
+  return officialPopulationStatusRows.map((row) => {
+    const internationalShare = row.totalPopulation
+      ? round((row.internationalPopulation / row.totalPopulation) * 100, 2)
+      : 0;
+
+    return {
+      ...row,
+      germanPopulation: row.totalPopulation - row.internationalPopulation,
+      internationalShare,
+      months: 12
+    };
+  });
+}
+
 function parseAgeQuoteRows(rows) {
   return rows
     .map((row) => ({
@@ -211,6 +236,45 @@ function parseAgeQuoteRows(rows) {
     }))
     .filter((row) => Number.isFinite(row.year))
     .sort((a, b) => a.year - b.year);
+}
+
+function totalAgeGroupMoves(row) {
+  const total = asNumber(row[7]);
+
+  if (total > 0) {
+    return total;
+  }
+
+  return ageLabels.reduce((sum, _label, index) => sum + asNumber(row[index + 1]), 0);
+}
+
+function parseMigrationRows(incomingRows, outgoingRows) {
+  const outgoingByYear = new Map(outgoingRows.map((row) => [Number(row[0]), row]));
+
+  const annual = incomingRows
+    .map((incomingRow) => {
+      const year = Number(incomingRow[0]);
+      const outgoingRow = outgoingByYear.get(year);
+
+      if (!Number.isFinite(year) || !outgoingRow) {
+        return null;
+      }
+
+      const arrivals = totalAgeGroupMoves(incomingRow);
+      const departures = totalAgeGroupMoves(outgoingRow);
+
+      return {
+        year,
+        arrivals,
+        departures,
+        net: arrivals - departures,
+        months: 12
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.year - b.year);
+
+  return { annual };
 }
 
 function parseAgeMigrationRows(incomingRows, outgoingRows) {
@@ -271,10 +335,9 @@ export async function getPopulationDashboardData() {
   }
 
   const files = await getPopulationFiles();
-  const [districtRows, migrationRows, vitalRows, ageQuoteRows, ageIncomingRows, ageOutgoingRows] =
+  const [districtRows, vitalRows, ageQuoteRows, ageIncomingRows, ageOutgoingRows] =
     await Promise.all([
       readSheetRows(files.districtGender),
-      readSheetRows(files.migration),
       readSheetRows(files.vitalEvents),
       readSheetRows(files.ageQuote),
       readSheetRows(files.ageIncoming),
@@ -282,8 +345,9 @@ export async function getPopulationDashboardData() {
     ]);
 
   const population = parsePopulationRows(districtRows);
-  const migration = parseMigrationRows(migrationRows);
+  const populationStatus = parsePopulationStatusRows();
   const vital = parseVitalRows(vitalRows);
+  const migration = parseMigrationRows(ageIncomingRows, ageOutgoingRows);
   const ageQuote = parseAgeQuoteRows(ageQuoteRows);
   const ageMigration = parseAgeMigrationRows(ageIncomingRows, ageOutgoingRows);
 
@@ -296,6 +360,7 @@ export async function getPopulationDashboardData() {
       ageQuote
     }),
     population,
+    populationStatus,
     migration,
     vital,
     ageQuote,
