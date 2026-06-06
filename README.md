@@ -1,5 +1,9 @@
 # MagdePulse
 
+## Link to delopyed dashboard
+
+```https://team-11.2ahjkglgoo01.eu-de.codeengine.appdomain.cloud```
+
 Node.js dashboard for exploring Magdeburg population data.
 
 ## Run Locally
