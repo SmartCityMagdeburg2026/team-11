@@ -38,5 +38,25 @@ export const dataSources = [
     dataset: "Daten_Gesundheit und Soziales",
     source: "Einwohnermelderegister",
     url: "https://statistik.magdeburg.de/KISS-MD/"
+  },
+  {
+    dataset: "Schulen in der Stadt Magdeburg nach Stadtteilen",
+    source: "Statistisches Landesamt Sachsen-Anhalt",
+    url: "https://statistik.magdeburg.de/KISS-MD/"
+  },
+  {
+    dataset: "Schulen in der Stadt Magdeburg",
+    source: "Statistisches Landesamt Sachsen-Anhalt",
+    url: "https://statistik.magdeburg.de/KISS-MD/"
+  },
+  {
+    dataset: "Anzahl der Studierenden im 1. Fachsemester",
+    source: "Statistisches Landesamt Sachsen-Anhalt",
+    url: "https://statistik.magdeburg.de/KISS-MD/"
+  },
+  {
+    dataset: "Studierende nach Studienform und Studiengang im Wintersemester",
+    source: "Statistisches Landesamt Sachsen-Anhalt",
+    url: "https://statistik.magdeburg.de/KISS-MD/"
   }
 ];

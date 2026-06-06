@@ -4,6 +4,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { getPopulationDashboardData } from "./data/population.js";
 import { getHealthDashboardData } from "./data/health.js";
+import { getEducationDashboardData } from "./data/education.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -52,6 +53,7 @@ app.get("/api/dashboard", async (_request, response, next) => {
       },
       population: await getPopulationDashboardData(),
       health: await getHealthDashboardData(),
+      education: await getEducationDashboardData(),
       alerts: [
         {
           level: { en: "Data", de: "Daten" },
@@ -70,11 +72,19 @@ app.get("/api/dashboard", async (_request, response, next) => {
           }
         },
         {
+          level: { en: "Insight", de: "Hinweis" },
+          title: { en: "Education Data Scope", de: "Umfang der Bildungsdaten" },
+          detail: {
+            en: "School district distributions reflect the 2023 academic year. University trends track 1st-semester students.",
+            de: "Die Schulverteilung nach Stadtteilen spiegelt das Schuljahr 2023 wider. Universitätstrends erfassen Studierende im 1. Fachsemester."
+          }
+        },
+        {
           level: { en: "Note", de: "Notiz" },
           title: { en: "More sections coming", de: "Weitere Bereiche folgen" },
           detail: {
-            en: "Education, infrastructure, health and social services are prepared as placeholders.",
-            de: "Bildung, Infrastruktur sowie Gesundheit und Soziales sind als Platzhalter vorbereitet."
+            en: "Infrastructure, health and social services are prepared as placeholders.",
+            de: "Infrastruktur sowie Gesundheit und Soziales sind als Platzhalter vorbereitet."
           }
         }
       ]
@@ -83,6 +93,22 @@ app.get("/api/dashboard", async (_request, response, next) => {
     next(error);
   }
 });
+
+// ---------------------------------------------------------------------------
+// Separate lightweight endpoint so education tab can lazy-load if needed
+// ---------------------------------------------------------------------------
+
+app.get("/api/education", async (_req, res, next) => {
+  try {
+    res.json(await getEducationDashboardData());
+  } catch (error) {
+    next(error);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Static fallback
+// ---------------------------------------------------------------------------
 
 app.get("/", (_request, response) => {
   response.sendFile(path.join(publicDir, "index.html"));
