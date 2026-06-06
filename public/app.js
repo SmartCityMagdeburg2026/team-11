@@ -255,7 +255,7 @@ function chartOptions({ percent = false } = {}) {
         }
       },
       tooltip: {
-        backgroundColor: "rgba(81, 14, 0, 0.94)",
+        backgroundColor: "rgba(84, 45, 36, 0.94)",
         padding: 12,
         callbacks: {
           label: (context) => `${context.dataset.label}: ${formatNumber(context.parsed.y)}${percent ? "%" : ""}`
@@ -268,7 +268,7 @@ function chartOptions({ percent = false } = {}) {
         ticks: { color: css("--muted"), maxRotation: 0, autoSkip: true, maxTicksLimit: 10 }
       },
       y: {
-        grid: { color: "rgba(81, 14, 0, 0.12)" },
+        grid: { color: "#eeeeee" },
         ticks: {
           color: css("--muted"),
           callback: (value) => `${formatNumber(value)}${percent ? "%" : ""}`
@@ -511,7 +511,7 @@ function renderMigrationChart(population) {
           label: labels.arrivals,
           data: source.map((row) => row.arrivals),
           borderColor: css("--brand-orange"),
-          backgroundColor: "rgba(232, 68, 0, 0.11)",
+          backgroundColor: "rgba(196, 77, 54, 0.11)",
           borderWidth: 3,
           tension: 0.34,
           fill: true
@@ -520,7 +520,7 @@ function renderMigrationChart(population) {
           label: labels.departures,
           data: source.map((row) => row.departures),
           borderColor: css("--brand-brown"),
-          backgroundColor: "rgba(81, 14, 0, 0.08)",
+          backgroundColor: "rgba(84, 45, 36, 0.08)",
           borderWidth: 3,
           tension: 0.34
         },
@@ -569,7 +569,7 @@ function renderVitalChart(population) {
         {
           label: labels.birthDeathGap,
           data: source.map((row) => row.birthDeathGap),
-          backgroundColor: "rgba(232, 68, 0, 0.34)",
+          backgroundColor: "rgba(196, 77, 54, 0.34)",
           borderColor: css("--brand-orange"),
           borderWidth: 1
         }
@@ -701,17 +701,17 @@ function addBoundaryMask(map, feature) {
 
   L.polygon([world, ...holes], {
     stroke: false,
-    fillColor: "#fff7ef",
+    fillColor: "#ffffff",
     fillOpacity: 0.82,
     interactive: false
   }).addTo(map);
 
   const boundaryLayer = L.geoJSON(feature, {
     style: {
-      color: "#e84400",
-      weight: 2,
+      color: css("--brand-orange"),
+      weight: 0,
       opacity: 0.88,
-      fillColor: "#e84400",
+      fillColor: css("--brand-orange"),
       fillOpacity: 0.08
     }
   }).addTo(map);
@@ -744,14 +744,13 @@ function renderMap(containerId, inspectorId, districts, { ranked = false, onInsp
 
     const point = [coordinate.lat, coordinate.lon];
     const intensity = Math.max(0.12, Math.sqrt(district.total / max));
+    const markerColor = ranked && topNames.has(district.name) ? css("--brand-brown") : css("--brand-orange");
     const marker = L.circleMarker(point, {
       radius: 4 + intensity * 11,
-      fillColor: mixColor("#ffd6bf", ranked && topNames.has(district.name) ? "#510e00" : "#e84400", intensity),
+      fillColor: mixColor("#eeeeee", markerColor, intensity),
       fillOpacity: ranked && topNames.has(district.name) ? 0.88 : 0.72,
-      color: ranked && topNames.has(district.name) ? "#510e00" : "#ffffff",
+      stroke: false,
       opacity: 0.94,
-      weight: ranked && topNames.has(district.name) ? 2 : 1,
-      dashArray: coordinate.inferred ? "4 3" : null
     }).addTo(map);
     const rank = rankByName.get(district.name);
     const onInspect = () => {
