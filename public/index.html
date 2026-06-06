@@ -50,11 +50,11 @@
     <main class="app-main">
       <section class="intro" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow" id="topic-kicker">Population intelligence</p>
+          <p class="eyebrow" id="topic-kicker">Population indicators</p>
           <h1 id="page-title">MagdePulse</h1>
           <p id="page-copy">
-            Explore the city's population rhythm through migration, gender balance,
-            life events, and age structure.
+            Review official indicators for population, migration, district distribution,
+            vital statistics, and age structure.
           </p>
         </div>
         <div class="pulse-mark" aria-hidden="true">
@@ -166,6 +166,54 @@
       </section>
 
       <!-- ================================================================
+           INFRASTRUCTURE VIEW
+      ================================================================= -->
+      <section id="infrastructure-view" hidden>
+        <section class="kpi-grid" id="infra-kpi-grid" aria-label="Infrastructure summary"></section>
+
+        <section class="visual-grid">
+          <article class="chart-card chart-card-wide">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="infra-stock-kicker">Housing stock</p>
+                <h2 id="infra-stock-title">Housing stock and residential buildings over time</h2>
+              </div>
+            </div>
+            <div class="chart-frame chart-frame-wide">
+              <canvas id="infra-stock-chart"></canvas>
+            </div>
+            <p class="source-note" id="infra-stock-source"></p>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="infra-completions-kicker">New completions</p>
+                <h2 id="infra-completions-title">Completed apartments in new buildings by year</h2>
+              </div>
+            </div>
+            <div class="chart-frame chart-frame-compact">
+              <canvas id="infra-completions-chart"></canvas>
+            </div>
+            <p class="source-note" id="infra-completions-source"></p>
+          </article>
+
+          <article class="chart-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="infra-vacancy-kicker">Vacancy rate</p>
+                <h2 id="infra-vacancy-title">Citywide vacancy rate over time</h2>
+              </div>
+            </div>
+            <div class="chart-frame chart-frame-compact">
+              <canvas id="infra-vacancy-chart"></canvas>
+            </div>
+            <p class="source-note" id="infra-vacancy-source"></p>
+          </article>
+        </section>
+      </section>
+
+      <!-- ================================================================
            HEALTH VIEW
       ================================================================= -->
       <section id="health-view" hidden>
@@ -198,10 +246,10 @@
            PLACEHOLDER VIEW (Infrastructure etc.)
       ================================================================= -->
       <section class="placeholder-view" id="placeholder-view" hidden>
-        <p class="eyebrow" id="placeholder-kicker">Coming soon</p>
-        <h2 id="placeholder-title">This topic is ready for future data.</h2>
+        <p class="eyebrow" id="placeholder-kicker">In preparation</p>
+        <h2 id="placeholder-title">This topic is prepared for validated data.</h2>
         <p id="placeholder-copy">
-          The dashboard framework is prepared. Add datasets to activate this section.
+          Add validated datasets to activate this section.
         </p>
       </section>
 
@@ -215,29 +263,40 @@
           <article class="chart-card chart-card-wide">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">Resident migration</p>
-                <h2>Annual arrivals, departures and migration balance</h2>
+                <p class="eyebrow">Population status</p>
+                <h2>Resident population and international residents</h2>
               </div>
+              <span id="status-year-label"></span>
             </div>
-            <canvas id="migration-chart" height="132"></canvas>
-            <p class="source-note" id="migration-source"></p>
+            <label class="year-slider status-slider">
+              <span id="status-slider-label">Year</span>
+              <input id="status-year-slider" type="range" min="0" max="0" step="1" value="0">
+            </label>
+            <div class="status-layout">
+              <div class="status-orbits" id="status-orbits"></div>
+            </div>
+            <p class="source-note" id="status-source"></p>
           </article>
 
           <article class="chart-card chart-card-wide map-card">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">Population map</p>
-                <h2>Total and gender by statistical district</h2>
+                <p class="eyebrow">District population</p>
+                <h2>Resident population by statistical district</h2>
               </div>
-              <output id="population-year-output"></output>
             </div>
-            <label class="year-slider map-year-slider">
-              <span id="population-slider-label">Year</span>
-              <input id="population-year-slider" type="range" min="0" max="0" step="1" value="0">
-            </label>
             <div class="map-layout">
               <div class="city-map" id="population-map" aria-label="Magdeburg population district map"></div>
-              <aside class="map-inspector" id="population-inspector"></aside>
+              <aside class="map-inspector" id="population-inspector">
+                <div class="map-inspector-detail" id="population-inspector-detail"></div>
+                <label class="year-slider map-year-slider">
+                  <span>
+                    <span id="population-slider-label">Year</span>
+                    <output id="population-year-output"></output>
+                  </span>
+                  <input id="population-year-slider" type="range" min="0" max="0" step="1" value="0">
+                </label>
+              </aside>
             </div>
             <p class="source-note" id="population-source"></p>
           </article>
@@ -245,11 +304,13 @@
           <article class="chart-card">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">Life events</p>
-                <h2>Births, deaths and birth-death gap</h2>
+                <p class="eyebrow">Vital statistics</p>
+                <h2>Births, deaths and births-minus-deaths</h2>
               </div>
             </div>
-            <canvas id="vital-chart" height="184"></canvas>
+            <div class="chart-frame chart-frame-compact">
+              <canvas id="vital-chart"></canvas>
+            </div>
             <p class="source-note" id="vital-source"></p>
           </article>
 
@@ -257,7 +318,7 @@
             <div class="card-heading">
               <div>
                 <p class="eyebrow">Age structure</p>
-                <h2>Youth and elderly ratios</h2>
+                <h2>Youth and elderly quotas</h2>
               </div>
               <span id="age-year-label"></span>
             </div>
@@ -266,15 +327,27 @@
               <input id="age-quote-year-slider" type="range" min="0" max="0" step="1" value="0">
             </label>
             <div class="age-orbits" id="age-orbits"></div>
-            <div class="age-trend" id="age-trend"></div>
             <p class="source-note" id="age-source"></p>
+          </article>
+
+          <article class="chart-card chart-card-wide">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow">Migration</p>
+                <h2>Arrivals, departures and net migration</h2>
+              </div>
+            </div>
+            <div class="chart-frame chart-frame-wide">
+              <canvas id="migration-chart"></canvas>
+            </div>
+            <p class="source-note" id="migration-source"></p>
           </article>
 
           <article class="chart-card chart-card-wide age-flow-card">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">Age-group migration</p>
-                <h2>Moving into and out of Magdeburg by age</h2>
+                <p class="eyebrow">Migration by age group</p>
+                <h2>Arrivals and departures by age group</h2>
               </div>
               <output id="age-flow-year"></output>
             </div>
