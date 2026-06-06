@@ -6,6 +6,7 @@ import { getPopulationDashboardData } from "./data/population.js";
 import { getHealthDashboardData } from "./data/health.js";
 import { getEducationDashboardData } from "./data/education.js";
 import { getInfrastructureDashboardData } from "./data/infrastructure.js";
+import { getLiveDashboardData } from "./data/live.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -91,6 +92,14 @@ app.get("/api/dashboard", async (_request, response, next) => {
         }
       ]
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/api/live", async (_request, response, next) => {
+  try {
+    response.json(await getLiveDashboardData());
   } catch (error) {
     next(error);
   }

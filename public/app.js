@@ -1,7 +1,10 @@
 const state = {
   data: null,
+  liveData: null,
+  liveStatus: "idle",
+  liveRefreshTimer: null,
   language: "en",
-  topic: "population",
+  topic: "home",
   selectedPopulationYear: null,
   selectedStatusIndex: 0,
   selectedAgeQuoteIndex: 0,
@@ -16,15 +19,22 @@ const state = {
   districtCells: new Map()
 };
 
+const dashboardTopics = new Set(["home", "population", "education", "infrastructure", "health"]);
+
 const translations = {
   en: {
     tagline: "Don't just live in Magdeburg. Feel its pulse.",
     topics: {
+      home: "Overview",
       population: "Population",
       education: "Education",
       infrastructure: "Infrastructure",
       health: "Health and Social Services"
     },
+    landingKicker: "Live city pulse",
+    landingTitle: "MagdePulse",
+    landingCopy:
+      "Start with real-time weather, Elbe water level, and air-quality signals, then move into the official dashboard domains.",
     introKicker: "Population indicators",
     introTitle: "MagdePulse",
     introCopy:
@@ -44,6 +54,44 @@ const translations = {
     health: {
       service: "Service",
       services: { doctors: "Doctors", dentists: "Dentists", pharmacies: "Pharmacies" }
+    },
+    live: {
+      loading: "Loading live data",
+      live: "Live",
+      unavailable: "Unavailable",
+      updated: "Updated",
+      weatherKicker: "Weather",
+      weatherTitle: "Current weather in Magdeburg",
+      waterKicker: "Elbe water level",
+      waterTitle: "Magdeburg-Strombrücke gauge",
+      airKicker: "Air Quality Index",
+      airTitle: "Particulate matter around the city",
+      wind: "Wind",
+      precipitation: "Precipitation",
+      cloudCover: "Cloud cover",
+      sevenDayChange: "7-day change",
+      sevenDayRange: "7-day range",
+      measurements: "Measurements",
+      pm25: "PM2.5",
+      pm10: "PM10",
+      sensors: "Sensors",
+      guideline: "WHO 24h guideline",
+      quality: {
+        good: "Good",
+        moderate: "Moderate",
+        elevated: "Elevated",
+        high: "High"
+      },
+      sourcePrefix: "Source"
+    },
+    landingNav: {
+      kicker: "Explore dashboards",
+      title: "Choose a city domain",
+      open: "Open",
+      population: "Resident trends, migration, age structure, and district population.",
+      education: "Schools, students, capacity, universities, and district education distribution.",
+      infrastructure: "Housing stock, completions, vacancy, and built-environment indicators.",
+      health: "Doctors, dentists, pharmacies, and health-service distribution by district."
     },
     comingSoon: "In preparation",
     readyCopy: "This dashboard section is prepared for validated datasets.",
@@ -165,11 +213,16 @@ const translations = {
   de: {
     tagline: "Lebe nicht nur in Magdeburg. Fühle seinen Puls.",
     topics: {
+      home: "Überblick",
       population: "Bevölkerung",
       education: "Bildung",
       infrastructure: "Infrastruktur",
       health: "Gesundheit und Soziales"
     },
+    landingKicker: "Live-Stadtpuls",
+    landingTitle: "MagdePulse",
+    landingCopy:
+      "Starte mit aktuellen Wetter-, Elbpegel- und Luftqualitätsdaten und wechsle dann in die offiziellen Dashboard-Bereiche.",
     introKicker: "Bevölkerungsindikatoren",
     introTitle: "MagdePulse",
     introCopy:
@@ -189,6 +242,44 @@ const translations = {
     health: {
       service: "Dienstleistung",
       services: { doctors: "Ärzte", dentists: "Zahnärzte", pharmacies: "Apotheken" }
+    },
+    live: {
+      loading: "Live-Daten werden geladen",
+      live: "Live",
+      unavailable: "Nicht verfügbar",
+      updated: "Aktualisiert",
+      weatherKicker: "Wetter",
+      weatherTitle: "Aktuelles Wetter in Magdeburg",
+      waterKicker: "Elbpegel",
+      waterTitle: "Pegel Magdeburg-Strombrücke",
+      airKicker: "Luftqualitätsindex",
+      airTitle: "Feinstaubwerte im Stadtgebiet",
+      wind: "Wind",
+      precipitation: "Niederschlag",
+      cloudCover: "Bewölkung",
+      sevenDayChange: "7-Tage-Veränderung",
+      sevenDayRange: "7-Tage-Spanne",
+      measurements: "Messwerte",
+      pm25: "PM2,5",
+      pm10: "PM10",
+      sensors: "Sensoren",
+      guideline: "WHO-24h-Richtwert",
+      quality: {
+        good: "Gut",
+        moderate: "Mäßig",
+        elevated: "Erhöht",
+        high: "Hoch"
+      },
+      sourcePrefix: "Quelle"
+    },
+    landingNav: {
+      kicker: "Dashboards erkunden",
+      title: "Wähle einen Stadtbereich",
+      open: "Öffnen",
+      population: "Bevölkerungstrends, Wanderung, Altersstruktur und Bezirkswerte.",
+      education: "Schulen, Schülerzahlen, Kapazitäten, Hochschulen und Bezirksverteilung.",
+      infrastructure: "Wohnungsbestand, Fertigstellungen, Leerstand und gebaute Umgebung.",
+      health: "Ärzte, Zahnärzte, Apotheken und Gesundheitsangebote nach Bezirk."
     },
     comingSoon: "In Vorbereitung",
     readyCopy: "Dieser Dashboard-Bereich ist für geprüfte Datensätze vorbereitet.",
@@ -430,6 +521,45 @@ function setSource(id, needles) {
   setText(`#${id}`, `${t().sources}: ${sourceText(needles)}${suffix}`);
 }
 
+function formatDateTime(value) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat(state.language === "de" ? "de-DE" : "en-US", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  }).format(date);
+}
+
+function formatMetric(value, suffix = "") {
+  return Number.isFinite(Number(value)) ? `${formatNumber(value)}${suffix}` : t().live.unavailable;
+}
+
+function formatSignedMetric(value, suffix = "") {
+  return Number.isFinite(Number(value)) ? `${formatSigned(value)}${suffix}` : t().live.unavailable;
+}
+
+function topicFromUrl() {
+  const hashTopic = window.location.hash.replace("#", "");
+  return dashboardTopics.has(hashTopic) ? hashTopic : "home";
+}
+
+function updateTopicButtons() {
+  document.querySelectorAll(".topic-button").forEach((btn) => {
+    btn.classList.toggle("is-active", btn.dataset.topic === state.topic);
+  });
+}
+
+function setTopic(topic, { updateUrl = true } = {}) {
+  state.topic = dashboardTopics.has(topic) ? topic : "home";
+  updateTopicButtons();
+  if (updateUrl) {
+    const target = state.topic === "home" ? `${window.location.pathname}` : `#${state.topic}`;
+    history.pushState(null, "", target);
+  }
+  renderTopic();
+}
+
 function annualComplete(rows) { return rows.filter((r) => r.months >= 12); }
 
 async function loadDistrictCoordinates() {
@@ -556,6 +686,190 @@ function updateHealthInspector(inspector, district, rank) {
     </div>
   `;
   if (rank) { syncHealthRankControls(rank); state.selectedHealthRank = rank - 1; }
+}
+
+// ---------------------------------------------------------------------------
+// Landing view
+// ---------------------------------------------------------------------------
+
+function liveSource(id) {
+  return state.liveData?.sources?.find((source) => source.id === id);
+}
+
+function sourceLabel(source) {
+  return source ? `${t().live.sourcePrefix}: ${source.name} · ${source.url}` : "";
+}
+
+function setLiveCardState(cardId, block) {
+  const card = document.getElementById(cardId);
+  if (!card) return;
+  card.dataset.status = block?.status ?? "loading";
+}
+
+function setLiveFacts(id, facts) {
+  const root = document.getElementById(id);
+  if (!root) return;
+  root.innerHTML = facts
+    .filter((fact) => fact.value !== null && fact.value !== undefined && fact.value !== "")
+    .map((fact) => `<span><b>${fact.label}</b>${fact.value}</span>`)
+    .join("");
+}
+
+function renderWeatherCard() {
+  const labels = t().live;
+  const weather = state.liveData?.weather;
+  setText("#live-weather-kicker", labels.weatherKicker);
+  setText("#live-weather-title", labels.weatherTitle);
+  setText("#live-weather-source", sourceLabel(liveSource("weather")));
+  setLiveCardState("live-weather-card", weather);
+
+  if (!weather || weather.status !== "ok") {
+    setText("#live-weather-status", weather ? labels.unavailable : labels.live);
+    setText("#live-weather-value", labels.loading);
+    setText("#live-weather-detail", weather?.message ?? labels.loading);
+    setLiveFacts("live-weather-facts", []);
+    return;
+  }
+
+  setText("#live-weather-status", labels.live);
+  setText("#live-weather-value", formatMetric(weather.temperatureC, "°C"));
+  setText("#live-weather-detail", `${weather.condition ?? labels.weatherTitle} · ${labels.updated}: ${formatDateTime(weather.timestamp)}`);
+  setLiveFacts("live-weather-facts", [
+    { label: labels.wind, value: formatMetric(weather.windSpeedKmh, " km/h") },
+    { label: labels.precipitation, value: formatMetric(weather.precipitationMm, " mm") },
+    { label: labels.cloudCover, value: formatMetric(weather.cloudCoverPct, "%") }
+  ]);
+}
+
+function waterMeterWidth(water) {
+  if (
+    !water ||
+    water.status !== "ok" ||
+    !Number.isFinite(Number(water.levelCm)) ||
+    !Number.isFinite(Number(water.minCm)) ||
+    !Number.isFinite(Number(water.maxCm)) ||
+    water.minCm === water.maxCm
+  ) return 50;
+  const ratio = (water.levelCm - water.minCm) / (water.maxCm - water.minCm);
+  return Math.max(8, Math.min(100, Math.round(ratio * 100)));
+}
+
+function renderWaterCard() {
+  const labels = t().live;
+  const water = state.liveData?.water;
+  setText("#live-water-kicker", labels.waterKicker);
+  setText("#live-water-title", labels.waterTitle);
+  setText("#live-water-source", sourceLabel(liveSource("water")));
+  setLiveCardState("live-water-card", water);
+
+  if (!water || water.status !== "ok") {
+    setText("#live-water-status", water ? labels.unavailable : labels.live);
+    setText("#live-water-value", labels.loading);
+    setText("#live-water-detail", water?.message ?? labels.loading);
+    setLiveFacts("live-water-facts", []);
+    document.getElementById("live-water-meter").style.width = "50%";
+    return;
+  }
+
+  setText("#live-water-status", labels.live);
+  setText("#live-water-value", formatMetric(water.levelCm, " cm"));
+  setText("#live-water-detail", `${water.station} · ${labels.updated}: ${formatDateTime(water.timestamp)}`);
+  document.getElementById("live-water-meter").style.width = `${waterMeterWidth(water)}%`;
+  setLiveFacts("live-water-facts", [
+    { label: labels.sevenDayChange, value: formatSignedMetric(water.trendCm, " cm") },
+    { label: labels.sevenDayRange, value: Number.isFinite(Number(water.minCm)) && Number.isFinite(Number(water.maxCm)) ? `${formatNumber(water.minCm)}-${formatNumber(water.maxCm)} cm` : labels.unavailable },
+    { label: labels.measurements, value: formatMetric(water.measurements) }
+  ]);
+}
+
+function renderAirCard() {
+  const labels = t().live;
+  const air = state.liveData?.air;
+  setText("#live-air-kicker", labels.airKicker);
+  setText("#live-air-title", labels.airTitle);
+  setText("#live-air-source", sourceLabel(liveSource("air")));
+  setLiveCardState("live-air-card", air);
+
+  if (!air || air.status !== "ok") {
+    setText("#live-air-status", air ? labels.unavailable : labels.live);
+    setText("#live-air-value", labels.loading);
+    setText("#live-air-detail", air?.message ?? labels.loading);
+    setLiveFacts("live-air-facts", []);
+    return;
+  }
+
+  const quality = labels.quality[air.qualityKey] ?? air.qualityKey;
+  setText("#live-air-status", labels.live);
+  setText("#live-air-value", quality);
+  setText("#live-air-detail", `${labels.guideline}: PM2.5 ${air.guideline.pm25} ${air.guideline.unit}, PM10 ${air.guideline.pm10} ${air.guideline.unit}`);
+  setLiveFacts("live-air-facts", [
+    { label: labels.pm25, value: formatMetric(air.pm25, ` ${air.guideline.unit}`) },
+    { label: labels.pm10, value: formatMetric(air.pm10, ` ${air.guideline.unit}`) },
+    { label: labels.sensors, value: formatMetric(air.sensors) }
+  ]);
+}
+
+function renderLandingNavigation() {
+  const copy = t();
+  setText("#landing-nav-kicker", copy.landingNav.kicker);
+  setText("#landing-nav-title", copy.landingNav.title);
+  const root = document.getElementById("landing-topic-grid");
+  if (!root) return;
+
+  const topics = ["population", "education", "infrastructure", "health"];
+  root.innerHTML = topics.map((topic) => `
+    <article class="landing-topic-card">
+      <p class="eyebrow">${copy.topics[topic]}</p>
+      <h3>${copy.topics[topic]}</h3>
+      <p>${copy.landingNav[topic]}</p>
+      <button class="landing-topic-button" type="button" data-landing-topic="${topic}">
+        ${copy.landingNav.open}
+      </button>
+    </article>
+  `).join("");
+
+  root.querySelectorAll("[data-landing-topic]").forEach((button) => {
+    button.addEventListener("click", () => setTopic(button.dataset.landingTopic));
+  });
+}
+
+function renderLiveCards() {
+  renderWeatherCard();
+  renderWaterCard();
+  renderAirCard();
+}
+
+function renderLandingView() {
+  renderLandingNavigation();
+  renderLiveCards();
+}
+
+async function loadLiveData() {
+  state.liveStatus = "loading";
+  if (state.topic === "home") renderLiveCards();
+
+  try {
+    const response = await fetch("/api/live");
+    if (!response.ok) throw new Error("Live data could not be loaded.");
+    state.liveData = await response.json();
+    state.liveStatus = "ready";
+  } catch (error) {
+    state.liveStatus = "error";
+    state.liveData = {
+      sources: [],
+      weather: { status: "unavailable", message: error.message },
+      water: { status: "unavailable", message: error.message },
+      air: { status: "unavailable", message: error.message }
+    };
+  }
+
+  if (state.topic === "home") renderLiveCards();
+}
+
+function startLivePolling() {
+  if (state.liveRefreshTimer) clearInterval(state.liveRefreshTimer);
+  loadLiveData();
+  state.liveRefreshTimer = setInterval(loadLiveData, 5 * 60 * 1000);
 }
 
 // ---------------------------------------------------------------------------
@@ -1994,12 +2308,14 @@ function updateStaticText() {
   document.querySelector(".brand em").textContent = copy.tagline;
 
   const kickerMap = {
+    home: copy.landingKicker,
     population: copy.introKicker,
     education: copy.educationKicker,
     infrastructure: copy.infrastructureKicker,
     health: copy.healthKicker ?? copy.introKicker
   };
   const copyMap = {
+    home: copy.landingCopy,
     population: copy.introCopy,
     education: copy.educationCopy,
     infrastructure: copy.infrastructureIntro,
@@ -2007,7 +2323,7 @@ function updateStaticText() {
   };
 
   setText("#topic-kicker", kickerMap[state.topic] ?? copy.comingSoon);
-  setText("#page-title", copy.introTitle);
+  setText("#page-title", state.topic === "home" ? copy.landingTitle : copy.introTitle);
   setText("#page-copy", copyMap[state.topic] ?? copy.placeholders[state.topic] ?? copy.readyCopy);
   setText("#placeholder-kicker", copy.comingSoon);
   setText("#placeholder-title", copy.placeholders[state.topic] ?? copy.placeholders.infrastructure);
@@ -2058,20 +2374,23 @@ function updateStaticText() {
 // ---------------------------------------------------------------------------
 
 function renderTopic() {
+  const isHome = state.topic === "home";
   const isPopulation = state.topic === "population";
   const isEducation = state.topic === "education";
   const isInfrastructure = state.topic === "infrastructure";
   const isHealth = state.topic === "health";
 
+  document.getElementById("home-view").hidden = !isHome;
   document.getElementById("population-view").hidden = !isPopulation;
   document.getElementById("education-view").hidden = !isEducation;
   document.getElementById("infrastructure-view").hidden = !isInfrastructure;
   document.getElementById("health-view").hidden = !isHealth;
-  document.getElementById("placeholder-view").hidden = isPopulation || isEducation || isInfrastructure || isHealth;
+  document.getElementById("placeholder-view").hidden = isHome || isPopulation || isEducation || isInfrastructure || isHealth;
 
   updateStaticText();
   if (!state.data) return;
 
+  if (isHome) renderLandingView();
   if (isPopulation) renderPopulationView();
   if (isEducation) renderEducationView();
   if (isInfrastructure) renderInfrastructureView();
@@ -2085,10 +2404,17 @@ function renderTopic() {
 function bindEvents() {
   document.querySelectorAll(".topic-button").forEach((btn) => {
     btn.addEventListener("click", () => {
-      state.topic = btn.dataset.topic;
-      document.querySelectorAll(".topic-button").forEach((b) => b.classList.toggle("is-active", b === btn));
-      renderTopic();
+      setTopic(btn.dataset.topic);
     });
+  });
+
+  document.getElementById("brand-link").addEventListener("click", (event) => {
+    event.preventDefault();
+    setTopic("home");
+  });
+
+  window.addEventListener("popstate", () => {
+    setTopic(topicFromUrl(), { updateUrl: false });
   });
 
   document.querySelectorAll(".language-toggle button").forEach((btn) => {
@@ -2160,6 +2486,8 @@ async function loadDashboard() {
   const response = await fetch("/api/dashboard");
   if (!response.ok) throw new Error("Dashboard data could not be loaded.");
   state.data = await response.json();
+  state.topic = topicFromUrl();
+  updateTopicButtons();
   [state.boundary, state.districtCoordinates] = await Promise.all([loadBoundary(), loadDistrictCoordinates()]);
   state.selectedPopulationYear = populationYears(state.data.population).at(-1);
   state.selectedStatusIndex = statusRows(state.data.population).length - 1;
@@ -2168,6 +2496,7 @@ async function loadDashboard() {
   state.selectedHealthYear = state.data.health?.latestYear;
   renderAlerts(state.data.alerts);
   renderTopic();
+  startLivePolling();
 }
 
 bindEvents();

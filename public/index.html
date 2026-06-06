@@ -12,7 +12,7 @@
   </head>
   <body>
     <header class="app-header">
-      <a class="brand" href="/" aria-label="MagdePulse home">
+      <a class="brand" id="brand-link" href="#home" aria-label="MagdePulse home">
         <img src="/Logos/Logo_ottostadt_magdeburg.png" alt="Ottostadt Magdeburg logo">
         <span>
           <strong>MagdePulse</strong>
@@ -21,7 +21,8 @@
       </a>
 
       <nav class="topic-nav" aria-label="Visualization topics">
-        <button class="topic-button is-active" data-topic="population" type="button">Population</button>
+        <button class="topic-button is-active" data-topic="home" type="button">Overview</button>
+        <button class="topic-button" data-topic="population" type="button">Population</button>
         <button class="topic-button" data-topic="education" type="button">Education</button>
         <button class="topic-button" data-topic="infrastructure" type="button">Infrastructure</button>
         <button class="topic-button" data-topic="health" type="button">Health and Social Services</button>
@@ -61,6 +62,64 @@
           <span></span>
           <strong>MD</strong>
         </div>
+      </section>
+
+      <!-- ================================================================
+           LANDING VIEW
+      ================================================================= -->
+      <section id="home-view">
+        <section class="live-grid" aria-label="Live city signals">
+          <article class="live-card" id="live-weather-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="live-weather-kicker">Weather</p>
+                <h2 id="live-weather-title">Current weather in Magdeburg</h2>
+              </div>
+              <span id="live-weather-status">Live</span>
+            </div>
+            <strong id="live-weather-value">Loading</strong>
+            <p id="live-weather-detail">Fetching Bright Sky / DWD weather data.</p>
+            <div class="live-facts" id="live-weather-facts"></div>
+            <p class="source-note" id="live-weather-source"></p>
+          </article>
+
+          <article class="live-card" id="live-water-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="live-water-kicker">Elbe water level</p>
+                <h2 id="live-water-title">Magdeburg-Strombrücke gauge</h2>
+              </div>
+              <span id="live-water-status">Live</span>
+            </div>
+            <strong id="live-water-value">Loading</strong>
+            <p id="live-water-detail">Fetching PEGELONLINE / WSV river level data.</p>
+            <div class="live-meter" aria-hidden="true"><span id="live-water-meter"></span></div>
+            <div class="live-facts" id="live-water-facts"></div>
+            <p class="source-note" id="live-water-source"></p>
+          </article>
+
+          <article class="live-card" id="live-air-card">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="live-air-kicker">Air quality</p>
+                <h2 id="live-air-title">Particulate matter around the city</h2>
+              </div>
+              <span id="live-air-status">Live</span>
+            </div>
+            <strong id="live-air-value">Loading</strong>
+            <p id="live-air-detail">Fetching Sensor.Community measurements.</p>
+            <div class="live-facts" id="live-air-facts"></div>
+            <p class="source-note" id="live-air-source"></p>
+          </article>
+        </section>
+
+        <section class="landing-nav-section" aria-labelledby="landing-nav-title">
+          <div class="section-heading">
+            <p class="eyebrow" id="landing-nav-kicker">Explore dashboards</p>
+            <h2 id="landing-nav-title">Choose a city domain</h2>
+          </div>
+          <div class="landing-topic-grid" id="landing-topic-grid"></div>
+        </section>
       </section>
 
       <!-- ================================================================
