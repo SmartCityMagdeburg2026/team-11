@@ -81,22 +81,10 @@
                 <h2 id="edu-type-title">Students by school type</h2>
               </div>
             </div>
-            <canvas id="school-type-chart" height="184"></canvas>
+            <canvas id="school-type-chart" height="350"></canvas>
             <p class="source-note" id="edu-type-source"></p>
           </article>
-
-          <!-- 2. Bubble/scatter: classrooms vs students per school -->
-          <article class="chart-card chart-card-wide">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-capacity-kicker">School capacity</p>
-                <h2 id="edu-capacity-title">Classrooms vs. student population</h2>
-              </div>
-            </div>
-            <canvas id="school-capacity-chart" height="132"></canvas>
-            <p class="source-note" id="edu-capacity-source"></p>
-          </article>
-
+          
           <!-- 3. Bar chart: city-wide student count over years -->
           <article class="chart-card">
             <div class="card-heading">
@@ -108,6 +96,20 @@
             <canvas id="school-trend-chart" height="184"></canvas>
             <p class="source-note" id="edu-trend-source"></p>
           </article>
+
+          <!-- 2. Bubble/scatter: classrooms vs students per school -->
+          <article class="chart-card chart-card-wide">
+            <div class="card-heading">
+              <div>
+                <p class="eyebrow" id="edu-capacity-kicker">School capacity</p>
+                <h2 id="edu-capacity-title">Classrooms vs. student population</h2>
+              </div>
+            </div>
+            <canvas id="school-capacity-chart" height="600"></canvas>
+            <p class="source-note" id="edu-capacity-source"></p>
+          </article>
+
+          
 
           <!-- 4. Leaflet map: students by district -->
           <article class="chart-card chart-card-wide map-card">
@@ -137,26 +139,26 @@
           </article>
 
           <!-- 6. Stacked bar: freshmen by institution + gender (latest year) -->
-          <article class="chart-card chart-card-wide">
+          <article class="chart-card"
             <div class="card-heading">
               <div>
                 <p class="eyebrow" id="edu-uni-institution-kicker">Institutions</p>
                 <h2 id="edu-uni-institution-title">Freshmen by institution and gender</h2>
               </div>
             </div>
-            <canvas id="institution-breakdown-chart" height="132"></canvas>
+            <canvas id="institution-breakdown-chart" height="180"></canvas>
             <p class="source-note" id="edu-uni-institution-source"></p>
           </article>
 
           <!-- 7. Stacked bar: students by study form and institution -->
-          <article class="chart-card chart-card-wide">
+          <article class="chart-card">
             <div class="card-heading">
               <div>
                 <p class="eyebrow" id="edu-program-kicker">Degree programmes</p>
                 <h2 id="edu-program-title">Students by study form and institution</h2>
               </div>
             </div>
-            <canvas id="study-program-chart" height="132"></canvas>
+            <canvas id="study-program-chart" height="180"></canvas>
             <p class="source-note" id="edu-program-source"></p>
           </article>
 

@@ -768,58 +768,243 @@ function renderEducationKpis(summary, lang) {
 
 function renderSchoolTypeChart(schoolDetails, lang) {
   const { byType, typeLabels } = schoolDetails;
+
+  // Sort ascending so largest bar appears at top
+  const sorted = [...byType].sort((a, b) => a.students - b.students);
+
+  const colours = [
+    "#C44D36","#542D24","#4A7C59","#7BAFD4","#E5A14F",
+    "#9B6EA8","#4EB3A2","#D4836A","#6B8E5E","#A06030","#3A6B8A","#C9A84C"
+  ];
+
+  // Assign a colour per type in sorted order
+  const barColours = sorted.map((_, i) => colours[i % colours.length]);
+
   createChart("school-type-chart", {
-    type: "polarArea",
+    type: "bar",
     data: {
-      labels: byType.map((d) => typeLabels[lang]?.[d.type] ?? d.type),
-      datasets: [{
-        data: byType.map((d) => d.students),
-        backgroundColor: EDU_TYPE_COLOURS.map((c) => c + "CC"),
-        borderColor: EDU_TYPE_COLOURS,
-        borderWidth: 1.5
-      }]
+      labels: sorted.map((d) => typeLabels[lang]?.[d.type] ?? d.type),
+      datasets: [
+        {
+          // Thin stem of the lollipop
+          label: lang === "de" ? "Schüler" : "Students",
+          data: sorted.map((d) => d.students),
+          backgroundColor: barColours.map((c) => c + "22"),
+          borderColor: barColours,
+          borderWidth: 0,
+          borderRadius: 0,
+          barThickness: 3
+        },
+        {
+          // Round head of the lollipop
+          type: "bubble",
+          label: "_head",
+          data: sorted.map((d, i) => ({
+            x: d.students,
+            y: typeLabels[lang]?.[sorted[i].type] ?? sorted[i].type,
+            r: 7,
+            students: d.students,
+            schools: d.schools
+          })),
+          backgroundColor: barColours,
+          borderColor: "#ffffff",
+          borderWidth: 2
+        }
+      ]
     },
     options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
+      indexAxis: "y",
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: { duration: 900, easing: "easeOutQuart" },
       plugins: {
-        legend: { position: "right", labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700, size: 11 } } },
-        tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => ` ${formatNumber(ctx.parsed.r)} students` } }
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "rgba(84,45,36,0.94)",
+          padding: 12,
+          filter: (item) => item.datasetIndex === 1,
+          callbacks: {
+            title: (items) => items[0]?.label ?? "",
+            label: (ctx) => [
+              ` ${lang === "de" ? "Schüler" : "Students"}: ${formatNumber(ctx.raw.students)}`,
+              ` ${lang === "de" ? "Schulen" : "Schools"}: ${formatNumber(ctx.raw.schools)}`
+            ]
+          }
+        }
       },
-      scales: { r: { ticks: { display: false }, grid: { color: "#e5e5e5" } } }
+      scales: {
+        x: {
+          grid: { color: "#eeeeee" },
+          ticks: {
+            color: css("--muted"),
+            callback: (v) => v >= 1000 ? (v / 1000).toFixed(0) + "k" : v
+          }
+        },
+        y: {
+          grid: { display: false },
+          ticks: {
+            color: css("--ink"),
+            font: { size: 12, weight: 600 }
+          }
+        }
+      }
     }
   });
 }
 
 function renderCapacityChart(schoolDetails, lang) {
-  const { capacityData, typeLabels } = schoolDetails;
-  const typeMap = new Map();
-  for (const school of capacityData) {
-    const list = typeMap.get(school.type) ?? [];
-    list.push(school);
-    typeMap.set(school.type, list);
-  }
-  const datasets = [...typeMap.entries()].map(([type, schools], i) => ({
-    label: typeLabels[lang]?.[type] ?? type,
-    data: schools.map((s) => ({ x: s.classes, y: s.students, r: Math.max(4, Math.min(20, s.avgPerClass * 0.6)), name: s.name, avg: s.avgPerClass })),
-    backgroundColor: (EDU_TYPE_COLOURS[i % EDU_TYPE_COLOURS.length]) + "99",
-    borderColor: EDU_TYPE_COLOURS[i % EDU_TYPE_COLOURS.length],
-    borderWidth: 1.5
-  }));
-  createChart("school-capacity-chart", {
-    type: "bubble",
-    data: { datasets },
-    options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
-      plugins: {
-        legend: { labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700, size: 11 } } },
-        tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => [` ${ctx.raw.name}`, ` Classes: ${ctx.raw.x}  ·  Students: ${formatNumber(ctx.raw.y)}`, ` Avg class size: ${ctx.raw.avg}`] } }
-      },
-      scales: {
-        x: { title: { display: true, text: lang === "de" ? "Klassen" : "Classes", color: css("--muted") }, grid: { display: false }, ticks: { color: css("--muted") } },
-        y: { title: { display: true, text: lang === "de" ? "Schüler" : "Students", color: css("--muted") }, grid: { color: "#eeeeee" }, ticks: { color: css("--muted"), callback: (v) => formatNumber(v) } }
-      }
+  const { byType, typeLabels } = schoolDetails;
+
+  // Build per-type aggregates
+  const aggregated = byType.map((d) => ({
+    type: typeLabels[lang]?.[d.type] ?? d.type,
+    schools: d.schools,
+    classes: d.classes,
+    students: d.students,
+    avgClassSize: d.classes > 0 ? Math.round(d.students / d.classes) : 0,
+    avgSchoolSize: d.schools > 0 ? Math.round(d.students / d.schools) : 0
+  })).sort((a, b) => b.students - a.students);
+
+  const TYPE_COLORS = {
+    "Primary": "#C44D36", "Grundschule": "#C44D36",
+    "Secondary": "#4EB3A2", "Sekundarschule": "#4EB3A2",
+    "Gemeinschaftsschule": "#7BAFD4",
+    "Gymnasium": "#4A7C59",
+    "IGS": "#E5A14F",
+    "Special needs": "#9B6EA8", "Förderschule": "#9B6EA8",
+    "Berufsbildende": "#542D24", "Vocational": "#542D24",
+    "Sixth-form": "#3A6B8A", "Fachgymnasium": "#3A6B8A",
+    "Evening gym.": "#D4836A", "Abendgym.": "#D4836A",
+    "Kolleg": "#A06030",
+    "College": "#C9A84C"
+  };
+
+  const getColor = (type) =>
+    TYPE_COLORS[type] ?? TYPE_COLORS[typeLabels?.en?.[type]] ?? "#888";
+
+  const metrics = [
+    {
+      key: "schools",
+      label: lang === "de" ? "Schulen" : "Schools",
+      fn: (d) => d.schools,
+      fmt: (v) => v
+    },
+    {
+      key: "classes",
+      label: lang === "de" ? "Klassen" : "Classes",
+      fn: (d) => d.classes,
+      fmt: (v) => v
+    },
+    {
+      key: "students",
+      label: lang === "de" ? "Schüler" : "Students",
+      fn: (d) => d.students,
+      fmt: (v) => v >= 1000 ? (v / 1000).toFixed(1) + "k" : v
+    },
+    {
+      key: "avgClassSize",
+      label: lang === "de" ? "Ø Klassengröße" : "Avg class size",
+      fn: (d) => d.avgClassSize,
+      fmt: (v) => v
+    },
+    {
+      key: "avgSchoolSize",
+      label: lang === "de" ? "Ø Schulgröße" : "Avg school size",
+      fn: (d) => d.avgSchoolSize,
+      fmt: (v) => v >= 1000 ? (v / 1000).toFixed(1) + "k" : v
     }
+  ];
+
+  // Compute min/max per metric for colour scaling
+  metrics.forEach((m) => {
+    const vals = aggregated.map(m.fn);
+    m.min = Math.min(...vals);
+    m.max = Math.max(...vals);
   });
+
+  const HEAT = ["#FAECE7", "#F5C4B3", "#F0997B", "#D85A30", "#993C1D", "#712B13"];
+
+  function heatBg(val, min, max) {
+    const t = Math.round(((val - min) / (max - min || 1)) * 5);
+    return HEAT[Math.max(0, Math.min(5, t))];
+  }
+
+  function heatText(val, min, max) {
+    return (val - min) / (max - min || 1) > 0.55 ? "#ffffff" : "#712B13";
+  }
+
+  // Replace canvas with a styled table
+  const canvas = document.getElementById("school-capacity-chart");
+  if (!canvas) return;
+
+  // Remove old chart instance if any
+  destroyChart("school-capacity-chart");
+
+  // Replace canvas with a div for the table
+  const wrapper = document.createElement("div");
+  wrapper.id = "school-capacity-heatmap";
+  wrapper.style.cssText = "overflow-x:auto; margin-top:0.5rem;";
+  canvas.replaceWith(wrapper);
+
+  // Build table HTML
+  let html = `
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+      <thead>
+        <tr>
+          <th style="text-align:left;padding:8px 10px;color:#888;font-weight:500;
+                     border-bottom:1px solid #e5e5e5;white-space:nowrap;">
+            ${lang === "de" ? "Schulart" : "School type"}
+          </th>
+          ${metrics.map((m) => `
+            <th style="padding:8px 10px;color:#888;font-weight:500;
+                       border-bottom:1px solid #e5e5e5;text-align:center;
+                       white-space:nowrap;">
+              ${m.label}
+            </th>`).join("")}
+        </tr>
+      </thead>
+      <tbody>
+        ${aggregated.map((d) => `
+          <tr style="transition:background 0.15s;" 
+              onmouseover="this.style.outline='2px solid #C44D3655'"
+              onmouseout="this.style.outline='none'">
+            <td style="padding:9px 10px;font-weight:600;color:#2C2C2A;
+                       border-bottom:1px solid #f0f0f0;white-space:nowrap;">
+              <span style="display:inline-block;width:9px;height:9px;
+                           border-radius:2px;background:${getColor(d.type)};
+                           margin-right:7px;vertical-align:middle;flex-shrink:0;">
+              </span>${d.type}
+            </td>
+            ${metrics.map((m) => {
+              const val = m.fn(d);
+              const bg = heatBg(val, m.min, m.max);
+              const tc = heatText(val, m.min, m.max);
+              return `
+                <td style="padding:9px 10px;text-align:center;background:${bg};
+                           color:${tc};font-weight:600;border-bottom:1px solid #f0f0f0;
+                           border-left:2px solid #fff;border-right:2px solid #fff;">
+                  ${m.fmt(val)}
+                </td>`;
+            }).join("")}
+          </tr>`).join("")}
+      </tbody>
+    </table>`;
+
+  wrapper.innerHTML = html;
+
+  // Add colour scale legend
+  const legend = document.createElement("div");
+  legend.style.cssText = "display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;color:#888;";
+  legend.innerHTML = `
+    <span>${lang === "de" ? "Niedrig" : "Low"}</span>
+    ${HEAT.map((c) => `<div style="width:18px;height:12px;border-radius:2px;background:${c};"></div>`).join("")}
+    <span>${lang === "de" ? "Hoch" : "High"}</span>
+    <span style="margin-left:12px;color:#aaa;">
+      ${lang === "de" 
+        ? "· Farbe zeigt relativen Wert je Spalte" 
+        : "· Colour shows relative value within each column"}
+    </span>`;
+  wrapper.after(legend);
 }
 
 function renderSchoolTrendChart(schoolDetails) {
@@ -914,7 +1099,11 @@ function renderInstitutionChart(universities) {
   createChart("institution-breakdown-chart", {
     type: "bar",
     data: {
-      labels: top.map((d) => d.name),
+      labels: top.map((d) => {
+        const parts = d.name.split(/\s+/);
+        const mid = Math.ceil(parts.length / 2);
+        return [parts.slice(0, mid).join(" "), parts.slice(mid).join(" ")];
+      }),
       datasets: [
         { label: state.language === "de" ? "Männlich" : "Male", data: top.map((d) => d.male), backgroundColor: css("--brand-brown") + "CC", borderColor: css("--brand-brown"), borderWidth: 1, stack: "gender" },
         { label: state.language === "de" ? "Weiblich" : "Female", data: top.map((d) => d.female), backgroundColor: css("--signal-green") + "CC", borderColor: css("--signal-green"), borderWidth: 1, stack: "gender" }
@@ -976,7 +1165,11 @@ function renderStudyProgramChart(studyPrograms, lang) {
   createChart("study-program-chart", {
     type: "bar",
     data: {
-      labels: institutions.map((institution) => institution.name),
+      labels: institutions.map((institution) => {
+        const parts = institution.name.split(/\s+/);
+        const mid = Math.ceil(parts.length / 2);
+        return [parts.slice(0, mid).join(" "), parts.slice(mid).join(" ")];
+      }),
       datasets
     },
     options: {
