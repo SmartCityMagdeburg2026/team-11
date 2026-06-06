@@ -59,8 +59,8 @@ app.get("/api/dashboard", async (_request, response, next) => {
           level: { en: "Data", de: "Daten" },
           title: { en: "2026 values are partial", de: "Werte für 2026 sind vorläufig" },
           detail: {
-            en: "Monthly migration and vital-event data currently include January through April 2026.",
-            de: "Monatliche Wanderungs- und Lebensereignisdaten enthalten aktuell Januar bis April 2026."
+            en: "Resident migration uses complete annual age-group movement datasets; vital-event data currently include January through April 2026.",
+            de: "Die Wanderung nutzt vollstÃ¤ndige jÃ¤hrliche Altersgruppen-Wanderungsdaten; Lebensereignisdaten enthalten aktuell Januar bis April 2026."
           }
         },
         {

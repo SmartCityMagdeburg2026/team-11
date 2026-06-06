@@ -1,5 +1,10 @@
 export const dataSources = [
   {
+    dataset: "Sonderbericht - Auslaendische Bevoelkerung am 31.12.2024",
+    source: "Landeshauptstadt Magdeburg, Amt fuer Statistik, Wahlen und Digitalisierung; Einwohnermelderegister",
+    url: "https://www.magdeburg.de/PDF/Sonderbericht_Ausl%C3%A4ndische_Bev%C3%B6lkerung_am_31_12_2024.PDF?Ext=PDF&ObjID=27959&ObjLa=1&ObjSvrID=698&WTR=1&_ts=1764842454"
+  },
+  {
     dataset: "Bevölkerungsbestand monatlich",
     source: "Einwohnermelderegister",
     url: "https://statistik.magdeburg.de/KISS-MD/"

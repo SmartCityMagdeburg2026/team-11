@@ -3,6 +3,7 @@ const state = {
   language: "en",
   topic: "population",
   selectedPopulationYear: null,
+  selectedStatusIndex: 0,
   selectedAgeQuoteIndex: 0,
   selectedAgeIndex: 0,
   selectedHealthYear: null,
@@ -11,7 +12,8 @@ const state = {
   charts: {},
   maps: {},
   boundary: null,
-  districtCoordinates: new Map()
+  districtCoordinates: new Map(),
+  districtCells: new Map()
 };
 
 const translations = {
@@ -23,45 +25,47 @@ const translations = {
       infrastructure: "Infrastructure",
       health: "Health and Social Services"
     },
-    introKicker: "Population intelligence",
+    introKicker: "Population indicators",
     introTitle: "MagdePulse",
     introCopy:
-      "Explore Magdeburg's population rhythm through resident movement, district patterns, life events, and age structure.",
+      "Review official indicators for population, migration, district distribution, vital statistics, and age structure in Magdeburg.",
     educationKicker: "Educational landscape",
     educationCopy:
-      "Explore Magdeburg's schools and universities — student enrolments, school types, capacity, and district distribution.",
+      "Review Magdeburg's schools and universities, including enrolment, school types, capacity, and district distribution.",
     healthIntro: "Explore district-level medical service availability for doctors, dentists and pharmacies.",
     placeholders: {
-      infrastructure: "Infrastructure visualizations are ready for future datasets.",
-      health: "Health and social services visualizations are ready for future datasets."
+      infrastructure: "Infrastructure indicators will appear when validated datasets are added.",
+      health: "Health and social service indicators will appear when validated datasets are added."
     },
     health: {
       service: "Service",
       services: { doctors: "Doctors", dentists: "Dentists", pharmacies: "Pharmacies" }
     },
-    comingSoon: "Coming soon",
-    readyCopy: "The dashboard framework is prepared. Add datasets to activate this section.",
+    comingSoon: "In preparation",
+    readyCopy: "This dashboard section is prepared for validated datasets.",
     kpis: {
-      population: "Residents",
-      populationHint: "City aggregate, latest annual value",
-      growth: "Growth since baseline",
-      growthHint: "Change from the first population year",
-      migration: "Migration balance",
-      migrationHint: "Latest complete annual balance",
-      age: "Age structure",
+      population: "Resident population",
+      populationHint: "Latest annual city total",
+      growth: "Change since baseline",
+      growthHint: "Difference from the first available year",
+      migration: "Net migration",
+      migrationHint: "Arrivals minus departures, annual age-group totals",
+      age: "Age indicators",
       ageHint: "Youth quota / elderly quota"
     },
     charts: {
-      migrationKicker: "Resident migration",
-      migrationTitle: "Annual arrivals, departures and migration balance",
-      populationKicker: "Population map",
-      populationTitle: "Total and gender by statistical district",
-      vitalKicker: "Life events",
-      vitalTitle: "Births, deaths and birth-death gap",
+      statusKicker: "Population status",
+      statusTitle: "Resident population and international residents",
+      migrationKicker: "Migration",
+      migrationTitle: "Arrivals, departures and net migration",
+      populationKicker: "District population",
+      populationTitle: "Resident population by statistical district",
+      vitalKicker: "Vital statistics",
+      vitalTitle: "Births, deaths and births-minus-deaths",
       ageKicker: "Age structure",
       ageTitle: "Youth and elderly quotas",
-      ageMigrationKicker: "Age-group migration",
-      ageMigrationTitle: "Moving into and out of Magdeburg by age",
+      ageMigrationKicker: "Migration by age group",
+      ageMigrationTitle: "Arrivals and departures by age group",
       healthKicker: "Health services",
       healthTitle: "Doctors, dentists and pharmacies by district",
       eduTypeKicker: "Educational landscape",
@@ -84,31 +88,37 @@ const translations = {
     series: {
       arrivals: "Arrivals",
       departures: "Departures",
-      net: "Migration balance",
+      net: "Net migration",
       births: "Births",
       deaths: "Deaths",
-      birthDeathGap: "Birth-death gap",
+      birthDeathGap: "Births minus deaths",
       youth: "Youth quota",
       elderly: "Elderly quota",
       male: "Male",
       female: "Female",
-      incoming: "Incoming",
-      outgoing: "Outgoing"
+      incoming: "Arrivals",
+      outgoing: "Departures"
     },
     map: {
-      residents: "Residents",
-      genderSplit: "Gender split",
-      hover: "Hover a district",
-      hoverCopy: "Move over any tile to inspect population and gender data.",
+      residents: "Resident population",
+      genderSplit: "Gender distribution",
+      hover: "Select a district",
+      hoverCopy: "Hover over a district area to view the selected year's resident population.",
       rank: "Rank",
-      topDistricts: "Top districts"
+      topDistricts: "District overview"
     },
     age: {
       year: "Year",
       years: "years",
-      net: "Net",
-      youth: "Youth",
-      elderly: "Elderly"
+      net: "Net migration",
+      youth: "Youth quota",
+      elderly: "Elderly quota"
+    },
+    status: {
+      residents: "Resident population",
+      internationals: "International residents",
+      ofResidents: "share of resident population",
+      sinceBaseline: "since 2001"
     },
     alerts: "Alerts",
     close: "Close",
@@ -123,45 +133,47 @@ const translations = {
       infrastructure: "Infrastruktur",
       health: "Gesundheit und Soziales"
     },
-    introKicker: "Bevölkerungsdaten",
+    introKicker: "Bevölkerungsindikatoren",
     introTitle: "MagdePulse",
     introCopy:
-      "Entdecke Magdeburgs Bevölkerungsrhythmus anhand von Wanderung, Bezirksmustern, Lebensereignissen und Altersstruktur.",
+      "Analyse amtlicher Kennzahlen zu Bevölkerung, Wanderung, Bezirksverteilung, Bevölkerungsbewegung und Altersstruktur in Magdeburg.",
     educationKicker: "Bildungslandschaft",
     educationCopy:
-      "Schulen und Hochschulen in Magdeburg — Schülerzahlen, Schularten, Kapazitäten und Bezirksverteilung.",
+      "Schulen und Hochschulen in Magdeburg: Schülerzahlen, Schularten, Kapazitäten und Bezirksverteilung.",
     healthIntro: "Zeige die Verteilung von Ärzten, Zahnärzten und Apotheken nach Stadtteil.",
     placeholders: {
-      infrastructure: "Visualisierungen zur Infrastruktur sind für zukünftige Datensätze vorbereitet.",
-      health: "Visualisierungen zu Gesundheit und Sozialem sind für zukünftige Datensätze vorbereitet."
+      infrastructure: "Infrastrukturindikatoren erscheinen, sobald geprüfte Datensätze ergänzt wurden.",
+      health: "Indikatoren zu Gesundheit und Sozialem erscheinen, sobald geprüfte Datensätze ergänzt wurden."
     },
     health: {
       service: "Dienstleistung",
       services: { doctors: "Ärzte", dentists: "Zahnärzte", pharmacies: "Apotheken" }
     },
-    comingSoon: "Demnächst",
-    readyCopy: "Das Dashboard-Framework ist vorbereitet. Neue Datensätze aktivieren diesen Bereich.",
+    comingSoon: "In Vorbereitung",
+    readyCopy: "Dieser Dashboard-Bereich ist für geprüfte Datensätze vorbereitet.",
     kpis: {
-      population: "Einwohner",
-      populationHint: "Stadt-Aggregat, neuester Jahreswert",
-      growth: "Wachstum seit Basisjahr",
-      growthHint: "Veränderung seit dem ersten Bevölkerungsjahr",
+      population: "Bevölkerung mit Hauptwohnsitz",
+      populationHint: "Neuester jährlicher Stadtwert",
+      growth: "Veränderung seit Basisjahr",
+      growthHint: "Differenz zum ersten verfügbaren Jahr",
       migration: "Wanderungssaldo",
-      migrationHint: "Letzter vollständiger Jahreswert",
-      age: "Altersstruktur",
+      migrationHint: "Zuzüge minus Wegzüge, jährliche Altersgruppensummen",
+      age: "Altersindikatoren",
       ageHint: "Jugendquote / Altenquote"
     },
     charts: {
+      statusKicker: "Bevölkerungsstand",
+      statusTitle: "Bevölkerung mit Hauptwohnsitz und ausländische Bevölkerung",
       migrationKicker: "Wanderung",
       migrationTitle: "Jährliche Zuzüge, Wegzüge und Wanderungssaldo",
-      populationKicker: "Bevölkerungskarte",
-      populationTitle: "Gesamtzahl und Geschlecht nach statistischem Bezirk",
-      vitalKicker: "Lebensereignisse",
-      vitalTitle: "Geburten, Sterbefälle und Geburten-Sterbefälle-Saldo",
+      populationKicker: "Bezirksbevölkerung",
+      populationTitle: "Bevölkerung mit Hauptwohnsitz nach statistischem Bezirk",
+      vitalKicker: "Bevölkerungsbewegung",
+      vitalTitle: "Geburten, Sterbefälle und Differenz",
       ageKicker: "Altersstruktur",
       ageTitle: "Jugend- und Altenquote",
-      ageMigrationKicker: "Altersgruppen-Migration",
-      ageMigrationTitle: "Zuzug und Wegzug nach Alter",
+      ageMigrationKicker: "Wanderung nach Altersgruppen",
+      ageMigrationTitle: "Zuzüge und Wegzüge nach Altersgruppe",
       healthKicker: "Gesundheitsdienste",
       healthTitle: "Ärzte, Zahnärzte und Apotheken nach Bezirk",
       eduTypeKicker: "Bildungslandschaft",
@@ -187,28 +199,34 @@ const translations = {
       net: "Wanderungssaldo",
       births: "Geburten",
       deaths: "Sterbefälle",
-      birthDeathGap: "Geburten-Sterbefälle-Saldo",
+      birthDeathGap: "Geburten minus Sterbefälle",
       youth: "Jugendquote",
       elderly: "Altenquote",
       male: "Männlich",
       female: "Weiblich",
-      incoming: "Zuzug",
-      outgoing: "Wegzug"
+      incoming: "Zuzüge",
+      outgoing: "Wegzüge"
     },
     map: {
-      residents: "Einwohner",
+      residents: "Bevölkerung mit Hauptwohnsitz",
       genderSplit: "Geschlechterverteilung",
       hover: "Bezirk auswählen",
-      hoverCopy: "Bewege die Maus über eine Kachel, um Bevölkerungs- und Geschlechtsdaten zu sehen.",
+      hoverCopy: "Bewege die Maus über einen Bezirk, um die Bevölkerung im ausgewählten Jahr zu sehen.",
       rank: "Rang",
-      topDistricts: "Größte Bezirke"
+      topDistricts: "Bezirksübersicht"
     },
     age: {
       year: "Jahr",
       years: "Jahre",
-      net: "Saldo",
-      youth: "Jugend",
-      elderly: "Ältere"
+      net: "Wanderungssaldo",
+      youth: "Jugendquote",
+      elderly: "Altenquote"
+    },
+    status: {
+      residents: "Bevölkerung mit Hauptwohnsitz",
+      internationals: "Ausländische Bevölkerung",
+      ofResidents: "Anteil an der Bevölkerung",
+      sinceBaseline: "seit 2001"
     },
     alerts: "Meldungen",
     close: "Schließen",
@@ -223,7 +241,7 @@ const ageLabelTranslations = {
 };
 
 const mapBoundarySource = "Map boundary: OpenStreetMap/Nominatim relation 62481";
-const coordinateSource = "District anchors: Nominatim/OpenStreetMap, with documented inferred anchors where exact labels are unavailable";
+const coordinateSource = "District regions: clipped from Nominatim/OpenStreetMap anchor points because official district polygons are not included in the workbook";
 
 const formatNumber = (value) => new Intl.NumberFormat(state.language === "de" ? "de-DE" : "en-US").format(value);
 const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -249,17 +267,34 @@ function mixColor(from, to, amount) {
 function chartOptions({ percent = false } = {}) {
   return {
     responsive: true,
-    maintainAspectRatio: true,
-    animation: { duration: 900, easing: "easeOutQuart" },
-    interaction: { mode: "index", intersect: false },
+    maintainAspectRatio: false,
+    resizeDelay: 80,
+    animation: {
+      duration: 900,
+      easing: "easeOutQuart"
+    },
+    interaction: {
+      mode: "index",
+      intersect: false
+    },
+    layout: {
+      padding: {
+        top: 14,
+        right: 18,
+        bottom: 10,
+        left: 8
+      }
+    },
     plugins: {
       legend: {
+        position: "top",
         labels: {
-          boxWidth: 10,
-          boxHeight: 10,
+          boxWidth: 12,
+          boxHeight: 12,
+          padding: 18,
           usePointStyle: true,
           color: css("--ink"),
-          font: { weight: 750 }
+          font: { size: 13, weight: 750 }
         }
       },
       tooltip: {
@@ -273,13 +308,23 @@ function chartOptions({ percent = false } = {}) {
     scales: {
       x: {
         grid: { display: false },
-        ticks: { color: css("--muted"), maxRotation: 0, autoSkip: true, maxTicksLimit: 10 }
+        ticks: {
+          color: css("--muted"),
+          maxRotation: 0,
+          autoSkip: true,
+          maxTicksLimit: 8,
+          padding: 10,
+          font: { size: 12, weight: 650 }
+        }
       },
       y: {
         grid: { color: "#eeeeee" },
+        border: { display: false },
         ticks: {
           color: css("--muted"),
-          callback: (v) => `${formatNumber(v)}${percent ? "%" : ""}`
+          padding: 12,
+          font: { size: 12, weight: 650 },
+          callback: (value) => `${formatNumber(value)}${percent ? "%" : ""}`
         }
       }
     }
@@ -293,6 +338,7 @@ function createChart(id, config) {
   const el = document.getElementById(id);
   if (!el) return;
   state.charts[id] = new Chart(el, config);
+  requestAnimationFrame(() => state.charts[id]?.resize());
 }
 
 function sourceText(needles) {
@@ -487,6 +533,82 @@ function renderVitalChart(population) {
   });
 }
 
+function statusRows(population) {
+  return population.populationStatus ?? [];
+}
+
+function renderStatusSlider(population) {
+  const slider = document.getElementById("status-year-slider");
+  const rows = statusRows(population);
+
+  if (state.selectedStatusIndex >= rows.length) {
+    state.selectedStatusIndex = rows.length - 1;
+  }
+
+  slider.min = "0";
+  slider.max = String(rows.length - 1);
+  slider.value = String(state.selectedStatusIndex);
+  setText("#status-slider-label", t().age.year);
+}
+
+function renderStatusOrbit(root, item) {
+  let orbit = root.querySelector(`[data-status-orbit="${item.className}"]`);
+
+  if (!orbit) {
+    orbit = document.createElement("article");
+    orbit.className = `status-orbit ${item.className}`;
+    orbit.dataset.statusOrbit = item.className;
+    orbit.innerHTML = `
+      <div class="status-ring">
+        <strong></strong>
+      </div>
+      <div>
+        <span></span>
+        <p></p>
+      </div>
+    `;
+    root.append(orbit);
+  }
+
+  const ring = orbit.querySelector(".status-ring");
+  ring.style.setProperty("--angle", `${Math.min(item.share / 100, 1) * 360}deg`);
+  ring.querySelector("strong").textContent = item.value;
+  orbit.querySelector("span").textContent = item.label;
+  orbit.querySelector("p").textContent = item.detail;
+}
+
+function renderPopulationStatus(population) {
+  const copy = t().status;
+  const rows = statusRows(population);
+  const selected = rows[state.selectedStatusIndex] ?? rows.at(-1);
+  const first = rows[0] ?? selected;
+  const totals = rows.map((row) => row.totalPopulation);
+  const minTotal = Math.min(...totals);
+  const maxTotal = Math.max(...totals);
+  const root = document.getElementById("status-orbits");
+  const totalProgress = maxTotal > minTotal
+    ? ((selected.totalPopulation - minTotal) / (maxTotal - minTotal)) * 100
+    : 100;
+  const residentChange = selected.totalPopulation - first.totalPopulation;
+  const residentChangeShare = first.totalPopulation ? ((residentChange / first.totalPopulation) * 100).toFixed(1) : "0.0";
+
+  document.getElementById("status-year-label").textContent = selected.year;
+  renderStatusOrbit(root, {
+    className: "residents",
+    label: copy.residents,
+    value: formatNumber(selected.totalPopulation),
+    detail: `${formatSigned(residentChange)} / ${residentChangeShare}% ${copy.sinceBaseline}`,
+    share: totalProgress
+  });
+  renderStatusOrbit(root, {
+    className: "internationals",
+    label: copy.internationals,
+    value: formatNumber(selected.internationalPopulation),
+    detail: `${selected.internationalShare}% ${copy.ofResidents}`,
+    share: selected.internationalShare
+  });
+}
+
 function renderPopulationYearSlider(population) {
   const years = populationYears(population);
   const slider = document.getElementById("population-year-slider");
@@ -502,14 +624,11 @@ function renderPopulationYearSlider(population) {
 
 function updateInspector(inspector, district, rank) {
   const copy = t();
+  const detail = inspector.querySelector(".map-inspector-detail") ?? inspector;
   const maleShare = district.total ? Math.round((district.male / district.total) * 100) : 0;
   const femaleShare = district.total ? 100 - maleShare : 0;
-  const trendMax = Math.max(...district.trend.map((r) => r.total));
-  const trendBars = district.trend
-    .map((r) => `<span style="--value: ${(r.total / trendMax) * 100}%"><i>${r.year}</i><b>${formatNumber(r.total)}</b></span>`)
-    .join("");
 
-  inspector.innerHTML = `
+  detail.innerHTML = `
     <p class="eyebrow">${rank ? `${copy.map.rank} ${rank}` : copy.map.hover}</p>
     <h3>${district.name}</h3>
     <strong>${formatNumber(district.total)}</strong>
@@ -521,7 +640,6 @@ function updateInspector(inspector, district, rank) {
       <span>${copy.series.male}: ${formatNumber(district.male)} (${maleShare}%)</span>
       <span>${copy.series.female}: ${formatNumber(district.female)} (${femaleShare}%)</span>
     </div>
-    <div class="district-trend">${trendBars}</div>
   `;
 }
 
@@ -547,6 +665,168 @@ function boundaryPolygons(feature) {
     : feature.geometry.coordinates;
 }
 
+function projectionScale(feature) {
+  const coordinates = boundaryPolygons(feature).flatMap((polygon) => polygon[0]);
+  const averageLat = coordinates.reduce((sum, coordinate) => sum + coordinate[1], 0) / coordinates.length;
+  return Math.cos((averageLat * Math.PI) / 180);
+}
+
+function projectLonLat(lon, lat, scale) {
+  return { x: lon * scale, y: lat };
+}
+
+function unprojectPoint(point, scale) {
+  return [point.y, point.x / scale];
+}
+
+function openRing(ring) {
+  const first = ring[0];
+  const last = ring.at(-1);
+
+  if (first && last && first[0] === last[0] && first[1] === last[1]) {
+    return ring.slice(0, -1);
+  }
+
+  return ring;
+}
+
+function simplifyRing(ring, targetVertices = 260) {
+  const open = openRing(ring);
+
+  if (open.length <= targetVertices) {
+    return open;
+  }
+
+  const step = Math.ceil(open.length / targetVertices);
+  return open.filter((_, index) => index % step === 0);
+}
+
+function polygonArea(points) {
+  let area = 0;
+
+  for (let index = 0; index < points.length; index += 1) {
+    const current = points[index];
+    const next = points[(index + 1) % points.length];
+    area += current.x * next.y - next.x * current.y;
+  }
+
+  return area / 2;
+}
+
+function pointInRing(point, ring) {
+  let inside = false;
+
+  for (let index = 0, previous = ring.length - 1; index < ring.length; previous = index, index += 1) {
+    const current = ring[index];
+    const before = ring[previous];
+    const crosses = current.y > point.y !== before.y > point.y;
+
+    if (crosses && point.x < ((before.x - current.x) * (point.y - current.y)) / (before.y - current.y) + current.x) {
+      inside = !inside;
+    }
+  }
+
+  return inside;
+}
+
+function bisectorValue(point, anchor, other) {
+  const left = 2 * ((other.x - anchor.x) * point.x + (other.y - anchor.y) * point.y);
+  const right = other.x ** 2 + other.y ** 2 - anchor.x ** 2 - anchor.y ** 2;
+  return left - right;
+}
+
+function bisectorIntersection(start, end, anchor, other) {
+  const startValue = bisectorValue(start, anchor, other);
+  const endValue = bisectorValue(end, anchor, other);
+  const denominator = startValue - endValue;
+
+  if (Math.abs(denominator) < 1e-12) {
+    return end;
+  }
+
+  const amount = startValue / denominator;
+  return {
+    x: start.x + (end.x - start.x) * amount,
+    y: start.y + (end.y - start.y) * amount
+  };
+}
+
+function clipToCloserSide(cell, anchor, other) {
+  const clipped = [];
+
+  for (let index = 0; index < cell.length; index += 1) {
+    const current = cell[index];
+    const previous = cell[(index + cell.length - 1) % cell.length];
+    const currentInside = bisectorValue(current, anchor, other) <= 1e-12;
+    const previousInside = bisectorValue(previous, anchor, other) <= 1e-12;
+
+    if (currentInside !== previousInside) {
+      clipped.push(bisectorIntersection(previous, current, anchor, other));
+    }
+
+    if (currentInside) {
+      clipped.push(current);
+    }
+  }
+
+  return clipped;
+}
+
+function buildDistrictCells(districts) {
+  if (state.districtCells.size) {
+    return state.districtCells;
+  }
+
+  const scale = projectionScale(state.boundary);
+  const boundaryRings = boundaryPolygons(state.boundary)
+    .map((polygon) => simplifyRing(polygon[0]).map(([lon, lat]) => projectLonLat(lon, lat, scale)))
+    .filter((ring) => ring.length >= 3)
+    .map((ring) => ({
+      ring,
+      area: Math.abs(polygonArea(ring))
+    }));
+  const largestRing = boundaryRings.reduce((largest, ring) => (ring.area > largest.area ? ring : largest), boundaryRings[0]);
+  const anchors = districts
+    .map((district) => {
+      const coordinate = state.districtCoordinates.get(district.name);
+
+      if (!coordinate) {
+        return null;
+      }
+
+      return {
+        district,
+        point: projectLonLat(coordinate.lon, coordinate.lat, scale)
+      };
+    })
+    .filter(Boolean);
+  const cells = new Map();
+
+  for (const anchor of anchors) {
+    const baseRing = boundaryRings.find((ring) => pointInRing(anchor.point, ring.ring)) ?? largestRing;
+    let cell = baseRing.ring.map((point) => ({ ...point }));
+
+    for (const other of anchors) {
+      if (other === anchor) {
+        continue;
+      }
+
+      cell = clipToCloserSide(cell, anchor.point, other.point);
+
+      if (cell.length < 3) {
+        break;
+      }
+    }
+
+    if (cell.length >= 3) {
+      cells.set(anchor.district.name, cell.map((point) => unprojectPoint(point, scale)));
+    }
+  }
+
+  state.districtCells = cells;
+  return cells;
+}
+
 function resetLeafletMap(containerId) {
   state.maps[containerId]?.remove();
   const map = L.map(containerId, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, keyboard: true });
@@ -563,9 +843,18 @@ function addBoundaryMask(map, feature) {
   const world = [[85, -180], [85, 180], [-85, 180], [-85, -180]];
   const holes = boundaryPolygons(feature).map((poly) => poly[0].map(([lon, lat]) => [lat, lon]));
   L.polygon([world, ...holes], { stroke: false, fillColor: "#ffffff", fillOpacity: 0.82, interactive: false }).addTo(map);
-  return L.geoJSON(feature, {
-    style: { color: css("--brand-orange"), weight: 0, opacity: 0.88, fillColor: css("--brand-orange"), fillOpacity: 0.08 }
+
+  const boundaryLayer = L.geoJSON(feature, {
+    style: {
+      color: css("--brand-orange"),
+      weight: 3,
+      opacity: 0.94,
+      fillColor: css("--brand-orange"),
+      fillOpacity: 0.06
+    }
   }).addTo(map);
+
+  return boundaryLayer;
 }
 
 function renderMap(containerId, inspectorId, districts, { ranked = false, onInspect: cb = null, initialIndex = 0 } = {}) {
@@ -577,24 +866,28 @@ function renderMap(containerId, inspectorId, districts, { ranked = false, onInsp
   const map = resetLeafletMap(containerId);
   const boundaryLayer = addBoundaryMask(map, state.boundary);
   const bounds = boundaryLayer.getBounds();
+  const cells = buildDistrictCells(districts);
 
-  inspector.innerHTML = `
+  const detail = inspector.querySelector(".map-inspector-detail") ?? inspector;
+  detail.innerHTML = `
     <p class="eyebrow">${t().map.hover}</p>
     <h3>${t().map.topDistricts}</h3>
     <span>${t().map.hoverCopy}</span>
   `;
 
   districts.forEach((district) => {
-    const coord = findDistrictCoordinate(district.name);
-    if (!coord) return;
+    const cell = cells.get(district.name);
+
+    if (!cell) return;
+
     const intensity = Math.max(0.12, Math.sqrt(district.total / max));
     const markerColor = ranked && topNames.has(district.name) ? css("--brand-brown") : css("--brand-orange");
-    const marker = L.circleMarker([coord.lat, coord.lon], {
-      radius: 4 + intensity * 11,
+    const baseOpacity = 0.3 + intensity * 0.38;
+    const marker = L.polygon(cell, {
       fillColor: mixColor("#eeeeee", markerColor, intensity),
-      fillOpacity: ranked && topNames.has(district.name) ? 0.88 : 0.72,
+      fillOpacity: ranked && topNames.has(district.name) ? Math.max(baseOpacity, 0.68) : baseOpacity,
       stroke: false,
-      opacity: 0.94
+      className: "district-region"
     }).addTo(map);
     const rank = rankByName.get(district.name);
     const onInspect = () => {
@@ -602,13 +895,26 @@ function renderMap(containerId, inspectorId, districts, { ranked = false, onInsp
       else updateInspector(inspector, district, ranked ? rank : null);
     };
     marker.bindTooltip(
-      `${district.name}: ${formatNumber(district.total)}${coord.inferred ? " · inferred anchor" : ""}`,
-      { direction: "top", sticky: true }
+      `${district.name}: ${formatNumber(district.total)}`,
+      {
+        direction: "top",
+        sticky: true
+      }
     );
     marker.on("mouseover", onInspect);
+    marker.on("mouseover", () => {
+      marker.setStyle({ fillColor: css("--brand-brown"), fillOpacity: 0.86 });
+    });
+    marker.on("mouseout", () => {
+      marker.setStyle({
+        fillColor: mixColor("#eeeeee", markerColor, intensity),
+        fillOpacity: ranked && topNames.has(district.name) ? Math.max(baseOpacity, 0.68) : baseOpacity
+      });
+    });
     marker.on("click", onInspect);
   });
 
+  boundaryLayer.bringToFront();
   map.fitBounds(bounds, { padding: [16, 16] });
   map.setMaxBounds(bounds.pad(0.08));
   setTimeout(() => map.invalidateSize(), 0);
@@ -625,35 +931,34 @@ function renderMap(containerId, inspectorId, districts, { ranked = false, onInsp
 function renderAgeStructure(population) {
   const copy = t();
   const selected = population.ageQuote[state.selectedAgeQuoteIndex] ?? population.ageQuote.at(-1);
-  const trend = population.ageQuote;
   const orbitRoot = document.getElementById("age-orbits");
-  const trendRoot = document.getElementById("age-trend");
 
   document.getElementById("age-year-label").textContent = selected.year;
-  orbitRoot.innerHTML = "";
-  trendRoot.innerHTML = "";
 
   [
     { label: copy.age.youth, value: selected.youth, className: "youth" },
     { label: copy.age.elderly, value: selected.elderly, className: "elderly" }
   ].forEach((item) => {
-    const orbit = document.createElement("div");
-    orbit.className = `age-orbit ${item.className}`;
-    orbit.style.setProperty("--angle", `${Math.min(item.value / 50, 1) * 360}deg`);
-    orbit.innerHTML = `<div class="age-ring"><strong>${item.value}%</strong></div><span>${item.label}</span>`;
-    orbitRoot.append(orbit);
-  });
+    let orbit = orbitRoot.querySelector(`[data-age-orbit="${item.className}"]`);
 
-  for (const row of trend) {
-    const item = document.createElement("div");
-    item.className = `age-trend-year${row.year === selected.year ? " is-selected" : ""}`;
-    item.innerHTML = `
-      <span class="age-column youth" style="--value: ${row.youth}%"></span>
-      <span class="age-column elderly" style="--value: ${row.elderly}%"></span>
-      <small>${row.year}</small>
-    `;
-    trendRoot.append(item);
-  }
+    if (!orbit) {
+      orbit = document.createElement("div");
+      orbit.className = `age-orbit ${item.className}`;
+      orbit.dataset.ageOrbit = item.className;
+      orbit.innerHTML = `
+        <div class="age-ring">
+          <strong></strong>
+        </div>
+        <span></span>
+      `;
+      orbitRoot.append(orbit);
+    }
+
+    const ring = orbit.querySelector(".age-ring");
+    ring.style.setProperty("--angle", `${Math.min(item.value / 50, 1) * 360}deg`);
+    ring.querySelector("strong").textContent = `${item.value}%`;
+    orbit.querySelector("span").textContent = item.label;
+  });
 }
 
 function renderAgeQuoteSlider(population) {
@@ -692,12 +997,12 @@ function renderAgeFlow(population) {
       <div class="flow-lanes">
         <div class="flow-lane incoming">
           <span>${t().series.incoming}</span>
-          <div>${renderPeople(inCount, "incoming")}</div>
+          <div><span class="door-icon" aria-hidden="true"></span>${renderPeople(inCount, "incoming")}</div>
           <strong>${formatNumber(row.incoming)}</strong>
         </div>
         <div class="flow-lane outgoing">
           <span>${t().series.outgoing}</span>
-          <div>${renderPeople(outCount, "outgoing")}</div>
+          <div><span class="door-icon" aria-hidden="true"></span>${renderPeople(outCount, "outgoing")}</div>
           <strong>${formatNumber(row.outgoing)}</strong>
         </div>
       </div>
@@ -717,8 +1022,9 @@ function renderAgeSlider(population) {
 }
 
 function renderSources() {
-  setSource("migration-source", ["Zuzüge, Wegzüge"]);
-  setSource("population-source", ["Hauptwohnsitzbevölkerung"]);
+  setSource("status-source", ["Sonderbericht - Auslaendische Bevoelkerung"]);
+  setSource("migration-source", ["Zuzüge nach", "Wegzüge aus"]);
+  setSource("population-source", ["Statistischen Bezirken"]);
   setSource("vital-source", ["Geburten"]);
   setSource("age-source", ["Jugend- und Altenquote"]);
   setSource("age-migration-source", ["Zuzüge nach", "Wegzüge aus"]);
@@ -1057,13 +1363,20 @@ function renderHealthView() {
 // Population view
 // ---------------------------------------------------------------------------
 
+function renderPopulationMapSection(population) {
+  const districts = districtSnapshot(population, state.selectedPopulationYear);
+  renderMap("population-map", "population-inspector", districts);
+  renderPopulationYearSlider(population);
+}
+
 function renderPopulationView() {
   const population = state.data.population;
-  const districts = districtSnapshot(population, state.selectedPopulationYear);
+
   renderKpis(population.summary);
+  renderStatusSlider(population);
+  renderPopulationStatus(population);
   renderMigrationChart(population);
-  renderPopulationYearSlider(population);
-  renderMap("population-map", "population-inspector", districts);
+  renderPopulationMapSection(population);
   renderVitalChart(population);
   renderAgeQuoteSlider(population);
   renderAgeStructure(population);
@@ -1118,6 +1431,7 @@ function updateStaticText() {
   });
 
   const sectionCopy = [
+    ["status-orbits", "statusKicker", "statusTitle"],
     ["migration-chart", "migrationKicker", "migrationTitle"],
     ["population-map", "populationKicker", "populationTitle"],
     ["health-map", "healthKicker", "healthTitle"],
@@ -1190,7 +1504,13 @@ function bindEvents() {
   document.getElementById("population-year-slider").addEventListener("input", (e) => {
     const years = populationYears(state.data.population);
     state.selectedPopulationYear = years[Number(e.target.value)];
-    renderPopulationView();
+    renderPopulationMapSection(state.data.population);
+  });
+
+  document.getElementById("status-year-slider").addEventListener("input", (event) => {
+    state.selectedStatusIndex = Number(event.target.value);
+    renderStatusSlider(state.data.population);
+    renderPopulationStatus(state.data.population);
   });
 
   document.getElementById("age-quote-year-slider").addEventListener("input", (e) => {
@@ -1242,6 +1562,7 @@ async function loadDashboard() {
   state.data = await response.json();
   [state.boundary, state.districtCoordinates] = await Promise.all([loadBoundary(), loadDistrictCoordinates()]);
   state.selectedPopulationYear = populationYears(state.data.population).at(-1);
+  state.selectedStatusIndex = statusRows(state.data.population).length - 1;
   state.selectedAgeQuoteIndex = state.data.population.ageQuote.length - 1;
   state.selectedAgeIndex = state.data.population.ageMigration.length - 1;
   state.selectedHealthYear = state.data.health?.latestYear;
