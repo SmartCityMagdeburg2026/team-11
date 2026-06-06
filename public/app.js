@@ -27,9 +27,6 @@ const translations = {
     introTitle: "MagdePulse",
     introCopy:
       "Explore Magdeburg's population rhythm through resident movement, district patterns, life events, and age structure.",
-    infrastructureKicker: "Infrastructure trends",
-    infrastructureIntro:
-      "Follow housing stock, new completions and vacancy pressure to see how Magdeburg's built environment evolves over time.",
     healthIntro: "Explore district-level medical service availability for doctors, dentists and pharmacies.",
     placeholders: {
       education: "Education visualizations are ready for future datasets.",
@@ -54,15 +51,7 @@ const translations = {
       migration: "Migration balance",
       migrationHint: "Latest complete annual balance",
       age: "Age structure",
-      ageHint: "Youth quota / elderly quota",
-      infrastructureStock: "Housing stock",
-      infrastructureStockHint: "Latest annual dwelling total",
-      infrastructureBuildings: "Residential buildings",
-      infrastructureBuildingsHint: "Latest annual building total",
-      infrastructureFloorArea: "Floor area",
-      infrastructureFloorAreaHint: "Latest recorded residential floor area",
-      infrastructureVacancy: "Vacancy rate",
-      infrastructureVacancyHint: "Latest annual citywide vacancy share"
+      ageHint: "Youth quota / elderly quota"
     },
     charts: {
       migrationKicker: "Resident migration",
@@ -75,12 +64,6 @@ const translations = {
       ageTitle: "Youth and elderly quotas",
       ageMigrationKicker: "Age-group migration",
       ageMigrationTitle: "Moving into and out of Magdeburg by age",
-      infrastructureStockKicker: "Housing stock",
-      infrastructureStockTitle: "Housing stock and residential buildings over time",
-      infrastructureCompletionsKicker: "New completions",
-      infrastructureCompletionsTitle: "Completed apartments in new buildings by year",
-      infrastructureVacancyKicker: "Vacancy pressure",
-      infrastructureVacancyTitle: "Citywide vacancy rate over time",
       healthKicker: "Health services",
       healthTitle: "Doctors, dentists and pharmacies by district"
     },
@@ -96,11 +79,7 @@ const translations = {
       male: "Male",
       female: "Female",
       incoming: "Incoming",
-      outgoing: "Outgoing",
-      housingStock: "Housing stock",
-      residentialBuildings: "Residential buildings",
-      completions: "Completed apartments",
-      vacancyRate: "Vacancy rate"
+      outgoing: "Outgoing"
     },
     map: {
       residents: "Residents",
@@ -134,9 +113,6 @@ const translations = {
     introTitle: "MagdePulse",
     introCopy:
       "Entdecke Magdeburgs Bevölkerungsrhythmus anhand von Wanderung, Bezirksmustern, Lebensereignissen und Altersstruktur.",
-    infrastructureKicker: "Infrastrukturtrends",
-    infrastructureIntro:
-      "Verfolge Wohnungsbestand, Fertigstellungen und Leerstand, um zu sehen, wie sich Magdeburgs bauliche Entwicklung verändert.",
     healthIntro: "Zeige die Verteilung von Ärzten, Zahnärzten und Apotheken nach Stadtteil.",
     placeholders: {
       education: "Visualisierungen zur Bildung sind für zukünftige Datensätze vorbereitet.",
@@ -161,15 +137,7 @@ const translations = {
       migration: "Wanderungssaldo",
       migrationHint: "Letzter vollständiger Jahreswert",
       age: "Altersstruktur",
-      ageHint: "Jugendquote / Altenquote",
-      infrastructureStock: "Wohnungsbestand",
-      infrastructureStockHint: "Neuester jährlicher Gesamtbestand",
-      infrastructureBuildings: "Wohngebäude",
-      infrastructureBuildingsHint: "Neuester jährlicher Gebäudebestand",
-      infrastructureFloorArea: "Wohnfläche",
-      infrastructureFloorAreaHint: "Neueste erfasste Wohnfläche",
-      infrastructureVacancy: "Leerstandsquote",
-      infrastructureVacancyHint: "Neuester stadtweiter jährlicher Anteil"
+      ageHint: "Jugendquote / Altenquote"
     },
     charts: {
       migrationKicker: "Wanderung",
@@ -182,12 +150,6 @@ const translations = {
       ageTitle: "Jugend- und Altenquote",
       ageMigrationKicker: "Altersgruppen-Migration",
       ageMigrationTitle: "Zuzug und Wegzug nach Alter",
-      infrastructureStockKicker: "Wohnungsbestand",
-      infrastructureStockTitle: "Wohnungsbestand und Wohngebäude im Zeitverlauf",
-      infrastructureCompletionsKicker: "Fertigstellungen",
-      infrastructureCompletionsTitle: "Fertiggestellte Wohnungen im Neubau je Jahr",
-      infrastructureVacancyKicker: "Leerstand",
-      infrastructureVacancyTitle: "Stadtweite Leerstandsquote im Zeitverlauf",
       healthKicker: "Gesundheitsdienste",
       healthTitle: "Ärzte, Zahnärzte und Apotheken nach Bezirk"
     },
@@ -203,11 +165,7 @@ const translations = {
       male: "Männlich",
       female: "Weiblich",
       incoming: "Zuzug",
-      outgoing: "Wegzug",
-      housingStock: "Wohnungsbestand",
-      residentialBuildings: "Wohngebäude",
-      completions: "Fertiggestellte Wohnungen",
-      vacancyRate: "Leerstandsquote"
+      outgoing: "Wegzug"
     },
     map: {
       residents: "Einwohner",
@@ -540,45 +498,6 @@ function renderKpis(summary) {
   }
 }
 
-function renderInfrastructureKpis(summary) {
-  const labels = t().kpis;
-  const items = [
-    {
-      label: labels.infrastructureStock,
-      value: formatNumber(summary.housingStock),
-      hint: `${labels.infrastructureStockHint} (${summary.housingStockYear})`
-    },
-    {
-      label: labels.infrastructureBuildings,
-      value: formatNumber(summary.buildings),
-      hint: `${labels.infrastructureBuildingsHint} (${summary.buildingsYear})`
-    },
-    {
-      label: labels.infrastructureFloorArea,
-      value: `${formatNumber(summary.floorArea)} m²`,
-      hint: `${labels.infrastructureFloorAreaHint} (${summary.floorAreaYear})`
-    },
-    {
-      label: labels.infrastructureVacancy,
-      value: `${formatNumber(summary.vacancyRate)}%`,
-      hint: `${labels.infrastructureVacancyHint} (${summary.vacancyYear})`
-    }
-  ];
-
-  const grid = document.getElementById("infra-kpi-grid");
-  grid.innerHTML = "";
-
-  for (const item of items) {
-    const card = document.createElement("article");
-    card.className = "kpi-card";
-    card.innerHTML = `<span></span><strong></strong><p></p>`;
-    card.querySelector("span").textContent = item.label;
-    card.querySelector("strong").textContent = item.value;
-    card.querySelector("p").textContent = item.hint;
-    grid.append(card);
-  }
-}
-
 function renderMigrationChart(population) {
   const labels = t().series;
   const source = annualComplete(population.migration.annual);
@@ -657,98 +576,6 @@ function renderVitalChart(population) {
       ]
     },
     options: chartOptions()
-  });
-}
-
-function renderInfrastructureStockChart(infrastructure) {
-  const labels = t().series;
-  const options = chartOptions();
-
-  createChart("infra-stock-chart", {
-    type: "line",
-    data: {
-      labels: infrastructure.housingStock.map((row) => String(row.year)),
-      datasets: [
-        {
-          label: labels.housingStock,
-          data: infrastructure.housingStock.map((row) => row.total),
-          yAxisID: "y",
-          borderColor: css("--brand-orange"),
-          backgroundColor: "rgba(196, 77, 54, 0.11)",
-          borderWidth: 3,
-          tension: 0.28,
-          fill: true
-        },
-        {
-          label: labels.residentialBuildings,
-          data: infrastructure.buildings.map((row) => row.buildings),
-          yAxisID: "y1",
-          borderColor: css("--signal-green"),
-          backgroundColor: css("--signal-green"),
-          borderWidth: 3,
-          tension: 0.28
-        }
-      ]
-    },
-    options: {
-      ...options,
-      scales: {
-        ...options.scales,
-        y: {
-          ...options.scales.y,
-          title: { display: true, text: labels.housingStock }
-        },
-        y1: {
-          position: "right",
-          grid: { drawOnChartArea: false },
-          ticks: {
-            color: css("--muted"),
-            callback: (value) => formatNumber(value)
-          },
-          title: { display: true, text: labels.residentialBuildings }
-        }
-      }
-    }
-  });
-}
-
-function renderInfrastructureCompletionsChart(infrastructure) {
-  createChart("infra-completions-chart", {
-    type: "bar",
-    data: {
-      labels: infrastructure.completed.map((row) => String(row.year)),
-      datasets: [
-        {
-          label: t().series.completions,
-          data: infrastructure.completed.map((row) => row.completed),
-          backgroundColor: "rgba(196, 77, 54, 0.36)",
-          borderColor: css("--brand-orange"),
-          borderWidth: 1
-        }
-      ]
-    },
-    options: chartOptions()
-  });
-}
-
-function renderInfrastructureVacancyChart(infrastructure) {
-  createChart("infra-vacancy-chart", {
-    type: "line",
-    data: {
-      labels: infrastructure.vacancy.map((row) => String(row.year)),
-      datasets: [
-        {
-          label: t().series.vacancyRate,
-          data: infrastructure.vacancy.map((row) => row.rate),
-          borderColor: css("--brand-brown"),
-          backgroundColor: "rgba(84, 45, 36, 0.08)",
-          borderWidth: 3,
-          tension: 0.3,
-          fill: true
-        }
-      ]
-    },
-    options: chartOptions({ percent: true })
   });
 }
 
@@ -1076,9 +903,6 @@ function renderSources() {
   setSource("vital-source", ["Geburten"]);
   setSource("age-source", ["Jugend- und Altenquote"]);
   setSource("age-migration-source", ["Zuzüge nach", "Wegzüge aus"]);
-  setSource("infra-stock-source", ["Wohnungsbestand nach der Zahl der Räume", "Gebäuden mit Wohnraum"]);
-  setSource("infra-completions-source", ["Fertiggestellte Wohnungen im Neubau"]);
-  setSource("infra-vacancy-source", ["Leerstand im Geschosswohnungsbau"]);
   setSource("health-source", ["Gesundheit und Soziales"]);
 }
 
@@ -1095,16 +919,6 @@ function renderPopulationView() {
   renderAgeStructure(population);
   renderAgeSlider(population);
   renderAgeFlow(population);
-  renderSources();
-}
-
-function renderInfrastructureView() {
-  const infrastructure = state.data.infrastructure;
-
-  renderInfrastructureKpis(infrastructure.summary);
-  renderInfrastructureStockChart(infrastructure);
-  renderInfrastructureCompletionsChart(infrastructure);
-  renderInfrastructureVacancyChart(infrastructure);
   renderSources();
 }
 
@@ -1152,27 +966,9 @@ function updateStaticText() {
   document.title = "MagdePulse";
   document.querySelector(".brand strong").textContent = "MagdePulse";
   document.querySelector(".brand em").textContent = copy.tagline;
-  setText(
-    "#topic-kicker",
-    state.topic === "population"
-      ? copy.introKicker
-      : state.topic === "infrastructure"
-        ? copy.infrastructureKicker
-        : state.topic === "health"
-          ? copy.healthKicker
-          : copy.comingSoon
-  );
+  setText("#topic-kicker", state.topic === "population" ? copy.introKicker : state.topic === "health" ? copy.healthKicker : copy.comingSoon);
   setText("#page-title", copy.introTitle);
-  setText(
-    "#page-copy",
-    state.topic === "population"
-      ? copy.introCopy
-      : state.topic === "infrastructure"
-        ? copy.infrastructureIntro
-        : state.topic === "health"
-          ? copy.healthIntro
-          : copy.placeholders[state.topic]
-  );
+  setText("#page-copy", state.topic === "population" ? copy.introCopy : state.topic === "health" ? copy.healthIntro : copy.placeholders[state.topic]);
   setText("#placeholder-kicker", copy.comingSoon);
   setText("#placeholder-title", copy.placeholders[state.topic] ?? copy.placeholders.education);
   setText("#placeholder-copy", copy.readyCopy);
@@ -1187,9 +983,6 @@ function updateStaticText() {
   const sectionCopy = [
     ["migration-chart", "migrationKicker", "migrationTitle"],
     ["population-map", "populationKicker", "populationTitle"],
-    ["infra-stock-chart", "infrastructureStockKicker", "infrastructureStockTitle"],
-    ["infra-completions-chart", "infrastructureCompletionsKicker", "infrastructureCompletionsTitle"],
-    ["infra-vacancy-chart", "infrastructureVacancyKicker", "infrastructureVacancyTitle"],
     ["health-map", "healthKicker", "healthTitle"],
     ["vital-chart", "vitalKicker", "vitalTitle"],
     ["age-orbits", "ageKicker", "ageTitle"],
@@ -1207,12 +1000,10 @@ function updateStaticText() {
 
 function renderTopic() {
   const isPopulation = state.topic === "population";
-  const isInfrastructure = state.topic === "infrastructure";
   const isHealth = state.topic === "health";
   document.getElementById("population-view").hidden = !isPopulation;
-  document.getElementById("infrastructure-view").hidden = !isInfrastructure;
   document.getElementById("health-view").hidden = !isHealth;
-  document.getElementById("placeholder-view").hidden = isPopulation || isInfrastructure || isHealth;
+  document.getElementById("placeholder-view").hidden = isPopulation || isHealth;
   updateStaticText();
 
   if (!state.data) {
@@ -1221,10 +1012,6 @@ function renderTopic() {
 
   if (isPopulation) {
     renderPopulationView();
-  }
-
-  if (isInfrastructure) {
-    renderInfrastructureView();
   }
 
   if (isHealth) {

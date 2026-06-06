@@ -3,7 +3,6 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { getPopulationDashboardData } from "./data/population.js";
-import { getInfrastructureDashboardData } from "./data/infrastructure.js";
 import { getHealthDashboardData } from "./data/health.js";
 
 const app = express();
@@ -52,7 +51,6 @@ app.get("/api/dashboard", async (_request, response, next) => {
         categories: ["Population", "Education", "Infrastructure", "Health and Social Services"]
       },
       population: await getPopulationDashboardData(),
-      infrastructure: await getInfrastructureDashboardData(),
       health: await getHealthDashboardData(),
       alerts: [
         {
@@ -75,8 +73,8 @@ app.get("/api/dashboard", async (_request, response, next) => {
           level: { en: "Note", de: "Notiz" },
           title: { en: "More sections coming", de: "Weitere Bereiche folgen" },
           detail: {
-            en: "Education remains a placeholder while infrastructure and health sections are live.",
-            de: "Bildung bleibt ein Platzhalter, während Infrastruktur und Gesundheit aktiv sind."
+            en: "Education, infrastructure, health and social services are prepared as placeholders.",
+            de: "Bildung, Infrastruktur sowie Gesundheit und Soziales sind als Platzhalter vorbereitet."
           }
         }
       ]
