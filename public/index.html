@@ -50,11 +50,11 @@
     <main class="app-main">
       <section class="intro" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow" id="topic-kicker">Population indicators</p>
+          <p class="eyebrow" id="topic-kicker">Population intelligence</p>
           <h1 id="page-title">MagdePulse</h1>
           <p id="page-copy">
-            Review official indicators for population, migration, district distribution,
-            vital statistics, and age structure.
+            Explore the city's population rhythm through migration, gender balance,
+            life events, and age structure.
           </p>
         </div>
         <div class="pulse-mark" aria-hidden="true">
@@ -63,109 +63,6 @@
         </div>
       </section>
 
-      <!-- ================================================================
-           EDUCATION VIEW
-      ================================================================= -->
-      <section id="education-view" hidden aria-labelledby="edu-section-title">
-
-        <!-- KPI strip -->
-        <section class="kpi-grid" id="education-kpi-grid" aria-label="Education summary"></section>
-
-        <section class="visual-grid">
-
-          <!-- 1. Polar area: students by school type -->
-          <article class="chart-card">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-type-kicker">Educational landscape</p>
-                <h2 id="edu-type-title">Students by school type</h2>
-              </div>
-            </div>
-            <canvas id="school-type-chart" height="184"></canvas>
-            <p class="source-note" id="edu-type-source"></p>
-          </article>
-
-          <!-- 2. Bubble/scatter: classrooms vs students per school -->
-          <article class="chart-card chart-card-wide">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-capacity-kicker">School capacity</p>
-                <h2 id="edu-capacity-title">Classrooms vs. student population</h2>
-              </div>
-            </div>
-            <canvas id="school-capacity-chart" height="132"></canvas>
-            <p class="source-note" id="edu-capacity-source"></p>
-          </article>
-
-          <!-- 3. Bar chart: city-wide student count over years -->
-          <article class="chart-card">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-trend-kicker">Student trend</p>
-                <h2 id="edu-trend-title">City-wide school students over time</h2>
-              </div>
-            </div>
-            <canvas id="school-trend-chart" height="184"></canvas>
-            <p class="source-note" id="edu-trend-source"></p>
-          </article>
-
-          <!-- 4. Leaflet map: students by district -->
-          <article class="chart-card chart-card-wide map-card">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-map-kicker">District distribution</p>
-                <h2 id="edu-map-title">Schools and students by district</h2>
-              </div>
-            </div>
-            <div class="map-layout">
-              <div class="city-map" id="education-map" aria-label="Magdeburg education district map"></div>
-              <aside class="map-inspector" id="education-inspector"></aside>
-            </div>
-            <p class="source-note" id="edu-map-source"></p>
-          </article>
-
-          <!-- 5. Line chart: university freshmen trend (total + gender) -->
-          <article class="chart-card chart-card-wide">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-uni-trend-kicker">University freshmen</p>
-                <h2 id="edu-uni-trend-title">1st-semester enrolments over time</h2>
-              </div>
-            </div>
-            <canvas id="university-trend-chart" height="132"></canvas>
-            <p class="source-note" id="edu-uni-trend-source"></p>
-          </article>
-
-          <!-- 6. Stacked bar: freshmen by institution + gender (latest year) -->
-          <article class="chart-card chart-card-wide">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-uni-institution-kicker">Institutions</p>
-                <h2 id="edu-uni-institution-title">Freshmen by institution and gender</h2>
-              </div>
-            </div>
-            <canvas id="institution-breakdown-chart" height="132"></canvas>
-            <p class="source-note" id="edu-uni-institution-source"></p>
-          </article>
-
-          <!-- 7. Stacked bar: students by study form and institution -->
-          <article class="chart-card chart-card-wide">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow" id="edu-program-kicker">Degree programmes</p>
-                <h2 id="edu-program-title">Students by study form and institution</h2>
-              </div>
-            </div>
-            <canvas id="study-program-chart" height="132"></canvas>
-            <p class="source-note" id="edu-program-source"></p>
-          </article>
-
-        </section>
-      </section>
-
-      <!-- ================================================================
-           HEALTH VIEW
-      ================================================================= -->
       <section id="health-view" hidden>
         <article class="chart-card chart-card-wide map-card">
           <div class="card-heading">
@@ -192,7 +89,6 @@
         </article>
       </section>
 
-<<<<<<< HEAD
       <section id="infrastructure-view" hidden>
         <section class="kpi-grid" id="infra-kpi-grid" aria-label="Infrastructure summary"></section>
 
@@ -231,17 +127,15 @@
           </article>
         </section>
       </section>
+
       <section class="placeholder-view" id="placeholder-view" hidden>
-        <p class="eyebrow" id="placeholder-kicker">In preparation</p>
-        <h2 id="placeholder-title">This topic is prepared for validated data.</h2>
+        <p class="eyebrow" id="placeholder-kicker">Coming soon</p>
+        <h2 id="placeholder-title">This topic is ready for future data.</h2>
         <p id="placeholder-copy">
-          Add validated datasets to activate this section.
+          The dashboard framework is prepared. Add datasets to activate this section.
         </p>
       </section>
 
-      <!-- ================================================================
-           POPULATION VIEW
-      ================================================================= -->
       <section id="population-view">
         <section class="kpi-grid" id="kpi-grid" aria-label="Population summary"></section>
 
@@ -249,40 +143,29 @@
           <article class="chart-card chart-card-wide">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">Population status</p>
-                <h2>Resident population and international residents</h2>
+                <p class="eyebrow">Resident migration</p>
+                <h2>Annual arrivals, departures and migration balance</h2>
               </div>
-              <span id="status-year-label"></span>
             </div>
-            <label class="year-slider status-slider">
-              <span id="status-slider-label">Year</span>
-              <input id="status-year-slider" type="range" min="0" max="0" step="1" value="0">
-            </label>
-            <div class="status-layout">
-              <div class="status-orbits" id="status-orbits"></div>
-            </div>
-            <p class="source-note" id="status-source"></p>
+            <canvas id="migration-chart" height="132"></canvas>
+            <p class="source-note" id="migration-source"></p>
           </article>
 
           <article class="chart-card chart-card-wide map-card">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">District population</p>
-                <h2>Resident population by statistical district</h2>
+                <p class="eyebrow">Population map</p>
+                <h2>Total and gender by statistical district</h2>
               </div>
+              <output id="population-year-output"></output>
             </div>
+            <label class="year-slider map-year-slider">
+              <span id="population-slider-label">Year</span>
+              <input id="population-year-slider" type="range" min="0" max="0" step="1" value="0">
+            </label>
             <div class="map-layout">
               <div class="city-map" id="population-map" aria-label="Magdeburg population district map"></div>
-              <aside class="map-inspector" id="population-inspector">
-                <div class="map-inspector-detail" id="population-inspector-detail"></div>
-                <label class="year-slider map-year-slider">
-                  <span>
-                    <span id="population-slider-label">Year</span>
-                    <output id="population-year-output"></output>
-                  </span>
-                  <input id="population-year-slider" type="range" min="0" max="0" step="1" value="0">
-                </label>
-              </aside>
+              <aside class="map-inspector" id="population-inspector"></aside>
             </div>
             <p class="source-note" id="population-source"></p>
           </article>
@@ -290,13 +173,11 @@
           <article class="chart-card">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">Vital statistics</p>
-                <h2>Births, deaths and births-minus-deaths</h2>
+                <p class="eyebrow">Life events</p>
+                <h2>Births, deaths and birth-death gap</h2>
               </div>
             </div>
-            <div class="chart-frame chart-frame-compact">
-              <canvas id="vital-chart"></canvas>
-            </div>
+            <canvas id="vital-chart" height="184"></canvas>
             <p class="source-note" id="vital-source"></p>
           </article>
 
@@ -304,7 +185,7 @@
             <div class="card-heading">
               <div>
                 <p class="eyebrow">Age structure</p>
-                <h2>Youth and elderly quotas</h2>
+                <h2>Youth and elderly ratios</h2>
               </div>
               <span id="age-year-label"></span>
             </div>
@@ -313,27 +194,15 @@
               <input id="age-quote-year-slider" type="range" min="0" max="0" step="1" value="0">
             </label>
             <div class="age-orbits" id="age-orbits"></div>
+            <div class="age-trend" id="age-trend"></div>
             <p class="source-note" id="age-source"></p>
-          </article>
-
-          <article class="chart-card chart-card-wide">
-            <div class="card-heading">
-              <div>
-                <p class="eyebrow">Migration</p>
-                <h2>Arrivals, departures and net migration</h2>
-              </div>
-            </div>
-            <div class="chart-frame chart-frame-wide">
-              <canvas id="migration-chart"></canvas>
-            </div>
-            <p class="source-note" id="migration-source"></p>
           </article>
 
           <article class="chart-card chart-card-wide age-flow-card">
             <div class="card-heading">
               <div>
-                <p class="eyebrow">Migration by age group</p>
-                <h2>Arrivals and departures by age group</h2>
+                <p class="eyebrow">Age-group migration</p>
+                <h2>Moving into and out of Magdeburg by age</h2>
               </div>
               <output id="age-flow-year"></output>
             </div>

@@ -1,9 +1,3 @@
-@property --angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
 :root {
   color-scheme: light;
   --bg: #ffffff;
@@ -19,11 +13,6 @@
   --signal-blue: #444444;
   --shadow: none;
   --header-height: 88px;
-  --chart-height-wide: 470px;
-  --chart-height-compact: 420px;
-  --map-panel-height: 560px;
-  --orbit-stat-size: clamp(1.25rem, 2vw, 1.85rem);
-  --kpi-stat-size: clamp(1.35rem, 2.3vw, 1.9rem);
 }
 
 * {
@@ -407,11 +396,9 @@ button {
 
 .kpi-card strong {
   display: block;
-  max-width: 100%;
   color: var(--brand-brown);
-  font-size: var(--kpi-stat-size);
-  line-height: 1.08;
-  overflow-wrap: anywhere;
+  font-size: clamp(1.65rem, 4vw, 2.4rem);
+  line-height: 1;
 }
 
 .kpi-card p {
@@ -432,8 +419,6 @@ button {
 
 .chart-card {
   min-width: 0;
-  display: flex;
-  flex-direction: column;
   animation: riseIn 460ms ease both;
 }
 
@@ -488,23 +473,9 @@ button {
   font-weight: 900;
 }
 
-.chart-frame {
-  position: relative;
+.chart-card canvas {
   width: 100%;
-}
-
-.chart-frame-wide {
-  height: var(--chart-height-wide);
-}
-
-.chart-frame-compact {
-  height: var(--chart-height-compact);
-}
-
-.chart-frame canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
+  max-height: 390px;
 }
 
 .source-note {
@@ -523,8 +494,7 @@ button {
 
 .city-map {
   position: relative;
-  height: var(--map-panel-height);
-  min-height: var(--map-panel-height);
+  min-height: 470px;
   overflow: hidden;
   border-radius: 16px;
   background: var(--line);
@@ -563,21 +533,14 @@ button {
 
 .map-inspector {
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  gap: 1rem;
   align-content: start;
   min-width: 0;
-  height: var(--map-panel-height);
-  min-height: var(--map-panel-height);
-  max-height: var(--map-panel-height);
+  min-height: 100%;
+  max-height: 470px;
   overflow: auto;
   padding: 1rem;
   border-radius: 16px;
   background: var(--paper-strong);
-}
-
-.map-inspector-detail {
-  min-width: 0;
 }
 
 .map-inspector h3 {
@@ -599,33 +562,11 @@ button {
   line-height: 1;
 }
 
-.map-inspector-detail > span {
+.map-inspector > span {
   display: block;
   max-width: 100%;
   overflow-wrap: anywhere;
   line-height: 1.35;
-}
-
-.map-inspector .map-year-slider {
-  grid-template-columns: 1fr;
-  gap: 0.45rem;
-  margin: 0;
-  padding: 0.75rem;
-  border-radius: 12px;
-  background: var(--line);
-}
-
-.map-year-slider > span {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-}
-
-.map-year-slider output {
-  color: var(--brand-orange);
-  font-size: 1rem;
-  font-weight: 900;
 }
 
 .gender-meter {
@@ -663,100 +604,59 @@ button {
   overflow-wrap: anywhere;
 }
 
-.age-card {
-  overflow: hidden;
-  min-height: 380px;
+.district-trend {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.45rem;
+  align-items: end;
+  min-height: 94px;
+  max-width: 100%;
+  margin-top: 1rem;
+  padding-top: 0.85rem;
 }
 
-.status-layout {
+.district-trend span {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
-  align-items: stretch;
-  min-height: 260px;
-}
-
-.status-orbits {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  min-height: 260px;
-}
-
-.status-orbit {
-  display: grid;
-  grid-template-columns: minmax(150px, 0.42fr) minmax(0, 1fr);
-  align-items: center;
-  gap: 1rem;
+  grid-template-rows: 1fr auto auto;
+  gap: 0.18rem;
   min-width: 0;
-  min-height: 250px;
-  padding: 1rem;
-  border-radius: 8px;
-  background: #ffffff;
-}
-
-.status-ring {
-  display: grid;
-  place-items: center;
-  width: min(190px, 100%);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  --angle: 0deg;
-  --status-color: var(--brand-orange);
-  background:
-    radial-gradient(circle, var(--paper-strong) 58%, transparent 59%),
-    conic-gradient(var(--status-color) var(--angle), #eeeeee 0);
-  transition: --angle 760ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.status-orbit.internationals {
-  --status-color: var(--signal-green);
-}
-
-.status-ring strong {
-  color: var(--brand-brown);
-  font-size: var(--orbit-stat-size);
-  line-height: 1;
-  max-width: 72%;
-  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
   text-align: center;
 }
 
-.status-orbit > div:last-child {
-  display: grid;
-  gap: 0.6rem;
-  min-width: 0;
+.district-trend span::before {
+  content: "";
+  align-self: end;
+  height: calc(var(--value) * 0.62);
+  min-height: 18px;
+  border-radius: 999px 999px 0 0;
+  background: var(--brand-orange);
+  animation: growUp 700ms ease both;
 }
 
-.status-orbit span {
+.district-trend b {
+  overflow: hidden;
   color: var(--brand-brown);
-  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
-  font-weight: 900;
-  line-height: 1.1;
+  font-size: clamp(0.56rem, 0.72vw, 0.68rem);
+  text-overflow: ellipsis;
 }
 
-.status-orbit p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.96rem;
-  font-weight: 750;
-  line-height: 1.45;
+.age-card {
+  overflow: hidden;
 }
 
 .age-orbits {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
-  flex: 1;
-  min-height: 230px;
 }
 
 .age-orbit {
   display: grid;
   justify-items: center;
-  align-content: center;
   gap: 0.8rem;
-  min-height: 230px;
   padding: 0.85rem;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.62);
@@ -768,11 +668,10 @@ button {
   width: min(170px, 100%);
   aspect-ratio: 1;
   border-radius: 50%;
-  --angle: 0deg;
   background:
     radial-gradient(circle, var(--paper-strong) 58%, transparent 59%),
     conic-gradient(var(--age-color) var(--angle), #eeeeee 0);
-  transition: --angle 760ms cubic-bezier(0.22, 1, 0.36, 1);
+  animation: riseIn 420ms ease both;
 }
 
 .age-orbit.youth {
@@ -785,16 +684,66 @@ button {
 
 .age-ring strong {
   color: var(--brand-brown);
-  font-size: var(--orbit-stat-size);
-  line-height: 1;
-  max-width: 72%;
-  overflow-wrap: anywhere;
-  text-align: center;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
 }
 
 .age-orbit > span {
   color: var(--muted);
   font-weight: 850;
+}
+
+.age-trend {
+  display: grid;
+  grid-template-columns: repeat(34, minmax(28px, 1fr));
+  align-items: end;
+  gap: 0.5rem;
+  min-height: 110px;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  overflow-x: auto;
+  scrollbar-color: var(--brand-orange) #eeeeee;
+}
+
+.age-trend-year {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 74px auto;
+  gap: 0.18rem;
+  align-items: end;
+}
+
+.age-column {
+  align-self: end;
+  min-height: calc(var(--value) * 1.45);
+  border-radius: 999px 999px 0 0;
+  transform-origin: bottom;
+  animation: growUp 760ms ease both;
+}
+
+.age-column.youth {
+  background: var(--signal-green);
+}
+
+.age-column.elderly {
+  background: var(--brand-orange);
+}
+
+.age-trend-year small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.age-trend-year.is-selected {
+  padding: 0.2rem;
+  border-radius: 8px;
+  background: var(--brand-orange-soft);
+}
+
+.age-trend-year.is-selected small {
+  color: var(--brand-orange);
 }
 
 .year-slider {
@@ -844,12 +793,10 @@ button {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.8rem;
-  align-items: stretch;
 }
 
 .flow-card {
   min-width: 0;
-  min-height: 152px;
   padding: 0.9rem;
   border-radius: 14px;
   background: #ffffff;
@@ -900,59 +847,37 @@ button {
 
 .flow-lane > div {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
   min-width: 0;
-  min-height: 44px;
+  min-height: 34px;
   overflow: hidden;
 }
 
-.door-icon,
-.door-icon::before,
-.door-icon::after {
+.flow-lane > div::after {
   position: absolute;
-  content: "";
-}
-
-.door-icon {
   left: 50%;
-  top: 50%;
-  z-index: 4;
-  width: 34px;
-  height: 36px;
-  border-radius: 6px 6px 3px 3px;
-  background: var(--brand-brown);
-  transform: translate(-50%, -50%);
-}
-
-.door-icon::before {
-  left: 8px;
-  top: 6px;
+  bottom: 4px;
   width: 18px;
-  height: 28px;
-  border-radius: 2px 2px 0 0;
-  background: var(--ink);
-}
-
-.door-icon::after {
-  right: 9px;
-  top: 20px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--signal-green);
+  height: 16px;
+  content: "";
+  border-radius: 3px 3px 1px 1px;
+  background:
+    linear-gradient(90deg, transparent 39%, var(--brand-brown) 40%, var(--brand-brown) 58%, transparent 59%),
+    var(--paper-strong);
+  transform: translateX(-50%);
+  opacity: 0.74;
 }
 
 .person {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 2;
-  display: block;
+  position: relative;
+  display: inline-block;
   width: 10px;
   height: 18px;
-  animation: personIn 2.35s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  animation-delay: calc(var(--i) * 130ms);
-  opacity: 0;
+  flex: 0 0 10px;
+  animation: personIn 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 80ms);
 }
 
 .person::before,
@@ -1057,57 +982,35 @@ button {
 
 @keyframes personIn {
   0% {
-    left: 6%;
-    transform: translate(-50%, -50%) scale(0.86);
-    opacity: 0;
+    transform: translateX(-22px) scale(0.88);
+    opacity: 0.24;
   }
 
-  18% {
-    opacity: 1;
-  }
-
-  68% {
-    left: 43%;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-
-  86% {
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.72);
+  70% {
+    transform: translateX(10px) scale(1);
     opacity: 1;
   }
 
   100% {
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.2);
-    opacity: 0;
+    transform: translateX(18px) scale(0.94);
+    opacity: 0.42;
   }
 }
 
 @keyframes personOut {
   0% {
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.2);
-    opacity: 0;
+    transform: translateX(18px) scale(0.94);
+    opacity: 0.42;
   }
 
-  16% {
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.78);
-    opacity: 1;
-  }
-
-  42% {
-    left: 43%;
-    transform: translate(-50%, -50%) scale(1);
+  35% {
+    transform: translateX(8px) scale(1);
     opacity: 1;
   }
 
   100% {
-    left: 6%;
-    transform: translate(-50%, -50%) scale(0.86);
-    opacity: 0;
+    transform: translateX(-22px) scale(0.88);
+    opacity: 0.24;
   }
 }
 
@@ -1131,9 +1034,6 @@ button {
 @media (max-width: 940px) {
   :root {
     --header-height: 136px;
-    --chart-height-wide: 420px;
-    --chart-height-compact: 380px;
-    --map-panel-height: 500px;
   }
 
   .app-header,
@@ -1156,9 +1056,7 @@ button {
 
   .kpi-grid,
   .visual-grid,
-  .flow-grid,
-  .status-layout,
-  .status-orbits {
+  .flow-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1168,20 +1066,13 @@ button {
 }
 
 @media (max-width: 620px) {
-  :root {
-    --chart-height-wide: 380px;
-    --chart-height-compact: 350px;
-    --map-panel-height: 420px;
-  }
-
   .brand {
     align-items: flex-start;
     flex-direction: column;
   }
 
   .city-map {
-    height: var(--map-panel-height);
-    min-height: var(--map-panel-height);
+    min-height: 390px;
   }
 
   .flow-lane,
@@ -1193,13 +1084,12 @@ button {
     text-align: left;
   }
 
-  .age-orbits {
+  .age-orbits,
+  .age-trend {
     grid-template-columns: 1fr;
   }
 
-  .status-orbit {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
+  .age-trend-year {
+    grid-template-columns: 1fr 1fr;
   }
 }

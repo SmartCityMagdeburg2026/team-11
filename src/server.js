@@ -5,7 +5,6 @@ import { fileURLToPath } from "node:url";
 import { getPopulationDashboardData } from "./data/population.js";
 import { getInfrastructureDashboardData } from "./data/infrastructure.js";
 import { getHealthDashboardData } from "./data/health.js";
-import { getEducationDashboardData } from "./data/education.js";
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -55,14 +54,13 @@ app.get("/api/dashboard", async (_request, response, next) => {
       population: await getPopulationDashboardData(),
       infrastructure: await getInfrastructureDashboardData(),
       health: await getHealthDashboardData(),
-      education: await getEducationDashboardData(),
       alerts: [
         {
           level: { en: "Data", de: "Daten" },
           title: { en: "2026 values are partial", de: "Werte für 2026 sind vorläufig" },
           detail: {
-            en: "Resident migration uses complete annual age-group movement datasets; vital-event data currently include January through April 2026.",
-            de: "Die Wanderung nutzt vollstÃ¤ndige jÃ¤hrliche Altersgruppen-Wanderungsdaten; Lebensereignisdaten enthalten aktuell Januar bis April 2026."
+            en: "Monthly migration and vital-event data currently include January through April 2026.",
+            de: "Monatliche Wanderungs- und Lebensereignisdaten enthalten aktuell Januar bis April 2026."
           }
         },
         {
@@ -71,14 +69,6 @@ app.get("/api/dashboard", async (_request, response, next) => {
           detail: {
             en: "City-level total and gender trends use the Magdeburg aggregate row from the district workbook.",
             de: "Gesamtzahl und Geschlechtertrend nutzen die Magdeburg-Aggregatzeile aus der Bezirksdatei."
-          }
-        },
-        {
-          level: { en: "Insight", de: "Hinweis" },
-          title: { en: "Education Data Scope", de: "Umfang der Bildungsdaten" },
-          detail: {
-            en: "School district distributions reflect the 2023 academic year. University trends track 1st-semester students.",
-            de: "Die Schulverteilung nach Stadtteilen spiegelt das Schuljahr 2023 wider. Universitätstrends erfassen Studierende im 1. Fachsemester."
           }
         },
         {
@@ -95,22 +85,6 @@ app.get("/api/dashboard", async (_request, response, next) => {
     next(error);
   }
 });
-
-// ---------------------------------------------------------------------------
-// Separate lightweight endpoint so education tab can lazy-load if needed
-// ---------------------------------------------------------------------------
-
-app.get("/api/education", async (_req, res, next) => {
-  try {
-    res.json(await getEducationDashboardData());
-  } catch (error) {
-    next(error);
-  }
-});
-
-// ---------------------------------------------------------------------------
-// Static fallback
-// ---------------------------------------------------------------------------
 
 app.get("/", (_request, response) => {
   response.sendFile(path.join(publicDir, "index.html"));

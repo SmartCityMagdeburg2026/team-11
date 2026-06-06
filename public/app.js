@@ -3,7 +3,6 @@ const state = {
   language: "en",
   topic: "population",
   selectedPopulationYear: null,
-  selectedStatusIndex: 0,
   selectedAgeQuoteIndex: 0,
   selectedAgeIndex: 0,
   selectedHealthYear: null,
@@ -12,8 +11,7 @@ const state = {
   charts: {},
   maps: {},
   boundary: null,
-  districtCoordinates: new Map(),
-  districtCells: new Map()
+  districtCoordinates: new Map()
 };
 
 const translations = {
@@ -25,7 +23,7 @@ const translations = {
       infrastructure: "Infrastructure",
       health: "Health and Social Services"
     },
-    introKicker: "Population indicators",
+    introKicker: "Population intelligence",
     introTitle: "MagdePulse",
     introCopy:
       "Explore Magdeburg's population rhythm through resident movement, district patterns, life events, and age structure.",
@@ -34,16 +32,21 @@ const translations = {
       "Follow housing stock, new completions and vacancy pressure to see how Magdeburg's built environment evolves over time.",
     healthIntro: "Explore district-level medical service availability for doctors, dentists and pharmacies.",
     placeholders: {
-      infrastructure: "Infrastructure indicators will appear when validated datasets are added.",
-      health: "Health and social service indicators will appear when validated datasets are added."
+      education: "Education visualizations are ready for future datasets.",
+      infrastructure: "Infrastructure visualizations are ready for future datasets.",
+      health: "Health and social services visualizations are ready for future datasets."
     },
     health: {
       service: "Service",
-      services: { doctors: "Doctors", dentists: "Dentists", pharmacies: "Pharmacies" }
+      services: {
+        doctors: "Doctors",
+        dentists: "Dentists",
+        pharmacies: "Pharmacies"
+      }
     },
-    comingSoon: "In preparation",
-    readyCopy: "This dashboard section is prepared for validated datasets.",
-        kpis: {
+    comingSoon: "Coming soon",
+    readyCopy: "The dashboard framework is prepared. Add datasets to activate this section.",
+    kpis: {
       population: "Residents",
       populationHint: "City aggregate, latest annual value",
       growth: "Growth since baseline",
@@ -60,16 +63,14 @@ const translations = {
       infrastructureFloorAreaHint: "Latest recorded residential floor area",
       infrastructureVacancy: "Vacancy rate",
       infrastructureVacancyHint: "Latest annual citywide vacancy share"
-        },
+    },
     charts: {
-      statusKicker: "Population status",
-      statusTitle: "Resident population and international residents",
-      migrationKicker: "Migration",
-      migrationTitle: "Arrivals, departures and net migration",
-      populationKicker: "District population",
-      populationTitle: "Resident population by statistical district",
-      vitalKicker: "Vital statistics",
-      vitalTitle: "Births, deaths and births-minus-deaths",
+      migrationKicker: "Resident migration",
+      migrationTitle: "Annual arrivals, departures and migration balance",
+      populationKicker: "Population map",
+      populationTitle: "Total and gender by statistical district",
+      vitalKicker: "Life events",
+      vitalTitle: "Births, deaths and birth-death gap",
       ageKicker: "Age structure",
       ageTitle: "Youth and elderly quotas",
       ageMigrationKicker: "Age-group migration",
@@ -81,31 +82,15 @@ const translations = {
       infrastructureVacancyKicker: "Vacancy pressure",
       infrastructureVacancyTitle: "Citywide vacancy rate over time",
       healthKicker: "Health services",
-      healthTitle: "Doctors, dentists and pharmacies by district",
-      eduTypeKicker: "Educational landscape",
-      eduTypeTitle: "Students by school type",
-      eduCapacityKicker: "School capacity",
-      eduCapacityTitle: "Classrooms vs. student population",
-      eduMapKicker: "District distribution",
-      eduMapTitle: "Schools and students by district",
-      eduTrendKicker: "Student trend",
-      eduTrendTitle: "City-wide school students over time",
-      eduUniTrendKicker: "University freshmen",
-      eduUniTrendTitle: "1st-semester enrolments over time",
-      eduUniInstitutionKicker: "Institutions",
-      eduUniInstitutionTitle: "Freshmen by institution and gender",
-      eduProgramKicker: "Degree programmes",
-      eduProgramTitle: "Students by study form and institution",
-      eduProgramStudents: "Enrolled students",
-      eduProgramStudentsHint: "Latest winter semester"
+      healthTitle: "Doctors, dentists and pharmacies by district"
     },
-        series: {
+    series: {
       arrivals: "Arrivals",
       departures: "Departures",
-      net: "Net migration",
+      net: "Migration balance",
       births: "Births",
       deaths: "Deaths",
-      birthDeathGap: "Births minus deaths",
+      birthDeathGap: "Birth-death gap",
       youth: "Youth quota",
       elderly: "Elderly quota",
       male: "Male",
@@ -118,25 +103,19 @@ const translations = {
       vacancyRate: "Vacancy rate"
     },
     map: {
-      residents: "Resident population",
-      genderSplit: "Gender distribution",
-      hover: "Select a district",
-      hoverCopy: "Hover over a district area to view the selected year's resident population.",
+      residents: "Residents",
+      genderSplit: "Gender split",
+      hover: "Hover a district",
+      hoverCopy: "Move over any tile to inspect population and gender data.",
       rank: "Rank",
-      topDistricts: "District overview"
+      topDistricts: "Top districts"
     },
     age: {
       year: "Year",
       years: "years",
-      net: "Net migration",
-      youth: "Youth quota",
-      elderly: "Elderly quota"
-    },
-    status: {
-      residents: "Resident population",
-      internationals: "International residents",
-      ofResidents: "share of resident population",
-      sinceBaseline: "since 2001"
+      net: "Net",
+      youth: "Youth",
+      elderly: "Elderly"
     },
     alerts: "Alerts",
     close: "Close",
@@ -151,38 +130,35 @@ const translations = {
       infrastructure: "Infrastruktur",
       health: "Gesundheit und Soziales"
     },
-    introKicker: "Bevölkerungsindikatoren",
+    introKicker: "Bevölkerungsdaten",
     introTitle: "MagdePulse",
     introCopy:
-<<<<<<< HEAD
       "Entdecke Magdeburgs Bevölkerungsrhythmus anhand von Wanderung, Bezirksmustern, Lebensereignissen und Altersstruktur.",
     infrastructureKicker: "Infrastrukturtrends",
     infrastructureIntro:
       "Verfolge Wohnungsbestand, Fertigstellungen und Leerstand, um zu sehen, wie sich Magdeburgs bauliche Entwicklung verändert.",
-=======
-      "Analyse amtlicher Kennzahlen zu Bevölkerung, Wanderung, Bezirksverteilung, Bevölkerungsbewegung und Altersstruktur in Magdeburg.",
-    educationKicker: "Bildungslandschaft",
-    educationCopy:
-      "Schulen und Hochschulen in Magdeburg: Schülerzahlen, Schularten, Kapazitäten und Bezirksverteilung.",
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
     healthIntro: "Zeige die Verteilung von Ärzten, Zahnärzten und Apotheken nach Stadtteil.",
     placeholders: {
-      infrastructure: "Infrastrukturindikatoren erscheinen, sobald geprüfte Datensätze ergänzt wurden.",
-      health: "Indikatoren zu Gesundheit und Sozialem erscheinen, sobald geprüfte Datensätze ergänzt wurden."
+      education: "Visualisierungen zur Bildung sind für zukünftige Datensätze vorbereitet.",
+      infrastructure: "Visualisierungen zur Infrastruktur sind für zukünftige Datensätze vorbereitet.",
+      health: "Visualisierungen zu Gesundheit und Sozialem sind für zukünftige Datensätze vorbereitet."
     },
     health: {
       service: "Dienstleistung",
-      services: { doctors: "Ärzte", dentists: "Zahnärzte", pharmacies: "Apotheken" }
+      services: {
+        doctors: "Ärzte",
+        dentists: "Zahnärzte",
+        pharmacies: "Apotheken"
+      }
     },
-    comingSoon: "In Vorbereitung",
-    readyCopy: "Dieser Dashboard-Bereich ist für geprüfte Datensätze vorbereitet.",
+    comingSoon: "Demnächst",
+    readyCopy: "Das Dashboard-Framework ist vorbereitet. Neue Datensätze aktivieren diesen Bereich.",
     kpis: {
-      population: "Bevölkerung mit Hauptwohnsitz",
-      populationHint: "Neuester jährlicher Stadtwert",
-      growth: "Veränderung seit Basisjahr",
-      growthHint: "Differenz zum ersten verfügbaren Jahr",
+      population: "Einwohner",
+      populationHint: "Stadt-Aggregat, neuester Jahreswert",
+      growth: "Wachstum seit Basisjahr",
+      growthHint: "Veränderung seit dem ersten Bevölkerungsjahr",
       migration: "Wanderungssaldo",
-<<<<<<< HEAD
       migrationHint: "Letzter vollständiger Jahreswert",
       age: "Altersstruktur",
       ageHint: "Jugendquote / Altenquote",
@@ -194,24 +170,16 @@ const translations = {
       infrastructureFloorAreaHint: "Neueste erfasste Wohnfläche",
       infrastructureVacancy: "Leerstandsquote",
       infrastructureVacancyHint: "Neuester stadtweiter jährlicher Anteil"
-=======
-      migrationHint: "Zuzüge minus Wegzüge, jährliche Altersgruppensummen",
-      age: "Altersindikatoren",
-      ageHint: "Jugendquote / Altenquote"
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
     },
     charts: {
-      statusKicker: "Bevölkerungsstand",
-      statusTitle: "Bevölkerung mit Hauptwohnsitz und ausländische Bevölkerung",
       migrationKicker: "Wanderung",
       migrationTitle: "Jährliche Zuzüge, Wegzüge und Wanderungssaldo",
-      populationKicker: "Bezirksbevölkerung",
-      populationTitle: "Bevölkerung mit Hauptwohnsitz nach statistischem Bezirk",
-      vitalKicker: "Bevölkerungsbewegung",
-      vitalTitle: "Geburten, Sterbefälle und Differenz",
+      populationKicker: "Bevölkerungskarte",
+      populationTitle: "Gesamtzahl und Geschlecht nach statistischem Bezirk",
+      vitalKicker: "Lebensereignisse",
+      vitalTitle: "Geburten, Sterbefälle und Geburten-Sterbefälle-Saldo",
       ageKicker: "Altersstruktur",
       ageTitle: "Jugend- und Altenquote",
-<<<<<<< HEAD
       ageMigrationKicker: "Altersgruppen-Migration",
       ageMigrationTitle: "Zuzug und Wegzug nach Alter",
       infrastructureStockKicker: "Wohnungsbestand",
@@ -220,28 +188,8 @@ const translations = {
       infrastructureCompletionsTitle: "Fertiggestellte Wohnungen im Neubau je Jahr",
       infrastructureVacancyKicker: "Leerstand",
       infrastructureVacancyTitle: "Stadtweite Leerstandsquote im Zeitverlauf",
-=======
-      ageMigrationKicker: "Wanderung nach Altersgruppen",
-      ageMigrationTitle: "Zuzüge und Wegzüge nach Altersgruppe",
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
       healthKicker: "Gesundheitsdienste",
-      healthTitle: "Ärzte, Zahnärzte und Apotheken nach Bezirk",
-      eduTypeKicker: "Bildungslandschaft",
-      eduTypeTitle: "Schüler nach Schulart",
-      eduCapacityKicker: "Schulkapazität",
-      eduCapacityTitle: "Klassen vs. Schülerzahl",
-      eduMapKicker: "Bezirksverteilung",
-      eduMapTitle: "Schulen und Schüler nach Stadtteil",
-      eduTrendKicker: "Schülerzahl-Entwicklung",
-      eduTrendTitle: "Schüler stadtweit über die Zeit",
-      eduUniTrendKicker: "Erstsemester",
-      eduUniTrendTitle: "Studierende im 1. Fachsemester über die Zeit",
-      eduUniInstitutionKicker: "Hochschulen",
-      eduUniInstitutionTitle: "Erstsemester nach Hochschule und Geschlecht",
-      eduProgramKicker: "Studiengänge",
-      eduProgramTitle: "Studierende nach Studienform und Hochschule",
-      eduProgramStudents: "Studierende gesamt",
-      eduProgramStudentsHint: "Aktuelles Wintersemester"
+      healthTitle: "Ärzte, Zahnärzte und Apotheken nach Bezirk"
     },
     series: {
       arrivals: "Zuzüge",
@@ -249,43 +197,32 @@ const translations = {
       net: "Wanderungssaldo",
       births: "Geburten",
       deaths: "Sterbefälle",
-      birthDeathGap: "Geburten minus Sterbefälle",
+      birthDeathGap: "Geburten-Sterbefälle-Saldo",
       youth: "Jugendquote",
       elderly: "Altenquote",
       male: "Männlich",
       female: "Weiblich",
-<<<<<<< HEAD
       incoming: "Zuzug",
       outgoing: "Wegzug",
       housingStock: "Wohnungsbestand",
       residentialBuildings: "Wohngebäude",
       completions: "Fertiggestellte Wohnungen",
       vacancyRate: "Leerstandsquote"
-=======
-      incoming: "Zuzüge",
-      outgoing: "Wegzüge"
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
     },
     map: {
-      residents: "Bevölkerung mit Hauptwohnsitz",
+      residents: "Einwohner",
       genderSplit: "Geschlechterverteilung",
       hover: "Bezirk auswählen",
-      hoverCopy: "Bewege die Maus über einen Bezirk, um die Bevölkerung im ausgewählten Jahr zu sehen.",
+      hoverCopy: "Bewege die Maus über eine Kachel, um Bevölkerungs- und Geschlechtsdaten zu sehen.",
       rank: "Rang",
-      topDistricts: "Bezirksübersicht"
+      topDistricts: "Größte Bezirke"
     },
     age: {
       year: "Jahr",
       years: "Jahre",
-      net: "Wanderungssaldo",
-      youth: "Jugendquote",
-      elderly: "Altenquote"
-    },
-    status: {
-      residents: "Bevölkerung mit Hauptwohnsitz",
-      internationals: "Ausländische Bevölkerung",
-      ofResidents: "Anteil an der Bevölkerung",
-      sinceBaseline: "seit 2001"
+      net: "Saldo",
+      youth: "Jugend",
+      elderly: "Ältere"
     },
     alerts: "Meldungen",
     close: "Schließen",
@@ -295,20 +232,34 @@ const translations = {
 };
 
 const ageLabelTranslations = {
-  en: { "Under 18": "Under 18", "18-25": "18-25", "25-30": "25-30", "30-50": "30-50", "50-65": "50-65", "65+": "65+" },
-  de: { "Under 18": "Unter 18", "18-25": "18-25", "25-30": "25-30", "30-50": "30-50", "50-65": "50-65", "65+": "65+" }
+  en: {
+    "Under 18": "Under 18",
+    "18-25": "18-25",
+    "25-30": "25-30",
+    "30-50": "30-50",
+    "50-65": "50-65",
+    "65+": "65+"
+  },
+  de: {
+    "Under 18": "Unter 18",
+    "18-25": "18-25",
+    "25-30": "25-30",
+    "30-50": "30-50",
+    "50-65": "50-65",
+    "65+": "65+"
+  }
 };
 
 const mapBoundarySource = "Map boundary: OpenStreetMap/Nominatim relation 62481";
-const coordinateSource = "District regions: clipped from Nominatim/OpenStreetMap anchor points because official district polygons are not included in the workbook";
+const coordinateSource = "District anchors: Nominatim/OpenStreetMap, with documented inferred anchors where exact labels are unavailable";
 
 const formatNumber = (value) => new Intl.NumberFormat(state.language === "de" ? "de-DE" : "en-US").format(value);
 const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const t = () => translations[state.language];
 
 function setText(selector, text) {
-  const el = document.querySelector(selector);
-  if (el) el.textContent = text;
+  const element = document.querySelector(selector);
+  if (element) element.textContent = text;
 }
 
 function formatSigned(value) {
@@ -316,7 +267,7 @@ function formatSigned(value) {
 }
 
 function mixColor(from, to, amount) {
-  const parse = (hex) => hex.replace("#", "").match(/.{1,2}/g).map((p) => parseInt(p, 16));
+  const parse = (hex) => hex.replace("#", "").match(/.{1,2}/g).map((part) => parseInt(part, 16));
   const [fr, fg, fb] = parse(from);
   const [tr, tg, tb] = parse(to);
   const mix = (a, b) => Math.round(a + (b - a) * amount).toString(16).padStart(2, "0");
@@ -326,8 +277,7 @@ function mixColor(from, to, amount) {
 function chartOptions({ percent = false } = {}) {
   return {
     responsive: true,
-    maintainAspectRatio: false,
-    resizeDelay: 80,
+    maintainAspectRatio: true,
     animation: {
       duration: 900,
       easing: "easeOutQuart"
@@ -336,53 +286,33 @@ function chartOptions({ percent = false } = {}) {
       mode: "index",
       intersect: false
     },
-    layout: {
-      padding: {
-        top: 14,
-        right: 18,
-        bottom: 10,
-        left: 8
-      }
-    },
     plugins: {
       legend: {
-        position: "top",
         labels: {
-          boxWidth: 12,
-          boxHeight: 12,
-          padding: 18,
+          boxWidth: 10,
+          boxHeight: 10,
           usePointStyle: true,
           color: css("--ink"),
-          font: { size: 13, weight: 750 }
+          font: { weight: 750 }
         }
       },
       tooltip: {
         backgroundColor: "rgba(84, 45, 36, 0.94)",
         padding: 12,
         callbacks: {
-          label: (ctx) => `${ctx.dataset.label}: ${formatNumber(ctx.parsed.y)}${percent ? "%" : ""}`
+          label: (context) => `${context.dataset.label}: ${formatNumber(context.parsed.y)}${percent ? "%" : ""}`
         }
       }
     },
     scales: {
       x: {
         grid: { display: false },
-        ticks: {
-          color: css("--muted"),
-          maxRotation: 0,
-          autoSkip: true,
-          maxTicksLimit: 8,
-          padding: 10,
-          font: { size: 12, weight: 650 }
-        }
+        ticks: { color: css("--muted"), maxRotation: 0, autoSkip: true, maxTicksLimit: 10 }
       },
       y: {
         grid: { color: "#eeeeee" },
-        border: { display: false },
         ticks: {
           color: css("--muted"),
-          padding: 12,
-          font: { size: 12, weight: 650 },
           callback: (value) => `${formatNumber(value)}${percent ? "%" : ""}`
         }
       }
@@ -390,118 +320,151 @@ function chartOptions({ percent = false } = {}) {
   };
 }
 
-function destroyChart(id) { state.charts[id]?.destroy(); }
+function destroyChart(id) {
+  state.charts[id]?.destroy();
+}
 
 function createChart(id, config) {
   destroyChart(id);
-  const el = document.getElementById(id);
-  if (!el) return;
-  state.charts[id] = new Chart(el, config);
-  requestAnimationFrame(() => state.charts[id]?.resize());
+  state.charts[id] = new Chart(document.getElementById(id), config);
 }
 
 function sourceText(needles) {
-  const sources = state.data.population.sources.filter((s) =>
-    needles.some((n) => s.dataset.includes(n))
+  const sources = state.data.population.sources.filter((source) =>
+    needles.some((needle) => source.dataset.includes(needle))
   );
-  return sources.map((s) => `${s.dataset} · ${s.source} · ${s.url}`).join(" | ");
+
+  return sources
+    .map((source) => `${source.dataset} · ${source.source} · ${source.url}`)
+    .join(" | ");
 }
 
 function setSource(id, needles) {
-  const suffix =
-    id.includes("source") && (id.includes("population") || id.includes("district"))
-      ? ` | ${mapBoundarySource} | ${coordinateSource}`
-      : "";
+  const suffix = id.includes("source") && (id.includes("population") || id.includes("district"))
+    ? ` | ${mapBoundarySource} | ${coordinateSource}`
+    : "";
   setText(`#${id}`, `${t().sources}: ${sourceText(needles)}${suffix}`);
 }
 
-function annualComplete(rows) { return rows.filter((r) => r.months >= 12); }
+function annualComplete(rows) {
+  return rows.filter((row) => row.months >= 12);
+}
 
 async function loadDistrictCoordinates() {
   const response = await fetch("/data/district-coordinates.json");
-  if (!response.ok) throw new Error("District coordinate cache could not be loaded.");
+
+  if (!response.ok) {
+    throw new Error("District coordinate cache could not be loaded.");
+  }
+
   const cache = await response.json();
   return new Map(cache.coordinates.map((item) => [item.name, item]));
 }
 
-function normalizeLabel(v) {
-  return String(v || "").toLowerCase().trim().replace(/\s+/g, " ");
+function normalizeLabel(value) {
+  return String(value || "").toLowerCase().trim().replace(/\s+/g, " ");
 }
 
 function findDistrictCoordinate(name) {
-  if (!name) return null;
-  const exact = state.districtCoordinates.get(name);
-  if (exact) return exact;
+  if (!name) {
+    return null;
+  }
 
-  const norm = normalizeLabel(name);
+  const exact = state.districtCoordinates.get(name);
+  if (exact) {
+    return exact;
+  }
+
+  const normalizedName = normalizeLabel(name);
   const candidates = [...state.districtCoordinates.values()]
     .map((item) => {
-      const nv = normalizeLabel(item.name);
-      const dv = normalizeLabel(item.displayName);
-      const vv = normalizeLabel(item.matchedVariant || "");
+      const nameValue = normalizeLabel(item.name);
+      const displayValue = normalizeLabel(item.displayName);
+      const variantValue = normalizeLabel(item.matchedVariant || "");
       let score = 0;
-      if (nv === norm) score += 200;
-      if (dv === norm) score += 150;
-      if (vv === norm) score += 120;
-      if (dv.includes(norm)) score += 60;
-      if (vv.includes(norm)) score += 40;
-      if (nv.includes(norm)) score += 30;
+
+      if (nameValue === normalizedName) score += 200;
+      if (displayValue === normalizedName) score += 150;
+      if (variantValue === normalizedName) score += 120;
+      if (displayValue.includes(normalizedName)) score += 60;
+      if (variantValue.includes(normalizedName)) score += 40;
+      if (nameValue.includes(normalizedName)) score += 30;
       if (item.type === "administrative") score += 15;
       if (item.importance) score += Math.round(item.importance * 20);
+
       return { item, score };
     })
-    .filter((c) => c.score > 0)
+    .filter((candidate) => candidate.score > 0)
     .sort((a, b) => b.score - a.score);
 
   return candidates[0]?.item ?? null;
 }
 
-// ---------------------------------------------------------------------------
-// Health helpers
-// ---------------------------------------------------------------------------
-
 function syncHealthRankControls(rank) {
-  const pos = document.getElementById("health-rank-position");
-  const prev = document.getElementById("health-rank-prev");
+  const position = document.getElementById("health-rank-position");
+  const previous = document.getElementById("health-rank-prev");
   const next = document.getElementById("health-rank-next");
   const total = state.healthRankedDistricts.length;
-  if (!pos || !prev || !next) return;
-  pos.textContent = total ? `${t().map.rank} ${rank} / ${total}` : "";
-  prev.disabled = rank <= 1;
+
+  if (!position || !previous || !next) {
+    return;
+  }
+
+  position.textContent = total ? `${t().map.rank} ${rank} / ${total}` : "";
+  previous.disabled = rank <= 1;
   next.disabled = rank >= total;
 }
 
 function selectHealthRank(districts, rankIndex) {
   const index = Math.max(0, Math.min(rankIndex, districts.length - 1));
   const district = districts[index];
-  if (!district) return;
+
+  if (!district) {
+    return;
+  }
+
   state.selectedHealthRank = index;
-  updateHealthInspector(document.getElementById("health-inspector"), district, index + 1);
+  const inspector = document.getElementById("health-inspector");
+  updateHealthInspector(inspector, district, index + 1);
   syncHealthRankControls(index + 1);
 }
 
 function populationYears(population) {
-  return population.population.cityPopulation.map((r) => r.year);
+  return population.population.cityPopulation.map((row) => row.year);
 }
 
 function districtSnapshot(population, year) {
   return population.population.districtPopulation
     .map((district) => {
-      const snap = district.trend.find((r) => r.year === Number(year));
-      if (!snap || snap.total <= 0) return null;
-      return { ...district, male: snap.male, female: snap.female, total: snap.total, year: snap.year };
+      const snapshot = district.trend.find((row) => row.year === Number(year));
+
+      if (!snapshot || snapshot.total <= 0) {
+        return null;
+      }
+
+      return {
+        ...district,
+        male: snapshot.male,
+        female: snapshot.female,
+        total: snapshot.total,
+        year: snapshot.year
+      };
     })
     .filter(Boolean);
 }
 
-function healthYears(health) { return health.years; }
+function healthYears(health) {
+  return health.years;
+}
 
 function renderHealthYearSlider(health) {
   const years = healthYears(health);
   const slider = document.getElementById("health-year-slider");
+
   if (!state.selectedHealthYear || !years.includes(Number(state.selectedHealthYear))) {
     state.selectedHealthYear = years.at(-1);
   }
+
   slider.min = "0";
   slider.max = String(years.length - 1);
   slider.value = String(years.indexOf(Number(state.selectedHealthYear)));
@@ -509,8 +472,14 @@ function renderHealthYearSlider(health) {
 }
 
 function healthDistrictSnapshot(health, year) {
-  const districts = health.districtsByYear?.[String(year)] ?? [];
-  return districts.map((d) => ({ ...d, year, total: d.total }));
+  const yearKey = String(year);
+  const districts = health.districtsByYear?.[yearKey] ?? [];
+
+  return districts.map((district) => ({
+    ...district,
+    year,
+    total: district.total
+  }));
 }
 
 function updateHealthInspector(inspector, district, rank) {
@@ -525,24 +494,41 @@ function updateHealthInspector(inspector, district, rank) {
       <span>${t().health.services.pharmacies}: ${formatNumber(district.pharmacies)}</span>
     </div>
   `;
-  if (rank) { syncHealthRankControls(rank); state.selectedHealthRank = rank - 1; }
-}
 
-// ---------------------------------------------------------------------------
-// Population KPIs
-// ---------------------------------------------------------------------------
+  if (rank) {
+    syncHealthRankControls(rank);
+    state.selectedHealthRank = rank - 1;
+  }
+}
 
 function renderKpis(summary) {
   const labels = t().kpis;
   const items = [
-    { label: labels.population, value: formatNumber(summary.population), hint: `${labels.populationHint} (${summary.populationYear})` },
-    { label: labels.growth, value: formatSigned(summary.populationGrowth), hint: labels.growthHint },
-    { label: labels.migration, value: formatSigned(summary.migrationNet), hint: `${labels.migrationHint} (${summary.migrationYear})` },
-    { label: labels.age, value: `${summary.youthQuote}% / ${summary.elderlyQuote}%`, hint: `${labels.ageHint} (${summary.ageQuoteYear})` }
+    {
+      label: labels.population,
+      value: formatNumber(summary.population),
+      hint: `${labels.populationHint} (${summary.populationYear})`
+    },
+    {
+      label: labels.growth,
+      value: formatSigned(summary.populationGrowth),
+      hint: labels.growthHint
+    },
+    {
+      label: labels.migration,
+      value: formatSigned(summary.migrationNet),
+      hint: `${labels.migrationHint} (${summary.migrationYear})`
+    },
+    {
+      label: labels.age,
+      value: `${summary.youthQuote}% / ${summary.elderlyQuote}%`,
+      hint: `${labels.ageHint} (${summary.ageQuoteYear})`
+    }
   ];
 
   const grid = document.getElementById("kpi-grid");
   grid.innerHTML = "";
+
   for (const item of items) {
     const card = document.createElement("article");
     card.className = "kpi-card";
@@ -554,7 +540,6 @@ function renderKpis(summary) {
   }
 }
 
-<<<<<<< HEAD
 function renderInfrastructureKpis(summary) {
   const labels = t().kpis;
   const items = [
@@ -593,23 +578,42 @@ function renderInfrastructureKpis(summary) {
     grid.append(card);
   }
 }
-=======
-// ---------------------------------------------------------------------------
-// Population charts
-// ---------------------------------------------------------------------------
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
 
 function renderMigrationChart(population) {
   const labels = t().series;
   const source = annualComplete(population.migration.annual);
+
   createChart("migration-chart", {
     type: "line",
     data: {
-      labels: source.map((r) => String(r.year)),
+      labels: source.map((row) => String(row.year)),
       datasets: [
-        { label: labels.arrivals, data: source.map((r) => r.arrivals), borderColor: css("--brand-orange"), backgroundColor: "rgba(196,77,54,0.11)", borderWidth: 3, tension: 0.34, fill: true },
-        { label: labels.departures, data: source.map((r) => r.departures), borderColor: css("--brand-brown"), backgroundColor: "rgba(84,45,36,0.08)", borderWidth: 3, tension: 0.34 },
-        { label: labels.net, data: source.map((r) => r.net), borderColor: css("--signal-green"), backgroundColor: css("--signal-green"), borderWidth: 2, tension: 0.22, borderDash: [6, 5] }
+        {
+          label: labels.arrivals,
+          data: source.map((row) => row.arrivals),
+          borderColor: css("--brand-orange"),
+          backgroundColor: "rgba(196, 77, 54, 0.11)",
+          borderWidth: 3,
+          tension: 0.34,
+          fill: true
+        },
+        {
+          label: labels.departures,
+          data: source.map((row) => row.departures),
+          borderColor: css("--brand-brown"),
+          backgroundColor: "rgba(84, 45, 36, 0.08)",
+          borderWidth: 3,
+          tension: 0.34
+        },
+        {
+          label: labels.net,
+          data: source.map((row) => row.net),
+          borderColor: css("--signal-green"),
+          backgroundColor: css("--signal-green"),
+          borderWidth: 2,
+          tension: 0.22,
+          borderDash: [6, 5]
+        }
       ]
     },
     options: chartOptions()
@@ -619,21 +623,43 @@ function renderMigrationChart(population) {
 function renderVitalChart(population) {
   const labels = t().series;
   const source = annualComplete(population.vital.annual);
+
   createChart("vital-chart", {
     type: "bar",
     data: {
-      labels: source.map((r) => String(r.year)),
+      labels: source.map((row) => String(row.year)),
       datasets: [
-        { type: "line", label: labels.births, data: source.map((r) => r.births), borderColor: css("--signal-green"), backgroundColor: css("--signal-green"), borderWidth: 3, tension: 0.28 },
-        { type: "line", label: labels.deaths, data: source.map((r) => r.deaths), borderColor: css("--brand-brown"), backgroundColor: css("--brand-brown"), borderWidth: 3, tension: 0.28 },
-        { label: labels.birthDeathGap, data: source.map((r) => r.birthDeathGap), backgroundColor: "rgba(196,77,54,0.34)", borderColor: css("--brand-orange"), borderWidth: 1 }
+        {
+          type: "line",
+          label: labels.births,
+          data: source.map((row) => row.births),
+          borderColor: css("--signal-green"),
+          backgroundColor: css("--signal-green"),
+          borderWidth: 3,
+          tension: 0.28
+        },
+        {
+          type: "line",
+          label: labels.deaths,
+          data: source.map((row) => row.deaths),
+          borderColor: css("--brand-brown"),
+          backgroundColor: css("--brand-brown"),
+          borderWidth: 3,
+          tension: 0.28
+        },
+        {
+          label: labels.birthDeathGap,
+          data: source.map((row) => row.birthDeathGap),
+          backgroundColor: "rgba(196, 77, 54, 0.34)",
+          borderColor: css("--brand-orange"),
+          borderWidth: 1
+        }
       ]
     },
     options: chartOptions()
   });
 }
 
-<<<<<<< HEAD
 function renderInfrastructureStockChart(infrastructure) {
   const labels = t().series;
   const options = chartOptions();
@@ -723,90 +749,17 @@ function renderInfrastructureVacancyChart(infrastructure) {
       ]
     },
     options: chartOptions({ percent: true })
-=======
-function statusRows(population) {
-  return population.populationStatus ?? [];
-}
-
-function renderStatusSlider(population) {
-  const slider = document.getElementById("status-year-slider");
-  const rows = statusRows(population);
-
-  if (state.selectedStatusIndex >= rows.length) {
-    state.selectedStatusIndex = rows.length - 1;
-  }
-
-  slider.min = "0";
-  slider.max = String(rows.length - 1);
-  slider.value = String(state.selectedStatusIndex);
-  setText("#status-slider-label", t().age.year);
-}
-
-function renderStatusOrbit(root, item) {
-  let orbit = root.querySelector(`[data-status-orbit="${item.className}"]`);
-
-  if (!orbit) {
-    orbit = document.createElement("article");
-    orbit.className = `status-orbit ${item.className}`;
-    orbit.dataset.statusOrbit = item.className;
-    orbit.innerHTML = `
-      <div class="status-ring">
-        <strong></strong>
-      </div>
-      <div>
-        <span></span>
-        <p></p>
-      </div>
-    `;
-    root.append(orbit);
-  }
-
-  const ring = orbit.querySelector(".status-ring");
-  ring.style.setProperty("--angle", `${Math.min(item.share / 100, 1) * 360}deg`);
-  ring.querySelector("strong").textContent = item.value;
-  orbit.querySelector("span").textContent = item.label;
-  orbit.querySelector("p").textContent = item.detail;
-}
-
-function renderPopulationStatus(population) {
-  const copy = t().status;
-  const rows = statusRows(population);
-  const selected = rows[state.selectedStatusIndex] ?? rows.at(-1);
-  const first = rows[0] ?? selected;
-  const totals = rows.map((row) => row.totalPopulation);
-  const minTotal = Math.min(...totals);
-  const maxTotal = Math.max(...totals);
-  const root = document.getElementById("status-orbits");
-  const totalProgress = maxTotal > minTotal
-    ? ((selected.totalPopulation - minTotal) / (maxTotal - minTotal)) * 100
-    : 100;
-  const residentChange = selected.totalPopulation - first.totalPopulation;
-  const residentChangeShare = first.totalPopulation ? ((residentChange / first.totalPopulation) * 100).toFixed(1) : "0.0";
-
-  document.getElementById("status-year-label").textContent = selected.year;
-  renderStatusOrbit(root, {
-    className: "residents",
-    label: copy.residents,
-    value: formatNumber(selected.totalPopulation),
-    detail: `${formatSigned(residentChange)} / ${residentChangeShare}% ${copy.sinceBaseline}`,
-    share: totalProgress
-  });
-  renderStatusOrbit(root, {
-    className: "internationals",
-    label: copy.internationals,
-    value: formatNumber(selected.internationalPopulation),
-    detail: `${selected.internationalShare}% ${copy.ofResidents}`,
-    share: selected.internationalShare
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
   });
 }
 
 function renderPopulationYearSlider(population) {
   const years = populationYears(population);
   const slider = document.getElementById("population-year-slider");
+
   if (!state.selectedPopulationYear || !years.includes(Number(state.selectedPopulationYear))) {
     state.selectedPopulationYear = years.at(-1);
   }
+
   slider.min = "0";
   slider.max = String(years.length - 1);
   slider.value = String(years.indexOf(Number(state.selectedPopulationYear)));
@@ -816,297 +769,181 @@ function renderPopulationYearSlider(population) {
 
 function updateInspector(inspector, district, rank) {
   const copy = t();
-  const detail = inspector.querySelector(".map-inspector-detail") ?? inspector;
   const maleShare = district.total ? Math.round((district.male / district.total) * 100) : 0;
   const femaleShare = district.total ? 100 - maleShare : 0;
+  const trendMax = Math.max(...district.trend.map((row) => row.total));
+  const trendBars = district.trend
+    .map(
+      (row) => `
+        <span style="--value: ${(row.total / trendMax) * 100}%">
+          <i>${row.year}</i>
+          <b>${formatNumber(row.total)}</b>
+        </span>
+      `
+    )
+    .join("");
 
-  detail.innerHTML = `
+  inspector.innerHTML = `
     <p class="eyebrow">${rank ? `${copy.map.rank} ${rank}` : copy.map.hover}</p>
     <h3>${district.name}</h3>
     <strong>${formatNumber(district.total)}</strong>
     <span>${copy.map.residents} · ${district.year}</span>
     <div class="gender-meter" aria-label="${copy.map.genderSplit}">
-      <span style="--value: ${maleShare}%"></span><span style="--value: ${femaleShare}%"></span>
+      <span style="--value: ${maleShare}%"></span>
+      <span style="--value: ${femaleShare}%"></span>
     </div>
     <div class="gender-split">
       <span>${copy.series.male}: ${formatNumber(district.male)} (${maleShare}%)</span>
       <span>${copy.series.female}: ${formatNumber(district.female)} (${femaleShare}%)</span>
+    </div>
+    <div class="district-trend">
+      ${trendBars}
     </div>
   `;
 }
 
 function normalizeBoundaryFeature(rawBoundary) {
   const result = rawBoundary.find((item) => item.geojson?.type);
-  if (!result) throw new Error("Magdeburg boundary geometry is missing.");
+
+  if (!result) {
+    throw new Error("Magdeburg boundary geometry is missing.");
+  }
+
   return {
     type: "Feature",
-    properties: { name: result.display_name, osmId: result.osm_id },
+    properties: {
+      name: result.display_name,
+      osmId: result.osm_id
+    },
     geometry: result.geojson
   };
 }
 
 async function loadBoundary() {
   const response = await fetch("/data/magdeburg-nominatim.json");
-  if (!response.ok) throw new Error("Magdeburg map boundary could not be loaded.");
+
+  if (!response.ok) {
+    throw new Error("Magdeburg map boundary could not be loaded.");
+  }
+
   return normalizeBoundaryFeature(await response.json());
 }
 
 function boundaryPolygons(feature) {
-  return feature.geometry.type === "Polygon"
-    ? [feature.geometry.coordinates]
-    : feature.geometry.coordinates;
-}
-
-function projectionScale(feature) {
-  const coordinates = boundaryPolygons(feature).flatMap((polygon) => polygon[0]);
-  const averageLat = coordinates.reduce((sum, coordinate) => sum + coordinate[1], 0) / coordinates.length;
-  return Math.cos((averageLat * Math.PI) / 180);
-}
-
-function projectLonLat(lon, lat, scale) {
-  return { x: lon * scale, y: lat };
-}
-
-function unprojectPoint(point, scale) {
-  return [point.y, point.x / scale];
-}
-
-function openRing(ring) {
-  const first = ring[0];
-  const last = ring.at(-1);
-
-  if (first && last && first[0] === last[0] && first[1] === last[1]) {
-    return ring.slice(0, -1);
+  if (feature.geometry.type === "Polygon") {
+    return [feature.geometry.coordinates];
   }
 
-  return ring;
-}
-
-function simplifyRing(ring, targetVertices = 260) {
-  const open = openRing(ring);
-
-  if (open.length <= targetVertices) {
-    return open;
-  }
-
-  const step = Math.ceil(open.length / targetVertices);
-  return open.filter((_, index) => index % step === 0);
-}
-
-function polygonArea(points) {
-  let area = 0;
-
-  for (let index = 0; index < points.length; index += 1) {
-    const current = points[index];
-    const next = points[(index + 1) % points.length];
-    area += current.x * next.y - next.x * current.y;
-  }
-
-  return area / 2;
-}
-
-function pointInRing(point, ring) {
-  let inside = false;
-
-  for (let index = 0, previous = ring.length - 1; index < ring.length; previous = index, index += 1) {
-    const current = ring[index];
-    const before = ring[previous];
-    const crosses = current.y > point.y !== before.y > point.y;
-
-    if (crosses && point.x < ((before.x - current.x) * (point.y - current.y)) / (before.y - current.y) + current.x) {
-      inside = !inside;
-    }
-  }
-
-  return inside;
-}
-
-function bisectorValue(point, anchor, other) {
-  const left = 2 * ((other.x - anchor.x) * point.x + (other.y - anchor.y) * point.y);
-  const right = other.x ** 2 + other.y ** 2 - anchor.x ** 2 - anchor.y ** 2;
-  return left - right;
-}
-
-function bisectorIntersection(start, end, anchor, other) {
-  const startValue = bisectorValue(start, anchor, other);
-  const endValue = bisectorValue(end, anchor, other);
-  const denominator = startValue - endValue;
-
-  if (Math.abs(denominator) < 1e-12) {
-    return end;
-  }
-
-  const amount = startValue / denominator;
-  return {
-    x: start.x + (end.x - start.x) * amount,
-    y: start.y + (end.y - start.y) * amount
-  };
-}
-
-function clipToCloserSide(cell, anchor, other) {
-  const clipped = [];
-
-  for (let index = 0; index < cell.length; index += 1) {
-    const current = cell[index];
-    const previous = cell[(index + cell.length - 1) % cell.length];
-    const currentInside = bisectorValue(current, anchor, other) <= 1e-12;
-    const previousInside = bisectorValue(previous, anchor, other) <= 1e-12;
-
-    if (currentInside !== previousInside) {
-      clipped.push(bisectorIntersection(previous, current, anchor, other));
-    }
-
-    if (currentInside) {
-      clipped.push(current);
-    }
-  }
-
-  return clipped;
-}
-
-function buildDistrictCells(districts) {
-  if (state.districtCells.size) {
-    return state.districtCells;
-  }
-
-  const scale = projectionScale(state.boundary);
-  const boundaryRings = boundaryPolygons(state.boundary)
-    .map((polygon) => simplifyRing(polygon[0]).map(([lon, lat]) => projectLonLat(lon, lat, scale)))
-    .filter((ring) => ring.length >= 3)
-    .map((ring) => ({
-      ring,
-      area: Math.abs(polygonArea(ring))
-    }));
-  const largestRing = boundaryRings.reduce((largest, ring) => (ring.area > largest.area ? ring : largest), boundaryRings[0]);
-  const anchors = districts
-    .map((district) => {
-      const coordinate = state.districtCoordinates.get(district.name);
-
-      if (!coordinate) {
-        return null;
-      }
-
-      return {
-        district,
-        point: projectLonLat(coordinate.lon, coordinate.lat, scale)
-      };
-    })
-    .filter(Boolean);
-  const cells = new Map();
-
-  for (const anchor of anchors) {
-    const baseRing = boundaryRings.find((ring) => pointInRing(anchor.point, ring.ring)) ?? largestRing;
-    let cell = baseRing.ring.map((point) => ({ ...point }));
-
-    for (const other of anchors) {
-      if (other === anchor) {
-        continue;
-      }
-
-      cell = clipToCloserSide(cell, anchor.point, other.point);
-
-      if (cell.length < 3) {
-        break;
-      }
-    }
-
-    if (cell.length >= 3) {
-      cells.set(anchor.district.name, cell.map((point) => unprojectPoint(point, scale)));
-    }
-  }
-
-  state.districtCells = cells;
-  return cells;
+  return feature.geometry.coordinates;
 }
 
 function resetLeafletMap(containerId) {
   state.maps[containerId]?.remove();
-  const map = L.map(containerId, { zoomControl: false, attributionControl: false, scrollWheelZoom: false, keyboard: true });
+
+  const map = L.map(containerId, {
+    zoomControl: false,
+    attributionControl: false,
+    scrollWheelZoom: false,
+    keyboard: true
+  });
+
   L.control.zoom({ position: "bottomright" }).addTo(map);
-  L.control.attribution({ position: "bottomleft", prefix: false })
+  L.control
+    .attribution({ position: "bottomleft", prefix: false })
     .addAttribution("&copy; OpenStreetMap contributors")
     .addTo(map);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19 }).addTo(map);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19
+  }).addTo(map);
+
   state.maps[containerId] = map;
   return map;
 }
 
 function addBoundaryMask(map, feature) {
-  const world = [[85, -180], [85, 180], [-85, 180], [-85, -180]];
-  const holes = boundaryPolygons(feature).map((poly) => poly[0].map(([lon, lat]) => [lat, lon]));
-  L.polygon([world, ...holes], { stroke: false, fillColor: "#ffffff", fillOpacity: 0.82, interactive: false }).addTo(map);
+  const world = [
+    [85, -180],
+    [85, 180],
+    [-85, 180],
+    [-85, -180]
+  ];
+  const holes = boundaryPolygons(feature).map((polygon) =>
+    polygon[0].map(([lon, lat]) => [lat, lon])
+  );
+
+  L.polygon([world, ...holes], {
+    stroke: false,
+    fillColor: "#ffffff",
+    fillOpacity: 0.82,
+    interactive: false
+  }).addTo(map);
 
   const boundaryLayer = L.geoJSON(feature, {
     style: {
       color: css("--brand-orange"),
-      weight: 3,
-      opacity: 0.94,
+      weight: 0,
+      opacity: 0.88,
       fillColor: css("--brand-orange"),
-      fillOpacity: 0.06
+      fillOpacity: 0.08
     }
   }).addTo(map);
 
   return boundaryLayer;
 }
 
-function renderMap(containerId, inspectorId, districts, { ranked = false, onInspect: cb = null, initialIndex = 0 } = {}) {
+function renderMap(containerId, inspectorId, districts, { ranked = false, onInspect: onInspectCallback = null, initialIndex = 0 } = {}) {
   const inspector = document.getElementById(inspectorId);
-  const max = Math.max(1, ...districts.map((d) => d.total));
+  const max = Math.max(1, ...districts.map((district) => district.total));
   const rankedDistricts = [...districts].sort((a, b) => b.total - a.total);
-  const rankByName = new Map(rankedDistricts.map((d, i) => [d.name, i + 1]));
-  const topNames = new Set(rankedDistricts.slice(0, 12).map((d) => d.name));
+  const rankByName = new Map(rankedDistricts.map((district, index) => [district.name, index + 1]));
+  const topNames = new Set(rankedDistricts.slice(0, 12).map((district) => district.name));
   const map = resetLeafletMap(containerId);
   const boundaryLayer = addBoundaryMask(map, state.boundary);
   const bounds = boundaryLayer.getBounds();
-  const cells = buildDistrictCells(districts);
 
-  const detail = inspector.querySelector(".map-inspector-detail") ?? inspector;
-  detail.innerHTML = `
+  inspector.innerHTML = `
     <p class="eyebrow">${t().map.hover}</p>
     <h3>${t().map.topDistricts}</h3>
     <span>${t().map.hoverCopy}</span>
   `;
 
-  districts.forEach((district) => {
-    const cell = cells.get(district.name);
+  districts.forEach((district, index) => {
+    const coordinate = findDistrictCoordinate(district.name);
 
-    if (!cell) return;
+    if (!coordinate) {
+      return;
+    }
 
+    const point = [coordinate.lat, coordinate.lon];
     const intensity = Math.max(0.12, Math.sqrt(district.total / max));
     const markerColor = ranked && topNames.has(district.name) ? css("--brand-brown") : css("--brand-orange");
-    const baseOpacity = 0.3 + intensity * 0.38;
-    const marker = L.polygon(cell, {
+    const marker = L.circleMarker(point, {
+      radius: 4 + intensity * 11,
       fillColor: mixColor("#eeeeee", markerColor, intensity),
-      fillOpacity: ranked && topNames.has(district.name) ? Math.max(baseOpacity, 0.68) : baseOpacity,
+      fillOpacity: ranked && topNames.has(district.name) ? 0.88 : 0.72,
       stroke: false,
-      className: "district-region"
+      opacity: 0.94,
     }).addTo(map);
     const rank = rankByName.get(district.name);
     const onInspect = () => {
-      if (typeof cb === "function") cb(inspector, district, ranked ? rank : null);
-      else updateInspector(inspector, district, ranked ? rank : null);
+      if (typeof onInspectCallback === "function") {
+        onInspectCallback(inspector, district, ranked ? rank : null);
+      } else {
+        updateInspector(inspector, district, ranked ? rank : null);
+      }
     };
     marker.bindTooltip(
-      `${district.name}: ${formatNumber(district.total)}`,
+      `${district.name}: ${formatNumber(district.total)}${coordinate.inferred ? " · inferred anchor" : ""}`,
       {
-        direction: "top",
-        sticky: true
+      direction: "top",
+      sticky: true
       }
     );
     marker.on("mouseover", onInspect);
-    marker.on("mouseover", () => {
-      marker.setStyle({ fillColor: css("--brand-brown"), fillOpacity: 0.86 });
-    });
-    marker.on("mouseout", () => {
-      marker.setStyle({
-        fillColor: mixColor("#eeeeee", markerColor, intensity),
-        fillOpacity: ranked && topNames.has(district.name) ? Math.max(baseOpacity, 0.68) : baseOpacity
-      });
-    });
     marker.on("click", onInspect);
   });
 
-  boundaryLayer.bringToFront();
   map.fitBounds(bounds, { padding: [16, 16] });
   map.setMaxBounds(bounds.pad(0.08));
   setTimeout(() => map.invalidateSize(), 0);
@@ -1114,49 +951,63 @@ function renderMap(containerId, inspectorId, districts, { ranked = false, onInsp
   const safeIndex = Math.max(0, Math.min(initialIndex, rankedDistricts.length - 1));
   const initialDistrict = rankedDistricts[safeIndex];
   const initialRank = ranked ? safeIndex + 1 : null;
+
   if (initialDistrict) {
-    if (typeof cb === "function") cb(inspector, initialDistrict, initialRank);
-    else updateInspector(inspector, initialDistrict, initialRank);
+    if (typeof onInspectCallback === "function") {
+      onInspectCallback(inspector, initialDistrict, initialRank);
+    } else {
+      updateInspector(inspector, initialDistrict, initialRank);
+    }
   }
 }
 
 function renderAgeStructure(population) {
   const copy = t();
   const selected = population.ageQuote[state.selectedAgeQuoteIndex] ?? population.ageQuote.at(-1);
+  const trend = population.ageQuote;
   const orbitRoot = document.getElementById("age-orbits");
+  const trendRoot = document.getElementById("age-trend");
 
   document.getElementById("age-year-label").textContent = selected.year;
+  orbitRoot.innerHTML = "";
+  trendRoot.innerHTML = "";
 
   [
     { label: copy.age.youth, value: selected.youth, className: "youth" },
     { label: copy.age.elderly, value: selected.elderly, className: "elderly" }
   ].forEach((item) => {
-    let orbit = orbitRoot.querySelector(`[data-age-orbit="${item.className}"]`);
-
-    if (!orbit) {
-      orbit = document.createElement("div");
-      orbit.className = `age-orbit ${item.className}`;
-      orbit.dataset.ageOrbit = item.className;
-      orbit.innerHTML = `
-        <div class="age-ring">
-          <strong></strong>
-        </div>
-        <span></span>
-      `;
-      orbitRoot.append(orbit);
-    }
-
-    const ring = orbit.querySelector(".age-ring");
-    ring.style.setProperty("--angle", `${Math.min(item.value / 50, 1) * 360}deg`);
-    ring.querySelector("strong").textContent = `${item.value}%`;
-    orbit.querySelector("span").textContent = item.label;
+    const orbit = document.createElement("div");
+    orbit.className = `age-orbit ${item.className}`;
+    orbit.style.setProperty("--angle", `${Math.min(item.value / 50, 1) * 360}deg`);
+    orbit.innerHTML = `
+      <div class="age-ring">
+        <strong>${item.value}%</strong>
+      </div>
+      <span>${item.label}</span>
+    `;
+    orbitRoot.append(orbit);
   });
+
+  for (const row of trend) {
+    const item = document.createElement("div");
+    item.className = `age-trend-year${row.year === selected.year ? " is-selected" : ""}`;
+    item.innerHTML = `
+      <span class="age-column youth" style="--value: ${row.youth}%"></span>
+      <span class="age-column elderly" style="--value: ${row.elderly}%"></span>
+      <small>${row.year}</small>
+    `;
+    trendRoot.append(item);
+  }
 }
 
 function renderAgeQuoteSlider(population) {
   const slider = document.getElementById("age-quote-year-slider");
   const rows = population.ageQuote;
-  if (state.selectedAgeQuoteIndex >= rows.length) state.selectedAgeQuoteIndex = rows.length - 1;
+
+  if (state.selectedAgeQuoteIndex >= rows.length) {
+    state.selectedAgeQuoteIndex = rows.length - 1;
+  }
+
   slider.min = "0";
   slider.max = String(rows.length - 1);
   slider.value = String(state.selectedAgeQuoteIndex);
@@ -1164,21 +1015,23 @@ function renderAgeQuoteSlider(population) {
 }
 
 function renderPeople(count, direction) {
-  return Array.from({ length: count }, (_, i) => `<span class="person ${direction}" style="--i: ${i}"></span>`).join("");
+  return Array.from({ length: count }, (_, index) =>
+    `<span class="person ${direction}" style="--i: ${index}"></span>`
+  ).join("");
 }
 
 function renderAgeFlow(population) {
   const rows = population.ageMigration;
   const selected = rows[state.selectedAgeIndex] ?? rows.at(-1);
   const root = document.getElementById("age-flow-grid");
-  const max = Math.max(...selected.values.flatMap((r) => [r.incoming, r.outgoing]));
+  const max = Math.max(...selected.values.flatMap((row) => [row.incoming, row.outgoing]));
 
   document.getElementById("age-flow-year").textContent = selected.year;
   root.innerHTML = "";
 
   for (const row of selected.values) {
-    const inCount = Math.max(2, Math.round((row.incoming / max) * 9));
-    const outCount = Math.max(2, Math.round((row.outgoing / max) * 9));
+    const incomingCount = Math.max(2, Math.round((row.incoming / max) * 9));
+    const outgoingCount = Math.max(2, Math.round((row.outgoing / max) * 9));
     const card = document.createElement("article");
     card.className = "flow-card";
     card.innerHTML = `
@@ -1189,12 +1042,12 @@ function renderAgeFlow(population) {
       <div class="flow-lanes">
         <div class="flow-lane incoming">
           <span>${t().series.incoming}</span>
-          <div><span class="door-icon" aria-hidden="true"></span>${renderPeople(inCount, "incoming")}</div>
+          <div>${renderPeople(incomingCount, "incoming")}</div>
           <strong>${formatNumber(row.incoming)}</strong>
         </div>
         <div class="flow-lane outgoing">
           <span>${t().series.outgoing}</span>
-          <div><span class="door-icon" aria-hidden="true"></span>${renderPeople(outCount, "outgoing")}</div>
+          <div>${renderPeople(outgoingCount, "outgoing")}</div>
           <strong>${formatNumber(row.outgoing)}</strong>
         </div>
       </div>
@@ -1206,7 +1059,11 @@ function renderAgeFlow(population) {
 function renderAgeSlider(population) {
   const slider = document.getElementById("age-year-slider");
   const rows = population.ageMigration;
-  if (state.selectedAgeIndex >= rows.length) state.selectedAgeIndex = rows.length - 1;
+
+  if (state.selectedAgeIndex >= rows.length) {
+    state.selectedAgeIndex = rows.length - 1;
+  }
+
   slider.min = "0";
   slider.max = String(rows.length - 1);
   slider.value = String(state.selectedAgeIndex);
@@ -1214,9 +1071,8 @@ function renderAgeSlider(population) {
 }
 
 function renderSources() {
-  setSource("status-source", ["Sonderbericht - Auslaendische Bevoelkerung"]);
-  setSource("migration-source", ["Zuzüge nach", "Wegzüge aus"]);
-  setSource("population-source", ["Statistischen Bezirken"]);
+  setSource("migration-source", ["Zuzüge, Wegzüge"]);
+  setSource("population-source", ["Hauptwohnsitzbevölkerung"]);
   setSource("vital-source", ["Geburten"]);
   setSource("age-source", ["Jugend- und Altenquote"]);
   setSource("age-migration-source", ["Zuzüge nach", "Wegzüge aus"]);
@@ -1226,352 +1082,14 @@ function renderSources() {
   setSource("health-source", ["Gesundheit und Soziales"]);
 }
 
-// ---------------------------------------------------------------------------
-// Education view
-// ---------------------------------------------------------------------------
-
-const EDU_TYPE_COLOURS = [
-  "#C44D36","#542D24","#4A7C59","#7BAFD4","#E5A14F",
-  "#9B6EA8","#4EB3A2","#D4836A","#6B8E5E","#A06030","#3A6B8A","#C9A84C"
-];
-
-const EDU_PROGRAM_COLOURS = [
-  "#C44D36","#4A7C59","#7BAFD4","#E5A14F","#9B6EA8","#4EB3A2","#A06030"
-];
-
-function renderEducationKpis(summary, lang) {
-  const labels = lang === "de"
-    ? { students: "Schüler", studentsHint: "Stadtweit, aktuelles Schuljahr", schools: "Schulen", schoolsHint: "Aktive Schulen", growth: "Schüler-Veränderung", growthHint: "Seit Basiszeitraum", uniFreshmen: "Erstsemester", uniFreshmenHint: "1. Fachsemester", programmeStudents: "Studierende gesamt", programmeStudentsHint: "Aktuelles Wintersemester", femaleShare: "Frauenanteil Uni", femaleShareHint: "Anteil weiblicher Erstsemester" }
-    : { students: "School students", studentsHint: "City-wide, current school year", schools: "Schools", schoolsHint: "Active schools", growth: "Student change", growthHint: "Since baseline year", uniFreshmen: "Uni freshmen", uniFreshmenHint: "1st-semester enrolments", programmeStudents: "Enrolled students", programmeStudentsHint: "Latest winter semester", femaleShare: "Female uni share", femaleShareHint: "Share of female freshmen" };
-
-  const items = [
-    { label: labels.students, value: formatNumber(summary.totalSchoolStudents), hint: `${labels.studentsHint} (${summary.schoolDataYear})` },
-    { label: labels.schools, value: formatNumber(summary.totalSchools), hint: labels.schoolsHint },
-    { label: labels.growth, value: formatSigned(summary.schoolStudentsGrowth), hint: labels.growthHint },
-    { label: labels.uniFreshmen, value: formatNumber(summary.universityFreshmen), hint: `${labels.uniFreshmenHint} (${summary.universityDataYear})` },
-    { label: labels.programmeStudents, value: formatNumber(summary.programmeStudents), hint: `${labels.programmeStudentsHint} (${summary.programmeDataYear})` },
-    { label: labels.femaleShare, value: `${summary.femaleUniShare}%`, hint: labels.femaleShareHint }
-  ];
-
-  const grid = document.getElementById("education-kpi-grid");
-  if (!grid) return;
-  grid.innerHTML = "";
-  for (const item of items) {
-    const card = document.createElement("article");
-    card.className = "kpi-card";
-    card.innerHTML = `<span></span><strong></strong><p></p>`;
-    card.querySelector("span").textContent = item.label;
-    card.querySelector("strong").textContent = item.value;
-    card.querySelector("p").textContent = item.hint;
-    grid.append(card);
-  }
-}
-
-function renderSchoolTypeChart(schoolDetails, lang) {
-  const { byType, typeLabels } = schoolDetails;
-  createChart("school-type-chart", {
-    type: "polarArea",
-    data: {
-      labels: byType.map((d) => typeLabels[lang]?.[d.type] ?? d.type),
-      datasets: [{
-        data: byType.map((d) => d.students),
-        backgroundColor: EDU_TYPE_COLOURS.map((c) => c + "CC"),
-        borderColor: EDU_TYPE_COLOURS,
-        borderWidth: 1.5
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
-      plugins: {
-        legend: { position: "right", labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700, size: 11 } } },
-        tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => ` ${formatNumber(ctx.parsed.r)} students` } }
-      },
-      scales: { r: { ticks: { display: false }, grid: { color: "#e5e5e5" } } }
-    }
-  });
-}
-
-function renderCapacityChart(schoolDetails, lang) {
-  const { capacityData, typeLabels } = schoolDetails;
-  const typeMap = new Map();
-  for (const school of capacityData) {
-    const list = typeMap.get(school.type) ?? [];
-    list.push(school);
-    typeMap.set(school.type, list);
-  }
-  const datasets = [...typeMap.entries()].map(([type, schools], i) => ({
-    label: typeLabels[lang]?.[type] ?? type,
-    data: schools.map((s) => ({ x: s.classes, y: s.students, r: Math.max(4, Math.min(20, s.avgPerClass * 0.6)), name: s.name, avg: s.avgPerClass })),
-    backgroundColor: (EDU_TYPE_COLOURS[i % EDU_TYPE_COLOURS.length]) + "99",
-    borderColor: EDU_TYPE_COLOURS[i % EDU_TYPE_COLOURS.length],
-    borderWidth: 1.5
-  }));
-  createChart("school-capacity-chart", {
-    type: "bubble",
-    data: { datasets },
-    options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
-      plugins: {
-        legend: { labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700, size: 11 } } },
-        tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => [` ${ctx.raw.name}`, ` Classes: ${ctx.raw.x}  ·  Students: ${formatNumber(ctx.raw.y)}`, ` Avg class size: ${ctx.raw.avg}`] } }
-      },
-      scales: {
-        x: { title: { display: true, text: lang === "de" ? "Klassen" : "Classes", color: css("--muted") }, grid: { display: false }, ticks: { color: css("--muted") } },
-        y: { title: { display: true, text: lang === "de" ? "Schüler" : "Students", color: css("--muted") }, grid: { color: "#eeeeee" }, ticks: { color: css("--muted"), callback: (v) => formatNumber(v) } }
-      }
-    }
-  });
-}
-
-function renderSchoolTrendChart(schoolDetails) {
-  const { cityTrend } = schoolDetails;
-  createChart("school-trend-chart", {
-    type: "bar",
-    data: {
-      labels: cityTrend.map((r) => String(r.year)),
-      datasets: [{ label: state.language === "de" ? "Schüler gesamt" : "Total students", data: cityTrend.map((r) => r.students), backgroundColor: "rgba(196,77,54,0.30)", borderColor: css("--brand-orange"), borderWidth: 2, borderRadius: 3 }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
-      plugins: { legend: { display: false }, tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => ` ${formatNumber(ctx.parsed.y)} students` } } },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: css("--muted"), maxRotation: 0, autoSkip: true, maxTicksLimit: 12 } },
-        y: { grid: { color: "#eeeeee" }, ticks: { color: css("--muted"), callback: (v) => formatNumber(v) } }
-      }
-    }
-  });
-}
-
-function renderEducationDistrictMap(districtSchools) {
-  const inspector = document.getElementById("education-inspector");
-  if (!inspector || !state.boundary) return;
-  const districts = districtSchools.latestDistrictBreakdown;
-  const max = Math.max(1, ...districts.map((d) => d.students));
-  const ranked = [...districts].sort((a, b) => b.students - a.students);
-  const rankByName = new Map(ranked.map((d, i) => [d.name, i + 1]));
-  const topNames = new Set(ranked.slice(0, 10).map((d) => d.name));
-  const map = resetLeafletMap("education-map");
-  const boundaryLayer = addBoundaryMask(map, state.boundary);
-  const bounds = boundaryLayer.getBounds();
-
-  inspector.innerHTML = `<p class="eyebrow">${t().map.hover}</p><h3>${t().map.topDistricts}</h3><span>${state.language === "de" ? "Fahre über einen Bezirk für Details." : "Hover a district for details."}</span>`;
-
-  districts.forEach((district) => {
-    const coord = findDistrictCoordinate(district.name);
-    if (!coord) return;
-    const intensity = Math.max(0.12, Math.sqrt(district.students / max));
-    const markerColor = topNames.has(district.name) ? css("--brand-brown") : css("--brand-orange");
-    const marker = L.circleMarker([coord.lat, coord.lon], {
-      radius: 5 + intensity * 12,
-      fillColor: mixColor("#eeeeee", markerColor, intensity),
-      fillOpacity: topNames.has(district.name) ? 0.88 : 0.68,
-      stroke: false
-    }).addTo(map);
-    const rank = rankByName.get(district.name);
-    marker.bindTooltip(`${district.name}: ${formatNumber(district.students)} ${state.language === "de" ? "Schüler" : "students"}`, { direction: "top", sticky: true });
-    marker.on("mouseover", () => {
-      inspector.innerHTML = `<p class="eyebrow">${t().map.rank} ${rank}</p><h3>${district.name}</h3><strong>${formatNumber(district.students)}</strong><span>${state.language === "de" ? "Schüler" : "Students"} · ${districtSchools.latestYear}</span><div class="gender-split" style="margin-top:0.5rem"><span>${state.language === "de" ? "Schulen" : "Schools"}: ${district.schools}</span><span>${state.language === "de" ? "Klassen" : "Classes"}: ${district.classes}</span></div>`;
-    });
-    marker.on("click", () => marker.fire("mouseover"));
-  });
-
-  map.fitBounds(bounds, { padding: [16, 16] });
-  map.setMaxBounds(bounds.pad(0.08));
-  setTimeout(() => map.invalidateSize(), 0);
-
-  const top = ranked[0];
-  if (top) inspector.innerHTML = `<p class="eyebrow">${t().map.rank} 1</p><h3>${top.name}</h3><strong>${formatNumber(top.students)}</strong><span>${state.language === "de" ? "Schüler" : "Students"} · ${districtSchools.latestYear}</span><div class="gender-split" style="margin-top:0.5rem"><span>${state.language === "de" ? "Schulen" : "Schools"}: ${top.schools}</span><span>${state.language === "de" ? "Klassen" : "Classes"}: ${top.classes}</span></div>`;
-}
-
-function renderUniversityTrendChart(universities) {
-  const { trend } = universities;
-  createChart("university-trend-chart", {
-    type: "line",
-    data: {
-      labels: trend.map((r) => String(r.year)),
-      datasets: [
-        { label: state.language === "de" ? "Gesamt" : "Total", data: trend.map((r) => r.total), borderColor: css("--brand-orange"), backgroundColor: "rgba(196,77,54,0.10)", borderWidth: 3, tension: 0.35, fill: true },
-        { label: state.language === "de" ? "Männlich" : "Male", data: trend.map((r) => r.male), borderColor: css("--brand-brown"), borderWidth: 2, tension: 0.35 },
-        { label: state.language === "de" ? "Weiblich" : "Female", data: trend.map((r) => r.female), borderColor: css("--signal-green"), borderWidth: 2, tension: 0.35 }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900, easing: "easeOutQuart" },
-      interaction: { mode: "index", intersect: false },
-      plugins: {
-        legend: { labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700 } } },
-        tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 12, callbacks: { label: (ctx) => ` ${ctx.dataset.label}: ${formatNumber(ctx.parsed.y)}` } }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { color: css("--muted"), maxRotation: 0 } },
-        y: { grid: { color: "#eeeeee" }, ticks: { color: css("--muted"), callback: (v) => formatNumber(v) } }
-      }
-    }
-  });
-}
-
-function renderInstitutionChart(universities) {
-  const top = universities.institutionBreakdown.slice(0, 8);
-  createChart("institution-breakdown-chart", {
-    type: "bar",
-    data: {
-      labels: top.map((d) => d.name),
-      datasets: [
-        { label: state.language === "de" ? "Männlich" : "Male", data: top.map((d) => d.male), backgroundColor: css("--brand-brown") + "CC", borderColor: css("--brand-brown"), borderWidth: 1, stack: "gender" },
-        { label: state.language === "de" ? "Weiblich" : "Female", data: top.map((d) => d.female), backgroundColor: css("--signal-green") + "CC", borderColor: css("--signal-green"), borderWidth: 1, stack: "gender" }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true, animation: { duration: 900 },
-      plugins: {
-        legend: { labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700 } } },
-        tooltip: { backgroundColor: "rgba(84,45,36,0.94)", padding: 10, callbacks: { label: (ctx) => ` ${ctx.dataset.label}: ${formatNumber(ctx.parsed.y)}` } }
-      },
-      scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { color: css("--muted"), maxRotation: 30, font: { size: 10 } } },
-        y: { stacked: true, grid: { color: "#eeeeee" }, ticks: { color: css("--muted"), callback: (v) => formatNumber(v) } }
-      }
-    }
-  });
-}
-
-function renderStudyProgramChart(studyPrograms, lang) {
-  const institutions = studyPrograms.latestInstitutionBreakdown ?? [];
-  const formTotals = new Map();
-  for (const institution of institutions) {
-    for (const [form, data] of Object.entries(institution.studyForms ?? {})) {
-      formTotals.set(form, (formTotals.get(form) ?? 0) + data.total);
-    }
-  }
-
-  const formLabels = lang === "de"
-    ? {
-      "Direktstudium": "Direktstudium",
-      "Berufsbegleitendes Fernstudium": "Berufsbegl. Fernstudium",
-      "Grundständiges Studium": "Grundständiges Studium",
-      "Master- und Aufbaustudiengänge": "Master- und Aufbaustudiengänge",
-      "Weiterbildung": "Weiterbildung",
-      "Promotionsstudium": "Promotionsstudium",
-      "Struktur. Promotionsstudium": "Struktur. Promotionsstudium"
-    }
-    : {
-      "Direktstudium": "Direct study",
-      "Berufsbegleitendes Fernstudium": "Part-time distance study",
-      "Grundständiges Studium": "Undergraduate study",
-      "Master- und Aufbaustudiengänge": "Master's / advanced",
-      "Weiterbildung": "Continuing education",
-      "Promotionsstudium": "Doctoral study",
-      "Struktur. Promotionsstudium": "Structured doctorate"
-    };
-
-  const forms = [...formTotals.entries()].sort((a, b) => b[1] - a[1]).map(([form]) => form);
-  const datasets = forms.map((form, index) => ({
-    label: formLabels[form] ?? form,
-    data: institutions.map((institution) => institution.studyForms?.[form]?.total ?? 0),
-    backgroundColor: EDU_PROGRAM_COLOURS[index % EDU_PROGRAM_COLOURS.length] + "CC",
-    borderColor: EDU_PROGRAM_COLOURS[index % EDU_PROGRAM_COLOURS.length],
-    borderWidth: 1,
-    stack: "studyForms"
-  }));
-
-  createChart("study-program-chart", {
-    type: "bar",
-    data: {
-      labels: institutions.map((institution) => institution.name),
-      datasets
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      animation: { duration: 900 },
-      plugins: {
-        legend: {
-          position: "right",
-          labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true, color: css("--ink"), font: { weight: 700, size: 11 } }
-        },
-        tooltip: {
-          backgroundColor: "rgba(84,45,36,0.94)",
-          padding: 10,
-          callbacks: { label: (ctx) => ` ${ctx.dataset.label}: ${formatNumber(ctx.parsed.y)}` }
-        }
-      },
-      scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { color: css("--muted"), maxRotation: 20, font: { size: 10 } } },
-        y: { stacked: true, grid: { color: "#eeeeee" }, ticks: { color: css("--muted"), callback: (v) => formatNumber(v) } }
-      }
-    }
-  });
-}
-
-function renderEducationSources() {
-  const prefix = `${t().sources}: `;
-  const sources = state.data.education?.sources ?? [];
-  const pick = (needle) => sources.find((s) => s.dataset?.includes(needle));
-  const fmt = (src) => src ? `${src.dataset} · ${src.source} · ${src.url}` : "Amt für Statistik Magdeburg";
-  [
-    ["edu-type-source", pick("Schulen in der Stadt")],
-    ["edu-capacity-source", pick("Schulen in der Stadt")],
-    ["edu-map-source", pick("Schulen in der Stadt Magdeburg nach Stadtteilen")],
-    ["edu-trend-source", pick("Schulen in der Stadt")],
-    ["edu-uni-trend-source", pick("Studierenden")],
-    ["edu-uni-institution-source", pick("Studierenden")],
-    ["edu-program-source", pick("Studierende nach Studienform und Studiengang")]
-  ].forEach(([id, src]) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = prefix + fmt(src);
-  });
-}
-
-function renderEducationView() {
-  const edu = state.data.education;
-  if (!edu) return;
-  renderEducationKpis(edu.summary, state.language);
-  renderSchoolTypeChart(edu.schoolDetails, state.language);
-  renderCapacityChart(edu.schoolDetails, state.language);
-  renderSchoolTrendChart(edu.schoolDetails);
-  renderEducationDistrictMap(edu.districtSchools);
-  renderUniversityTrendChart(edu.universities);
-  renderInstitutionChart(edu.universities);
-  renderStudyProgramChart(edu.studyPrograms, state.language);
-  renderEducationSources();
-}
-
-// ---------------------------------------------------------------------------
-// Health view
-// ---------------------------------------------------------------------------
-
-function renderHealthView() {
-  const health = state.data.health;
-  const selectedYear = state.selectedHealthYear ?? health.latestYear;
-  const districts = healthDistrictSnapshot(health, selectedYear);
-  const rankedDistricts = [...districts].sort((a, b) => b.total - a.total);
-  state.healthRankedDistricts = rankedDistricts;
-  if (state.selectedHealthRank >= rankedDistricts.length) state.selectedHealthRank = 0;
-  renderHealthYearSlider(health);
-  renderMap("health-map", "health-inspector", districts, { ranked: true, onInspect: updateHealthInspector, initialIndex: state.selectedHealthRank });
-  syncHealthRankControls(state.selectedHealthRank + 1);
-  document.getElementById("health-year-output").textContent = selectedYear;
-  setSource("health-source", ["Gesundheit und Soziales"]);
-}
-
-// ---------------------------------------------------------------------------
-// Population view
-// ---------------------------------------------------------------------------
-
-function renderPopulationMapSection(population) {
-  const districts = districtSnapshot(population, state.selectedPopulationYear);
-  renderMap("population-map", "population-inspector", districts);
-  renderPopulationYearSlider(population);
-}
-
 function renderPopulationView() {
   const population = state.data.population;
+  const districts = districtSnapshot(population, state.selectedPopulationYear);
 
   renderKpis(population.summary);
-  renderStatusSlider(population);
-  renderPopulationStatus(population);
   renderMigrationChart(population);
-  renderPopulationMapSection(population);
+  renderPopulationYearSlider(population);
+  renderMap("population-map", "population-inspector", districts);
   renderVitalChart(population);
   renderAgeQuoteSlider(population);
   renderAgeStructure(population);
@@ -1580,7 +1098,6 @@ function renderPopulationView() {
   renderSources();
 }
 
-<<<<<<< HEAD
 function renderInfrastructureView() {
   const infrastructure = state.data.infrastructure;
 
@@ -1613,16 +1130,12 @@ function renderHealthView() {
   document.getElementById("health-year-output").textContent = selectedYear;
   setSource("health-source", ["Gesundheit und Soziales"]);
 }
-=======
-// ---------------------------------------------------------------------------
-// Alerts
-// ---------------------------------------------------------------------------
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
 
 function renderAlerts(alerts) {
   document.getElementById("alerts-count").textContent = alerts.length;
   const list = document.getElementById("alerts-list");
   list.innerHTML = "";
+
   for (const alert of alerts) {
     const item = document.createElement("li");
     item.innerHTML = `<span></span><strong></strong><p></p>`;
@@ -1633,16 +1146,12 @@ function renderAlerts(alerts) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Static text
-// ---------------------------------------------------------------------------
-
 function updateStaticText() {
   const copy = t();
+
   document.title = "MagdePulse";
   document.querySelector(".brand strong").textContent = "MagdePulse";
   document.querySelector(".brand em").textContent = copy.tagline;
-<<<<<<< HEAD
   setText(
     "#topic-kicker",
     state.topic === "population"
@@ -1664,28 +1173,18 @@ function updateStaticText() {
           ? copy.healthIntro
           : copy.placeholders[state.topic]
   );
-=======
-
-  const kickerMap = { population: copy.introKicker, education: copy.educationKicker, health: copy.healthKicker ?? copy.introKicker };
-  const copyMap = { population: copy.introCopy, education: copy.educationCopy, health: copy.healthIntro };
-
-  setText("#topic-kicker", kickerMap[state.topic] ?? copy.comingSoon);
-  setText("#page-title", copy.introTitle);
-  setText("#page-copy", copyMap[state.topic] ?? copy.placeholders[state.topic] ?? copy.readyCopy);
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
   setText("#placeholder-kicker", copy.comingSoon);
-  setText("#placeholder-title", copy.placeholders[state.topic] ?? copy.placeholders.infrastructure);
+  setText("#placeholder-title", copy.placeholders[state.topic] ?? copy.placeholders.education);
   setText("#placeholder-copy", copy.readyCopy);
   setText("#alerts-button span", copy.alerts);
   setText(".panel-title span", copy.liveAlerts);
   setText("#close-alerts", copy.close);
 
-  document.querySelectorAll(".topic-button").forEach((btn) => {
-    btn.textContent = copy.topics[btn.dataset.topic];
+  document.querySelectorAll(".topic-button").forEach((button) => {
+    button.textContent = copy.topics[button.dataset.topic];
   });
 
   const sectionCopy = [
-    ["status-orbits", "statusKicker", "statusTitle"],
     ["migration-chart", "migrationKicker", "migrationTitle"],
     ["population-map", "populationKicker", "populationTitle"],
     ["infra-stock-chart", "infrastructureStockKicker", "infrastructureStockTitle"],
@@ -1694,53 +1193,28 @@ function updateStaticText() {
     ["health-map", "healthKicker", "healthTitle"],
     ["vital-chart", "vitalKicker", "vitalTitle"],
     ["age-orbits", "ageKicker", "ageTitle"],
-    ["age-flow-grid", "ageMigrationKicker", "ageMigrationTitle"],
-    ["school-type-chart", "eduTypeKicker", "eduTypeTitle"],
-    ["school-capacity-chart", "eduCapacityKicker", "eduCapacityTitle"],
-    ["education-map", "eduMapKicker", "eduMapTitle"],
-    ["school-trend-chart", "eduTrendKicker", "eduTrendTitle"],
-    ["university-trend-chart", "eduUniTrendKicker", "eduUniTrendTitle"],
-    ["institution-breakdown-chart", "eduUniInstitutionKicker", "eduUniInstitutionTitle"]
+    ["age-flow-grid", "ageMigrationKicker", "ageMigrationTitle"]
   ];
 
   for (const [id, kicker, title] of sectionCopy) {
     const card = document.getElementById(id)?.closest(".chart-card");
     if (!card) continue;
-    const eyebrow = card.querySelector(".eyebrow");
-    const h2 = card.querySelector("h2");
-    if (eyebrow) eyebrow.textContent = copy.charts[kicker];
-    if (h2) h2.textContent = copy.charts[title];
+    card.querySelector(".eyebrow").textContent = copy.charts[kicker];
+    card.querySelector("h2").textContent = copy.charts[title];
   }
-}
 
-// ---------------------------------------------------------------------------
-// Topic routing
-// ---------------------------------------------------------------------------
+}
 
 function renderTopic() {
   const isPopulation = state.topic === "population";
-<<<<<<< HEAD
   const isInfrastructure = state.topic === "infrastructure";
-=======
-  const isEducation = state.topic === "education";
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
   const isHealth = state.topic === "health";
-
   document.getElementById("population-view").hidden = !isPopulation;
-<<<<<<< HEAD
   document.getElementById("infrastructure-view").hidden = !isInfrastructure;
   document.getElementById("health-view").hidden = !isHealth;
   document.getElementById("placeholder-view").hidden = isPopulation || isInfrastructure || isHealth;
-=======
-  document.getElementById("education-view").hidden = !isEducation;
-  document.getElementById("health-view").hidden = !isHealth;
-  document.getElementById("placeholder-view").hidden = isPopulation || isEducation || isHealth;
-
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
   updateStaticText();
-  if (!state.data) return;
 
-<<<<<<< HEAD
   if (!state.data) {
     return;
   }
@@ -1756,62 +1230,50 @@ function renderTopic() {
   if (isHealth) {
     renderHealthView();
   }
-=======
-  if (isPopulation) renderPopulationView();
-  if (isEducation) renderEducationView();
-  if (isHealth) renderHealthView();
->>>>>>> d34c8d1678ac9ad9a54e017a6385d122ca0c7447
 }
 
-// ---------------------------------------------------------------------------
-// Event bindings
-// ---------------------------------------------------------------------------
-
 function bindEvents() {
-  document.querySelectorAll(".topic-button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.topic = btn.dataset.topic;
-      document.querySelectorAll(".topic-button").forEach((b) => b.classList.toggle("is-active", b === btn));
+  document.querySelectorAll(".topic-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.topic = button.dataset.topic;
+      document.querySelectorAll(".topic-button").forEach((item) => item.classList.toggle("is-active", item === button));
       renderTopic();
     });
   });
 
-  document.querySelectorAll(".language-toggle button").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.language = btn.dataset.lang;
+  document.querySelectorAll(".language-toggle button").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.language = button.dataset.lang;
       document.documentElement.lang = state.language;
-      document.querySelectorAll(".language-toggle button").forEach((b) => b.classList.toggle("is-active", b === btn));
+      document
+        .querySelectorAll(".language-toggle button")
+        .forEach((item) => item.classList.toggle("is-active", item === button));
       renderTopic();
       if (state.data) renderAlerts(state.data.alerts);
     });
   });
 
-  document.getElementById("population-year-slider").addEventListener("input", (e) => {
+  document.getElementById("population-year-slider").addEventListener("input", (event) => {
     const years = populationYears(state.data.population);
-    state.selectedPopulationYear = years[Number(e.target.value)];
-    renderPopulationMapSection(state.data.population);
+    state.selectedPopulationYear = years[Number(event.target.value)];
+    renderPopulationView();
   });
 
-  document.getElementById("status-year-slider").addEventListener("input", (event) => {
-    state.selectedStatusIndex = Number(event.target.value);
-    renderStatusSlider(state.data.population);
-    renderPopulationStatus(state.data.population);
-  });
-
-  document.getElementById("age-quote-year-slider").addEventListener("input", (e) => {
-    state.selectedAgeQuoteIndex = Number(e.target.value);
+  document.getElementById("age-quote-year-slider").addEventListener("input", (event) => {
+    state.selectedAgeQuoteIndex = Number(event.target.value);
     renderAgeQuoteSlider(state.data.population);
     renderAgeStructure(state.data.population);
   });
 
-  document.getElementById("age-year-slider").addEventListener("input", (e) => {
-    state.selectedAgeIndex = Number(e.target.value);
+  document.getElementById("age-year-slider").addEventListener("input", (event) => {
+    state.selectedAgeIndex = Number(event.target.value);
     renderAgeFlow(state.data.population);
   });
 
-  document.getElementById("health-year-slider").addEventListener("input", (e) => {
-    const years = healthYears(state.data.health);
-    state.selectedHealthYear = years[Number(e.target.value)];
+  document.getElementById("health-year-slider").addEventListener("input", (event) => {
+    const health = state.data.health;
+    const years = health.years;
+    state.selectedHealthYear = years[Number(event.target.value)];
     state.selectedHealthRank = 0;
     renderHealthView();
   });
@@ -1837,20 +1299,19 @@ function bindEvents() {
   });
 }
 
-// ---------------------------------------------------------------------------
-// Bootstrap
-// ---------------------------------------------------------------------------
-
 async function loadDashboard() {
   const response = await fetch("/api/dashboard");
-  if (!response.ok) throw new Error("Dashboard data could not be loaded.");
+
+  if (!response.ok) {
+    throw new Error("Dashboard data could not be loaded.");
+  }
+
   state.data = await response.json();
   [state.boundary, state.districtCoordinates] = await Promise.all([loadBoundary(), loadDistrictCoordinates()]);
   state.selectedPopulationYear = populationYears(state.data.population).at(-1);
-  state.selectedStatusIndex = statusRows(state.data.population).length - 1;
   state.selectedAgeQuoteIndex = state.data.population.ageQuote.length - 1;
   state.selectedAgeIndex = state.data.population.ageMigration.length - 1;
-  state.selectedHealthYear = state.data.health?.latestYear;
+  state.selectedHealthYear = state.data.health.latestYear;
   renderAlerts(state.data.alerts);
   renderTopic();
 }
